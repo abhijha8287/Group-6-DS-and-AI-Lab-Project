@@ -1,0 +1,17 @@
+# Provisional dependency list (Milestone 1). Exact versions will be pinned at M3
+# once the prototype runs end-to-end.
+livekit-agents
+livekit-plugins-silero
+livekit-plugins-deepgram
+livekit-plugins-cartesia
+livekit-plugins-anthropic
+anthropic
+fastapi
+uvicorn
+sqlalchemy
+psycopg[binary]
+pydantic
+pyyaml
+python-dotenv
+pandas
+pytest
