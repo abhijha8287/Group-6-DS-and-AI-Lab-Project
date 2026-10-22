@@ -21,7 +21,7 @@ Instructors/TAs with access: @PulkitMangal09, @AlapeAniruddha
 |---|---|---|
 | Problem statement (with score) | [problem_statement/problem_statement.md](problem_statement/problem_statement.md) | ✅ |
 | M1: Problem & literature review | [milestones/M1_problem_literature/report.md](milestones/M1_problem_literature/report.md) | ✅ Submitted |
-| M1: Slides | `milestones/M1_problem_literature/slides.pdf` | After review meeting |
+| M1: Slides | [milestones/M1_problem_literature/slides.pdf](milestones/M1_problem_literature/slides.pdf) | ✅ |
 | M2: Dataset | [milestones/M2_dataset](milestones/M2_dataset) | Upcoming |
 | M3: Architecture | [milestones/M3_architecture](milestones/M3_architecture) | Upcoming |
 | M4: Development | [milestones/M4_training](milestones/M4_training) | Upcoming |
