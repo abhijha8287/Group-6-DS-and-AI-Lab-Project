@@ -270,7 +270,7 @@ These requirements become hard, testable constraints in our system (O7) rather t
 
 | Member | M1 contributions |
 |---|---|
-| Abhishek Jha (A.J.) | _To be filled in by member_ |
+| Abhishek Jha (A.J.) | Set up the GitHub repository and structure; drafted the problem statement, scope, stakeholders and measurable objectives; coordinated the report; proposed the work division; prepared the review slides |
 | Srijan (S.) | _To be filled in by member_ |
 | Sarwar Karim Akhand (S.K.A.) | _To be filled in by member_ |
 | Omkar Shankar Pawar (O.S.P.) | _To be filled in by member_ |
@@ -281,7 +281,7 @@ We, the members of Group 6, confirm that this submission is our own work. All ex
 
 | Member | Digital signature (initials) | Date |
 |---|---|---|
-| Abhishek Jha | | |
+| Abhishek Jha | A.J. | 22 Oct 2026 |
 | Srijan | | |
 | Sarwar Karim Akhand | | |
 | Omkar Shankar Pawar | | |

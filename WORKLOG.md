@@ -24,7 +24,7 @@ Every member presents their own area at each milestone review and commits from t
 
 | Member | Contributions | Approx. hours |
 |---|---|---|
-| Abhishek Jha (A.J.) | | |
+| Abhishek Jha (A.J.) | Created the repository and structure; drafted the problem statement, scope, stakeholders and objectives; coordinated the M1 report; proposed the work division; prepared the review slides | |
 | Srijan (S.) | | |
 | Sarwar Karim Akhand (S.K.A.) | | |
 | Omkar Shankar Pawar (O.S.P.) | | |
