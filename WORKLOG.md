@@ -27,7 +27,7 @@ Every member presents their own area at each milestone review and commits from t
 | Abhishek Jha (A.J.) | Created the repository and structure; drafted the problem statement, scope, stakeholders and objectives; coordinated the M1 report; proposed the work division; prepared the review slides | |
 | Srijan (S.) | Contributed to the voice-agent proposal, backend workflow and single-agent vs multi-agent comparison | |
 | Sarwar Karim Akhand (S.K.A.) | | |
-| Omkar Shankar Pawar (O.S.P.) | | |
+| Omkar Shankar Pawar (O.S.P.) | Conducted research on the problem statement and evaluation of single-agent vs. multi-agent systems using automated tests, performance metrics, cost and latency tracking, and error analysis.| |
 
 ### Meetings / decisions
 
