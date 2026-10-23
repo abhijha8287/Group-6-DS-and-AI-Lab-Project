@@ -272,7 +272,7 @@ These requirements become hard, testable constraints in our system (O7) rather t
 |---|---|
 | Abhishek Jha (A.J.) | Set up the GitHub repository and structure; drafted the problem statement, scope, stakeholders and measurable objectives; coordinated the report; proposed the work division; prepared the review slides |
 | Srijan (S.) | Contributed to the voice-agent proposal, backend workflow and single-agent vs multi-agent comparison |
-| Sarwar Karim Akhand (S.K.A.) | _To be filled in by member_ |
+| Sarwar Karim Akhand (S.K.A.) | Reviewed the project requirements and discussed the data and knowledge-base requirements for M2, including synthetic business documents, CRM seed data, consent/opt-out records, and test scenarios. |
 | Omkar Shankar Pawar (O.S.P.) | Conducted research on the problem statement and evaluation of single-agent vs. multi-agent systems using automated tests, performance metrics, cost and latency tracking, and error analysis. |
 
 ## 13. Acknowledgement
@@ -283,7 +283,7 @@ We, the members of Group 6, confirm that this submission is our own work. All ex
 |---|---|---|
 | Abhishek Jha | A.J. | 22 Oct 2026 |
 | Srijan | S. | 23 Oct 2026 |
-| Sarwar Karim Akhand | | |
+| Sarwar Karim Akhand | S.K.A | 23 Oct 2026 | 
 | Omkar Shankar Pawar | O.S.P | 23 Oct 2026 |
 
 _Each member adds their own initials (e.g., A.J.) and the date in their own commit._
