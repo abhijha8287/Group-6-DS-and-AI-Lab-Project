@@ -171,16 +171,16 @@ See [WORKLOG.md](../../WORKLOG.md) for milestone-specific records. AI tools assi
 
 ## 11. Acknowledgement
 
-This acknowledgement records participation and responsibility for the disclosed submission, including its outstanding work. It is not a claim that all data is human-approved, all requirements are complete, or benchmark results exist. Srijan requested his acknowledgement and confirmed that Abhishek authorized him to acknowledge on Abhishek's behalf. The proxy entry below is deliberately explicit and is not presented as Abhishek's personal signature. Roll numbers were not supplied and must be completed by the members.
+This acknowledgement records participation and responsibility for the disclosed submission, including its outstanding work. It is not a claim that all data is human-approved, all requirements are complete, or benchmark results exist. Srijan requested his acknowledgement and confirmed that Abhishek authorized him to acknowledge on Abhishek's behalf. The table uses the initials format used in M1. Abhishek's initials are entered by Srijan with authorization, not presented as a personally entered signature. Roll numbers remain pending for now.
 
 | Name | Roll No. | Signature | Date |
 |---|---|---|---|
-| Srijan | Pending — member to supply | S. — entered at Srijan's request | 29 October 2026 |
-| Abhishek Jha | Pending — member to supply | Srijan, on behalf of Abhishek Jha, with authorization (proxy acknowledgement) | 29 October 2026 |
+| Srijan | Pending — member to supply | S. | 29 October 2026 |
+| Abhishek Jha | Pending — member to supply | A.J. (entered by Srijan with authorization) | 29 October 2026 |
 | Sarwar Karim Akhand | Pending — member to supply | Pending personal acknowledgement | — |
 | Omkar Shankar Pawar | Pending — member to supply | Pending personal acknowledgement | — |
 
-**Administrative limitation:** a proxy or pending roll/signature entry may not satisfy the course's final acknowledgement check. The bot preview requested Name / Roll No. / Signature on the default branch; its exact validation rules and acceptance of proxy acknowledgement have not been verified. Obtain missing roll numbers, remaining personal acknowledgements and TA confirmation if a personal signature is required. This report must be merged into `main` before the deadline to be visible to the default-branch check.
+**Administrative limitation:** a proxy or pending roll/signature entry may not satisfy the course's final acknowledgement check. The bot preview requested Name / Roll No. / Signature on the default branch; its exact validation rules and acceptance of proxy acknowledgement have not been verified. Obtain missing roll numbers, remaining personal acknowledgements and TA confirmation if a personal signature is required. This report is on `main`; the automated check uses the default-branch version at the deadline.
 
 ## References
 
