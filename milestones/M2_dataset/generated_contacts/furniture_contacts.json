@@ -1,0 +1,945 @@
+{
+  "business_id": "urbannest_pilot",
+  "synthetic": true,
+  "review_status": "generated_pending_human_review",
+  "split": "development_candidate_not_yet_split",
+  "generation": {
+    "script": "generate_m2_contacts.py",
+    "seed": 20261029,
+    "target_per_business": 50,
+    "method": "Retain existing seed contacts; generate schema-compatible synthetic contacts; reset generated consent and interaction state."
+  },
+  "limitations": [
+    "Contacts only; no inbound scenarios or outbound test cases are generated.",
+    "Generated fields require human review for realism and policy consistency.",
+    "Generated contacts have no outbound consent.",
+    "These records are not observed agent outcomes or benchmark results."
+  ],
+  "contacts": [
+    {
+      "id": "C01",
+      "name": "Asha Demo",
+      "email": "asha@example.invalid",
+      "category": "desk",
+      "budget_inr": 12000,
+      "pincode": "560001",
+      "timeline_days": 14,
+      "status": "new",
+      "consent": true,
+      "consent_record": {
+        "purpose": "enquiry_followup",
+        "channel": "voice",
+        "recorded_at": "2026-11-01T12:00:00+05:30",
+        "source": "synthetic_explicit_checkbox"
+      },
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Requested information about a desk."
+      ]
+    },
+    {
+      "id": "C02",
+      "name": "Ravi Demo",
+      "email": "ravi.a@example.invalid",
+      "category": "chair",
+      "budget_inr": 6000,
+      "pincode": "560001",
+      "timeline_days": 7,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Submitted enquiry without voice consent."
+      ]
+    },
+    {
+      "id": "C03",
+      "name": "Ravi Demo",
+      "email": "ravi.b@example.invalid",
+      "category": "sofa",
+      "budget_inr": 35000,
+      "pincode": "560002",
+      "timeline_days": 30,
+      "status": "new",
+      "consent": true,
+      "consent_record": {
+        "purpose": "enquiry_followup",
+        "channel": "voice",
+        "recorded_at": "2026-11-01T12:00:00+05:30",
+        "source": "synthetic_explicit_checkbox"
+      },
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Interested in a sofa; different person from C02."
+      ]
+    },
+    {
+      "id": "C04",
+      "name": "Meera Demo",
+      "email": "meera@example.invalid",
+      "category": "shelf",
+      "budget_inr": 8000,
+      "pincode": "560003",
+      "timeline_days": 21,
+      "status": "new",
+      "consent": true,
+      "consent_record": {
+        "purpose": "enquiry_followup",
+        "channel": "voice",
+        "recorded_at": "2026-10-30T12:00:00+05:30",
+        "source": "synthetic_explicit_checkbox"
+      },
+      "opted_out": true,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Withdrew voice consent on 2026-11-01; opted_out overrides historical grant."
+      ]
+    },
+    {
+      "id": "C05",
+      "name": "Kabir Demo",
+      "email": "kabir@example.invalid",
+      "category": "desk",
+      "budget_inr": 10000,
+      "pincode": "560004",
+      "timeline_days": 10,
+      "status": "contacted",
+      "consent": true,
+      "consent_record": {
+        "purpose": "enquiry_followup",
+        "channel": "voice",
+        "recorded_at": "2026-11-01T08:00:00+05:30",
+        "source": "synthetic_explicit_checkbox"
+      },
+      "opted_out": false,
+      "attempts": 1,
+      "last_attempt_at": "2026-11-02T09:00:00+05:30",
+      "history": [
+        "Contact attempt two hours before snapshot."
+      ]
+    },
+    {
+      "id": "C06",
+      "name": "Nila Demo",
+      "email": "nila@example.invalid",
+      "category": "chair",
+      "budget_inr": 5000,
+      "pincode": "560005",
+      "timeline_days": 14,
+      "status": "contacted",
+      "consent": true,
+      "consent_record": {
+        "purpose": "enquiry_followup",
+        "channel": "voice",
+        "recorded_at": "2026-10-28T12:00:00+05:30",
+        "source": "synthetic_explicit_checkbox"
+      },
+      "opted_out": false,
+      "attempts": 2,
+      "last_attempt_at": "2026-10-30T11:00:00+05:30",
+      "history": [
+        "Two prior attempts; retry limit reached."
+      ]
+    },
+    {
+      "id": "C07",
+      "name": "Dev Demo",
+      "email": "dev@example.invalid",
+      "category": "worktop",
+      "budget_inr": 20000,
+      "pincode": "560006",
+      "timeline_days": 45,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Asked about a custom worktop."
+      ]
+    },
+    {
+      "id": "C08",
+      "name": "Ira Demo",
+      "email": "ira@example.invalid",
+      "category": "shelf",
+      "budget_inr": 7000,
+      "pincode": "560007",
+      "timeline_days": 14,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Asked about delivery coverage."
+      ]
+    },
+    {
+      "id": "C09",
+      "name": "Zoya Demo",
+      "email": "zoya@example.invalid",
+      "category": "sofa",
+      "budget_inr": 40000,
+      "pincode": "560008",
+      "timeline_days": 30,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Needs help with a cancellation request."
+      ]
+    },
+    {
+      "id": "C10",
+      "name": "Arun Demo",
+      "email": "arun@example.invalid",
+      "category": "desk",
+      "budget_inr": 15000,
+      "pincode": "560009",
+      "timeline_days": 14,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Requested a price discussion; no discount agreed."
+      ]
+    },
+    {
+      "id": "C11",
+      "name": "Tara Demo",
+      "email": "tara@example.invalid",
+      "category": null,
+      "budget_inr": null,
+      "pincode": null,
+      "timeline_days": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Incomplete web enquiry; no calling permission."
+      ]
+    },
+    {
+      "id": "C12",
+      "name": "Omar Demo",
+      "email": "omar@example.invalid",
+      "category": "chair",
+      "budget_inr": 4500,
+      "pincode": "560010",
+      "timeline_days": 7,
+      "status": "callback_requested",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Has an inbound-requested callback, not a marketing-consent grant."
+      ]
+    },
+    {
+      "id": "C13",
+      "name": "Kavya Synthetic 13",
+      "email": "synthetic.furniture.013@example.invalid",
+      "category": "worktop",
+      "budget_inr": 3500,
+      "pincode": "560001",
+      "timeline_days": 30,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C14",
+      "name": "Meera Synthetic 14",
+      "email": "synthetic.furniture.014@example.invalid",
+      "category": "chair",
+      "budget_inr": 7500,
+      "pincode": "122001",
+      "timeline_days": 45,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C15",
+      "name": "Mira Synthetic 15",
+      "email": "synthetic.furniture.015@example.invalid",
+      "category": null,
+      "budget_inr": 7500,
+      "pincode": "560034",
+      "timeline_days": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C16",
+      "name": "Ishaan Synthetic 16",
+      "email": "synthetic.furniture.016@example.invalid",
+      "category": "dining_table",
+      "budget_inr": 10000,
+      "pincode": "400050",
+      "timeline_days": 3,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C17",
+      "name": "Reyansh Synthetic 17",
+      "email": "synthetic.furniture.017@example.invalid",
+      "category": "worktop",
+      "budget_inr": 15000,
+      "pincode": null,
+      "timeline_days": 7,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C18",
+      "name": "Zoya Synthetic 18",
+      "email": "synthetic.furniture.018@example.invalid",
+      "category": "sofa",
+      "budget_inr": 15000,
+      "pincode": "400050",
+      "timeline_days": 30,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C19",
+      "name": "Meera Synthetic 19",
+      "email": "synthetic.furniture.019@example.invalid",
+      "category": "desk",
+      "budget_inr": 40000,
+      "pincode": "560034",
+      "timeline_days": 7,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C20",
+      "name": "Vihaan Synthetic 20",
+      "email": "synthetic.furniture.020@example.invalid",
+      "category": "shelf",
+      "budget_inr": 15000,
+      "pincode": "560034",
+      "timeline_days": 21,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C21",
+      "name": "Kavya Synthetic 21",
+      "email": "synthetic.furniture.021@example.invalid",
+      "category": "desk",
+      "budget_inr": 25000,
+      "pincode": "411001",
+      "timeline_days": 21,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C22",
+      "name": "Nikhil Synthetic 22",
+      "email": "synthetic.furniture.022@example.invalid",
+      "category": null,
+      "budget_inr": 5000,
+      "pincode": "411001",
+      "timeline_days": 90,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C23",
+      "name": "Diya Synthetic 23",
+      "email": "synthetic.furniture.023@example.invalid",
+      "category": "dining_table",
+      "budget_inr": 40000,
+      "pincode": "560001",
+      "timeline_days": 60,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C24",
+      "name": "Zoya Synthetic 24",
+      "email": "synthetic.furniture.024@example.invalid",
+      "category": "desk",
+      "budget_inr": 40000,
+      "pincode": "411001",
+      "timeline_days": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C25",
+      "name": "Omar Synthetic 25",
+      "email": "synthetic.furniture.025@example.invalid",
+      "category": null,
+      "budget_inr": 10000,
+      "pincode": "110001",
+      "timeline_days": 30,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C26",
+      "name": "Diya Synthetic 26",
+      "email": "synthetic.furniture.026@example.invalid",
+      "category": "worktop",
+      "budget_inr": 3500,
+      "pincode": "110001",
+      "timeline_days": 21,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C27",
+      "name": "Meera Synthetic 27",
+      "email": "synthetic.furniture.027@example.invalid",
+      "category": "chair",
+      "budget_inr": 15000,
+      "pincode": "400050",
+      "timeline_days": 90,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C28",
+      "name": "Vihaan Synthetic 28",
+      "email": "synthetic.furniture.028@example.invalid",
+      "category": "bed",
+      "budget_inr": 7500,
+      "pincode": "411001",
+      "timeline_days": 45,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C29",
+      "name": "Rohan Synthetic 29",
+      "email": "synthetic.furniture.029@example.invalid",
+      "category": "sofa",
+      "budget_inr": 40000,
+      "pincode": null,
+      "timeline_days": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C30",
+      "name": "Diya Synthetic 30",
+      "email": "synthetic.furniture.030@example.invalid",
+      "category": "bed",
+      "budget_inr": 3500,
+      "pincode": "400050",
+      "timeline_days": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C31",
+      "name": "Reyansh Synthetic 31",
+      "email": "synthetic.furniture.031@example.invalid",
+      "category": null,
+      "budget_inr": 7500,
+      "pincode": "400001",
+      "timeline_days": 14,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C32",
+      "name": "Ishaan Synthetic 32",
+      "email": "synthetic.furniture.032@example.invalid",
+      "category": "shelf",
+      "budget_inr": 5000,
+      "pincode": "122001",
+      "timeline_days": 21,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C33",
+      "name": "Omar Synthetic 33",
+      "email": "synthetic.furniture.033@example.invalid",
+      "category": "sofa",
+      "budget_inr": 40000,
+      "pincode": "400001",
+      "timeline_days": 21,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C34",
+      "name": "Aditi Synthetic 34",
+      "email": "synthetic.furniture.034@example.invalid",
+      "category": "chair",
+      "budget_inr": 5000,
+      "pincode": "560034",
+      "timeline_days": 45,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C35",
+      "name": "Kavya Synthetic 35",
+      "email": "synthetic.furniture.035@example.invalid",
+      "category": "shelf",
+      "budget_inr": 3500,
+      "pincode": null,
+      "timeline_days": 7,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C36",
+      "name": "Reyansh Synthetic 36",
+      "email": "synthetic.furniture.036@example.invalid",
+      "category": "shelf",
+      "budget_inr": null,
+      "pincode": "560001",
+      "timeline_days": 3,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C37",
+      "name": "Nikhil Synthetic 37",
+      "email": "synthetic.furniture.037@example.invalid",
+      "category": "sofa",
+      "budget_inr": 60000,
+      "pincode": null,
+      "timeline_days": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C38",
+      "name": "Riya Synthetic 38",
+      "email": "synthetic.furniture.038@example.invalid",
+      "category": "shelf",
+      "budget_inr": 3500,
+      "pincode": "110001",
+      "timeline_days": 7,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C39",
+      "name": "Zoya Synthetic 39",
+      "email": "synthetic.furniture.039@example.invalid",
+      "category": "worktop",
+      "budget_inr": 40000,
+      "pincode": "560034",
+      "timeline_days": 21,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C40",
+      "name": "Vihaan Synthetic 40",
+      "email": "synthetic.furniture.040@example.invalid",
+      "category": "bed",
+      "budget_inr": 15000,
+      "pincode": "110001",
+      "timeline_days": 7,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C41",
+      "name": "Riya Synthetic 41",
+      "email": "synthetic.furniture.041@example.invalid",
+      "category": "bed",
+      "budget_inr": 25000,
+      "pincode": "110001",
+      "timeline_days": 30,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C42",
+      "name": "Tara Synthetic 42",
+      "email": "synthetic.furniture.042@example.invalid",
+      "category": "worktop",
+      "budget_inr": 5000,
+      "pincode": "560034",
+      "timeline_days": 21,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C43",
+      "name": "Vihaan Synthetic 43",
+      "email": "synthetic.furniture.043@example.invalid",
+      "category": null,
+      "budget_inr": 25000,
+      "pincode": "400001",
+      "timeline_days": 45,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C44",
+      "name": "Rohan Synthetic 44",
+      "email": "synthetic.furniture.044@example.invalid",
+      "category": "dining_table",
+      "budget_inr": 15000,
+      "pincode": "400050",
+      "timeline_days": 30,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C45",
+      "name": "Mira Synthetic 45",
+      "email": "synthetic.furniture.045@example.invalid",
+      "category": "worktop",
+      "budget_inr": null,
+      "pincode": "400050",
+      "timeline_days": 3,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C46",
+      "name": "Neel Synthetic 46",
+      "email": "synthetic.furniture.046@example.invalid",
+      "category": "bed",
+      "budget_inr": 40000,
+      "pincode": null,
+      "timeline_days": 60,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C47",
+      "name": "Omar Synthetic 47",
+      "email": "synthetic.furniture.047@example.invalid",
+      "category": "chair",
+      "budget_inr": 60000,
+      "pincode": "400050",
+      "timeline_days": 14,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C48",
+      "name": "Mira Synthetic 48",
+      "email": "synthetic.furniture.048@example.invalid",
+      "category": "bed",
+      "budget_inr": 10000,
+      "pincode": "110001",
+      "timeline_days": 21,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C49",
+      "name": "Tara Synthetic 49",
+      "email": "synthetic.furniture.049@example.invalid",
+      "category": "bed",
+      "budget_inr": null,
+      "pincode": "411001",
+      "timeline_days": 7,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C50",
+      "name": "Dev Synthetic 50",
+      "email": "synthetic.furniture.050@example.invalid",
+      "category": "dining_table",
+      "budget_inr": 10000,
+      "pincode": "560001",
+      "timeline_days": 60,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    }
+  ]
+}

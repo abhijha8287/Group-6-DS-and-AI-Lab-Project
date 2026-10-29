@@ -29,8 +29,21 @@ Every member presents their own area at each milestone review and commits from t
 | Sarwar Karim Akhand (S.K.A.) | Reviewed the project requirements and discussed M2 data and knowledge-base needs, including synthetic business documents, CRM seed data, consent/opt-out records, and test scenarios. | |
 | Omkar Shankar Pawar (O.S.P.) | Conducted research on the problem statement and evaluation of single-agent vs. multi-agent systems using automated tests, performance metrics, cost and latency tracking, and error analysis.| |
 
+## Milestone 2: Dataset and Data Preparation (due 29 Oct 2026)
+
+Status: dataset preparation submission in progress; generated expansions remain review-only. See the [M2 report](milestones/Milestone-2/Milestone-2.md) for validation scope, pending work and acknowledgement details. Hours are not estimated retrospectively.
+
+| Member | Contributions | Approx. hours |
+|---|---|---|
+| Srijan (S.) | Coordinated AI-assisted pilot authoring and independent review; checked source/knowledge and CRM/tool contracts; addressed dental fixture-validation defects with negative controls; organized the WIP m2 branch; prepared milestone documentation and contribution/acknowledgement updates. Pilot work is recorded in commits 25ad148 and 2efa053. | Not recorded |
+| Abhishek Jha (A.J.) | M2 review and coordination, confirmed by Srijan. This entry is recorded by Srijan while Abhishek is unavailable, with explicit authorization for the proxy acknowledgement in the report. No unverified implementation or comprehensive data approval is attributed. | Not recorded |
+| Sarwar Karim Akhand (S.K.A.) | Generated expanded contact, inbound and outbound artifacts and a provisional review-split manifest; added preparation/static-check scripts and progress documentation (commits 4fad21f and f2bd392). Entry summarized from commit evidence; personal confirmation/signature pending. | Not recorded |
+| Omkar Shankar Pawar (O.S.P.) | M2 contribution details awaiting the member's confirmation. | Not recorded |
+
+AI tools assisted authoring, implementation, review and documentation. Generated data, static validation and AI acceptance do not constitute runtime evaluation or blanket human approval. Members remain responsible for verifying the recorded work and limitations.
+
 ### Meetings / decisions
 
 | Date | Attendees | Decisions |
 |---|---|---|
-| | | |
+| 29 Oct 2026 | Srijan; Abhishek's authorization reported by Srijan | Record Srijan's acknowledgement and an explicitly labelled authorized proxy acknowledgement for Abhishek. Keep roll numbers and other members' signatures pending until supplied; do not imply a meeting or personal signature occurred. |
