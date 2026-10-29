@@ -22,7 +22,7 @@ Instructors/TAs with access: @PulkitMangal09, @AlapeAniruddha
 | Problem statement (with score) | [problem_statement/problem_statement.md](problem_statement/problem_statement.md) | ✅ |
 | M1: Problem & literature review | [milestones/M1_problem_literature/report.md](milestones/M1_problem_literature/report.md) | ✅ Submitted |
 | M1: Slides | [milestones/M1_problem_literature/slides.pdf](milestones/M1_problem_literature/slides.pdf) | ✅ |
-| M2: Dataset | [milestones/M2_dataset](milestones/M2_dataset) | Upcoming |
+| M2: Dataset | [milestones/M2_dataset](milestones/M2_dataset) | 🟡 In progress — dataset expansion committed; review pending |
 | M3: Architecture | [milestones/M3_architecture](milestones/M3_architecture) | Upcoming |
 | M4: Development | [milestones/M4_training](milestones/M4_training) | Upcoming |
 | M5: Evaluation | [milestones/M5_evaluation](milestones/M5_evaluation) | Upcoming |

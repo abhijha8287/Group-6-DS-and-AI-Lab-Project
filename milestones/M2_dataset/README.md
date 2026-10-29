@@ -14,7 +14,7 @@ This is a review-stage M2 dataset, not a completed M2 submission or a benchmark 
 
 Each original pilot contains **12 synthetic contacts, 10 original inbound scenarios, and 5 outbound gate fixtures** (36 contacts, 30 inbound scenarios, and 15 outbound fixtures across all three businesses).
 
-All three original offline validators have passed their implemented fixture checks. Independent AI judges rechecked the original pilot fixes; their findings and follow-up resolutions are documented in the business review files. AI acceptance is limited to review-only task authoring and does not constitute human approval, runtime safety certification, or evidence of agent performance.
+All three original offline validators have passed their implemented fixture checks. Independent AI judges rechecked the original pilot fixtures; their findings and follow-up resolutions are documented in the business review files. AI acceptance is limited to review-only task authoring and does not constitute human approval, runtime safety certification, or evidence of agent performance.
 
 Published business facts are cited, bounded paraphrases. Their adoption into each fictional business is explicitly a sandbox assumption. CRM identities, consent evidence, availability, and outcomes are synthetic. No affiliation with the reference businesses is implied, and no external benchmark tasks are redistributed.
 
@@ -56,7 +56,7 @@ Three fictional business pilots are included: UrbanNest Furniture, SunGrid Rooft
 | Dataset component | Per business | Total | Status |
 |---|---:|---:|---|
 | Original pilot contacts | 12 | 36 | Existing fixtures; original validators passed |
-| Expanded contact dataset | 50 | 150 | Generated; review and file inventory should be confirmed |
+| Expanded contact dataset | 50 | 150 | Generated; record counts verified; schema and content review pending |
 | Original inbound scenarios | 10 | 30 | Existing pilot fixtures |
 | Expanded inbound scenarios | 40 | 120 | Generated; pending human review |
 | Original outbound gate fixtures | 5 | 15 | Existing pilot fixtures |
@@ -67,6 +67,14 @@ Three fictional business pilots are included: UrbanNest Furniture, SunGrid Rooft
 **Important:** The original pilot files remain separate from the expanded generated artifacts. The original validators continue to validate the original fixtures; they do not automatically validate the expanded inbound or contact datasets.
 
 ### 2. Generated artifacts
+
+#### Expanded contacts
+
+- `generated_contacts/furniture_contacts.json`
+- `generated_contacts/solar_contacts.json`
+- `generated_contacts/dental_contacts.json`
+
+Each generated contact file is expected to contain 50 synthetic contacts. Record counts have been reported as verified, but schema consistency, identity uniqueness, realism, and policy consistency still require review before approval.
 
 #### Expanded inbound scenarios
 
@@ -126,7 +134,7 @@ The following limitations apply:
 
 - Generated inbound scenarios have not yet received final human content and policy approval.
 - Expanded outbound cases have passed a static consistency check, but still require review against the intended consent, allowlist, opt-out, retry, calling-hours, duplicate-event, and recent-attempt policies.
-- The expanded contact dataset's exact files and review status must be confirmed before it is treated as an approved dataset.
+- The three generated contact files contain 50 records each. Schema consistency, identity uniqueness, realism, and policy consistency still require review before the dataset can be approved.
 - The development-review and test-review partitions are not a validated benchmark split.
 - The test-review partition must not be described as a validated held-out test set, and its results must not be reported as benchmark performance.
 - No voice calls, paid evaluations, or external CRM writes were performed during these generation and static-validation steps.
@@ -147,6 +155,6 @@ The following limitations apply:
 
 **Completed:** Original pilot fixtures and their local validation checks; generation of expanded inbound scenarios, expanded outbound cases, and the provisional review-split manifest; static consistency check of all 30 expanded outbound cases.
 
-**Pending:** Human review and approval, confirmation of the expanded contact artifacts, review of generated inbound and outbound content, an appropriately protected held-out evaluation set, broader expanded-data validation, and the M2 report and presentation.
+**Pending:** Human review and approval, review of generated inbound and outbound content, an appropriately protected held-out evaluation set, broader expanded-data validation, and the M2 report and presentation.
 
 **Overall status: M2 dataset expansion in progress. Human approval and final evaluation readiness have not been established.**
