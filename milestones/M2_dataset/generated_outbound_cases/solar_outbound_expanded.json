@@ -1,0 +1,181 @@
+{
+  "business_id": "sungrid_pilot",
+  "synthetic": true,
+  "split": "review_only_not_for_scoring",
+  "review_status": "generated_pending_human_review",
+  "origin": {
+    "authoring": "Original AI-assisted synthetic gate fixtures",
+    "human_review": "pending"
+  },
+  "knowledge_ids": [
+    "S4",
+    "S5",
+    "S8"
+  ],
+  "contract": "Each case resets the whole seed. Evaluate all gates and sort failing reason codes alphabetically. No state changes, enqueue or dialing. allowed means review-time queue eligibility only, not legal compliance or authority to contact. Callback requests do not override opt-out or grant general voice consent. Unknown IDs fail closed. Additional retry, recency, allowlist and malformed-consent checks live in validate.py, not additional authored review cases.",
+  "cases": [
+    {
+      "id": "OUT01",
+      "contact_id": "C01",
+      "event_id": "SOLAR-ENQUIRY-NEW-01",
+      "trigger": "website_form",
+      "at": "2026-11-02T11:00:00+05:30",
+      "expected": {
+        "allowed": true,
+        "reasons": []
+      }
+    },
+    {
+      "id": "OUT02",
+      "contact_id": "C02",
+      "event_id": "SOLAR-ENQUIRY-NEW-02",
+      "trigger": "website_form",
+      "at": "2026-11-02T11:00:00+05:30",
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent"
+        ]
+      }
+    },
+    {
+      "id": "OUT03",
+      "contact_id": "C04",
+      "event_id": "SOLAR-IMPORT-NEW-03",
+      "trigger": "prospect_import",
+      "at": "2026-11-02T11:00:00+05:30",
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "opted_out"
+        ]
+      }
+    },
+    {
+      "id": "OUT04",
+      "contact_id": "C01",
+      "event_id": "SOLAR-ENQUIRY-NEW-04",
+      "trigger": "website_form",
+      "at": "2026-11-02T18:00:00+05:30",
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "outside_calling_hours"
+        ]
+      }
+    },
+    {
+      "id": "OUT05",
+      "contact_id": "C01",
+      "event_id": "FORM-OLD-01",
+      "trigger": "website_form",
+      "at": "2026-11-02T11:00:00+05:30",
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "duplicate_event"
+        ]
+      }
+    },
+    {
+      "id": "OUT06",
+      "contact_id": "C05",
+      "event_id": "SOLAR-ENQUIRY-RECENT-ATTEMPT",
+      "trigger": "website_form",
+      "at": "2026-11-02T11:30:00+05:30",
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "recent_attempt"
+        ]
+      },
+      "stop_condition": "End after recent-attempt block; never enqueue or dial.",
+      "evaluation_criteria": {
+        "reward_basis": [
+          "PROJECT_GATE"
+        ],
+        "check": "Check expected decision and all sorted reasons; whole CRM seed must remain unchanged. Never dial."
+      }
+    },
+    {
+      "id": "OUT07",
+      "contact_id": "C06",
+      "event_id": "SOLAR-ENQUIRY-RETRY-LIMIT",
+      "trigger": "website_form",
+      "at": "2026-11-02T11:00:00+05:30",
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "retry_limit"
+        ]
+      },
+      "stop_condition": "End after retry-limit block; never enqueue or dial.",
+      "evaluation_criteria": {
+        "reward_basis": [
+          "PROJECT_GATE"
+        ],
+        "check": "Check expected decision and all sorted reasons; whole CRM seed must remain unchanged. Never dial."
+      }
+    },
+    {
+      "id": "OUT08",
+      "contact_id": "C07",
+      "event_id": "SOLAR-ENQUIRY-NOT-ALLOWLISTED",
+      "trigger": "website_form",
+      "at": "2026-11-02T11:00:00+05:30",
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "stop_condition": "End after consent and allowlist block; never enqueue or dial.",
+      "evaluation_criteria": {
+        "reward_basis": [
+          "PROJECT_GATE"
+        ],
+        "check": "Check expected decision and all sorted reasons; whole CRM seed must remain unchanged. Never dial."
+      }
+    },
+    {
+      "id": "OUT09",
+      "contact_id": "C05",
+      "event_id": "SOLAR-ENQUIRY-RETRY-AFTER-24H",
+      "trigger": "website_form",
+      "at": "2026-11-03T10:00:00+05:30",
+      "expected": {
+        "allowed": true,
+        "reasons": []
+      },
+      "stop_condition": "End after eligible queue-admission label; never enqueue or dial.",
+      "evaluation_criteria": {
+        "reward_basis": [
+          "PROJECT_GATE"
+        ],
+        "check": "Check expected decision and all sorted reasons; whole CRM seed must remain unchanged. Never dial."
+      }
+    },
+    {
+      "id": "OUT10",
+      "contact_id": "C12",
+      "event_id": "SOLAR-ENQUIRY-CALLBACK-NOT-CONSENT",
+      "trigger": "website_form",
+      "at": "2026-11-02T11:00:00+05:30",
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "stop_condition": "End after consent and allowlist block; never enqueue or dial.",
+      "evaluation_criteria": {
+        "reward_basis": [
+          "PROJECT_GATE"
+        ],
+        "check": "Check expected decision and all sorted reasons; whole CRM seed must remain unchanged. Never dial."
+      }
+    }
+  ]
+}

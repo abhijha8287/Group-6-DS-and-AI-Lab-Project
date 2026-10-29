@@ -1,0 +1,895 @@
+{
+  "business_id": "brightsmile_pilot",
+  "synthetic": true,
+  "review_status": "generated_pending_human_review",
+  "split": "development_candidate_not_yet_split",
+  "generation": {
+    "script": "generate_m2_contacts.py",
+    "seed": 20261029,
+    "target_per_business": 50,
+    "method": "Retain existing seed contacts; generate schema-compatible synthetic contacts; reset generated consent and interaction state."
+  },
+  "limitations": [
+    "Contacts only; no inbound scenarios or outbound test cases are generated.",
+    "Generated fields require human review for realism and policy consistency.",
+    "Generated contacts have no outbound consent.",
+    "These records are not observed agent outcomes or benchmark results."
+  ],
+  "contacts": [
+    {
+      "id": "C01",
+      "name": "Anvi Demo",
+      "email": "anvi@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "in_clinic",
+      "timing_preference": "next_week_morning",
+      "status": "new",
+      "consent": true,
+      "consent_record": {
+        "purpose": "enquiry_followup",
+        "channel": "voice",
+        "recorded_at": "2026-11-01T12:00:00+05:30",
+        "source": "synthetic_explicit_checkbox"
+      },
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Asked for administrative appointment information."
+      ]
+    },
+    {
+      "id": "C02",
+      "name": "Kiran Demo",
+      "email": "kiran.a@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "in_clinic",
+      "timing_preference": "next_week_evening",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Web enquiry without voice consent."
+      ]
+    },
+    {
+      "id": "C03",
+      "name": "Kiran Demo",
+      "email": "kiran.b@example.invalid",
+      "requested_service": "implant_enquiry",
+      "visit_mode": "video",
+      "timing_preference": "next_week_morning",
+      "status": "new",
+      "consent": true,
+      "consent_record": {
+        "purpose": "enquiry_followup",
+        "channel": "voice",
+        "recorded_at": "2026-11-01T12:00:00+05:30",
+        "source": "synthetic_explicit_checkbox"
+      },
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Different person from C02; enquiry is not treatment eligibility."
+      ]
+    },
+    {
+      "id": "C04",
+      "name": "Leena Demo",
+      "email": "leena@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "video",
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": true,
+      "consent_record": {
+        "purpose": "enquiry_followup",
+        "channel": "voice",
+        "recorded_at": "2026-10-30T12:00:00+05:30",
+        "source": "synthetic_explicit_checkbox"
+      },
+      "opted_out": true,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Voice opt-out overrides historical permission."
+      ]
+    },
+    {
+      "id": "C05",
+      "name": "Samir Demo",
+      "email": "samir@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "in_clinic",
+      "timing_preference": "next_week",
+      "status": "contacted",
+      "consent": true,
+      "consent_record": {
+        "purpose": "enquiry_followup",
+        "channel": "voice",
+        "recorded_at": "2026-11-01T08:00:00+05:30",
+        "source": "synthetic_explicit_checkbox"
+      },
+      "opted_out": false,
+      "attempts": 1,
+      "last_attempt_at": "2026-11-02T09:00:00+05:30",
+      "history": [
+        "One attempt two hours before snapshot."
+      ]
+    },
+    {
+      "id": "C06",
+      "name": "Reva Demo",
+      "email": "reva@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "video",
+      "timing_preference": "next_week",
+      "status": "contacted",
+      "consent": true,
+      "consent_record": {
+        "purpose": "enquiry_followup",
+        "channel": "voice",
+        "recorded_at": "2026-10-28T12:00:00+05:30",
+        "source": "synthetic_explicit_checkbox"
+      },
+      "opted_out": false,
+      "attempts": 2,
+      "last_attempt_at": "2026-10-30T11:00:00+05:30",
+      "history": [
+        "Two previous follow-up attempts."
+      ]
+    },
+    {
+      "id": "C07",
+      "name": "Nayan Demo",
+      "email": "nayan@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "in_clinic",
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Administrative coverage question; no insurer details collected."
+      ]
+    },
+    {
+      "id": "C08",
+      "name": "Pia Demo",
+      "email": "pia@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "video",
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Asked how to reach a qualified clinician; no clinical history stored."
+      ]
+    },
+    {
+      "id": "C09",
+      "name": "Yash Demo",
+      "email": "yash@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "in_clinic",
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Requested scheduling assistance."
+      ]
+    },
+    {
+      "id": "C10",
+      "name": "Bela Demo",
+      "email": "bela@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "in_clinic",
+      "timing_preference": "next_month",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Service enquiry only; no quote or coverage agreement."
+      ]
+    },
+    {
+      "id": "C11",
+      "name": "Tarun Demo",
+      "email": "tarun@example.invalid",
+      "requested_service": null,
+      "visit_mode": null,
+      "timing_preference": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Incomplete enquiry; no outbound permission."
+      ]
+    },
+    {
+      "id": "C12",
+      "name": "Mahi Demo",
+      "email": "mahi@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "video",
+      "timing_preference": "next_week",
+      "status": "callback_requested",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Inbound callback request did not grant marketing voice consent."
+      ]
+    },
+    {
+      "id": "C13",
+      "name": "Nikhil Synthetic 13",
+      "email": "synthetic.dental.013@example.invalid",
+      "requested_service": "implant_enquiry",
+      "visit_mode": "in_clinic",
+      "timing_preference": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C14",
+      "name": "Pia Synthetic 14",
+      "email": "synthetic.dental.014@example.invalid",
+      "requested_service": "implant_enquiry",
+      "visit_mode": null,
+      "timing_preference": "next_week_morning",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C15",
+      "name": "Arjun Synthetic 15",
+      "email": "synthetic.dental.015@example.invalid",
+      "requested_service": "implant_enquiry",
+      "visit_mode": null,
+      "timing_preference": "weekend",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C16",
+      "name": "Meera Synthetic 16",
+      "email": "synthetic.dental.016@example.invalid",
+      "requested_service": "appointment_information",
+      "visit_mode": null,
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C17",
+      "name": "Anaya Synthetic 17",
+      "email": "synthetic.dental.017@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": null,
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C18",
+      "name": "Anaya Synthetic 18",
+      "email": "synthetic.dental.018@example.invalid",
+      "requested_service": "appointment_information",
+      "visit_mode": null,
+      "timing_preference": "next_week_evening",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C19",
+      "name": "Kabir Synthetic 19",
+      "email": "synthetic.dental.019@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "video",
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C20",
+      "name": "Arjun Synthetic 20",
+      "email": "synthetic.dental.020@example.invalid",
+      "requested_service": "implant_enquiry",
+      "visit_mode": "in_clinic",
+      "timing_preference": "next_week_morning",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C21",
+      "name": "Omar Synthetic 21",
+      "email": "synthetic.dental.021@example.invalid",
+      "requested_service": "cleaning_enquiry",
+      "visit_mode": "video",
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C22",
+      "name": "Arjun Synthetic 22",
+      "email": "synthetic.dental.022@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "video",
+      "timing_preference": "next_week_evening",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C23",
+      "name": "Aditi Synthetic 23",
+      "email": "synthetic.dental.023@example.invalid",
+      "requested_service": "implant_enquiry",
+      "visit_mode": "video",
+      "timing_preference": "next_week_evening",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C24",
+      "name": "Omar Synthetic 24",
+      "email": "synthetic.dental.024@example.invalid",
+      "requested_service": "cleaning_enquiry",
+      "visit_mode": "in_clinic",
+      "timing_preference": "next_week_morning",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C25",
+      "name": "Vihaan Synthetic 25",
+      "email": "synthetic.dental.025@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": null,
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C26",
+      "name": "Kabir Synthetic 26",
+      "email": "synthetic.dental.026@example.invalid",
+      "requested_service": "appointment_information",
+      "visit_mode": "video",
+      "timing_preference": "next_week_evening",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C27",
+      "name": "Aarav Synthetic 27",
+      "email": "synthetic.dental.027@example.invalid",
+      "requested_service": "appointment_information",
+      "visit_mode": "video",
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C28",
+      "name": "Aditi Synthetic 28",
+      "email": "synthetic.dental.028@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "in_clinic",
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C29",
+      "name": "Sana Synthetic 29",
+      "email": "synthetic.dental.029@example.invalid",
+      "requested_service": "cleaning_enquiry",
+      "visit_mode": null,
+      "timing_preference": "next_week_morning",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C30",
+      "name": "Pia Synthetic 30",
+      "email": "synthetic.dental.030@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": null,
+      "timing_preference": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C31",
+      "name": "Dev Synthetic 31",
+      "email": "synthetic.dental.031@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "video",
+      "timing_preference": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C32",
+      "name": "Arjun Synthetic 32",
+      "email": "synthetic.dental.032@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "video",
+      "timing_preference": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C33",
+      "name": "Kavya Synthetic 33",
+      "email": "synthetic.dental.033@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "video",
+      "timing_preference": "next_week_evening",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C34",
+      "name": "Kabir Synthetic 34",
+      "email": "synthetic.dental.034@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "in_clinic",
+      "timing_preference": "next_week_morning",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C35",
+      "name": "Vihaan Synthetic 35",
+      "email": "synthetic.dental.035@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "video",
+      "timing_preference": "next_week_evening",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C36",
+      "name": "Aarav Synthetic 36",
+      "email": "synthetic.dental.036@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "in_clinic",
+      "timing_preference": "next_week_morning",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C37",
+      "name": "Sana Synthetic 37",
+      "email": "synthetic.dental.037@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "video",
+      "timing_preference": "next_week_morning",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C38",
+      "name": "Neel Synthetic 38",
+      "email": "synthetic.dental.038@example.invalid",
+      "requested_service": "appointment_information",
+      "visit_mode": null,
+      "timing_preference": "next_week_evening",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C39",
+      "name": "Arjun Synthetic 39",
+      "email": "synthetic.dental.039@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": null,
+      "timing_preference": "next_week_evening",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C40",
+      "name": "Aarav Synthetic 40",
+      "email": "synthetic.dental.040@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": null,
+      "timing_preference": "flexible",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C41",
+      "name": "Ira Synthetic 41",
+      "email": "synthetic.dental.041@example.invalid",
+      "requested_service": "appointment_information",
+      "visit_mode": "in_clinic",
+      "timing_preference": "weekend",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C42",
+      "name": "Aditi Synthetic 42",
+      "email": "synthetic.dental.042@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "video",
+      "timing_preference": "next_week_evening",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C43",
+      "name": "Sana Synthetic 43",
+      "email": "synthetic.dental.043@example.invalid",
+      "requested_service": "implant_enquiry",
+      "visit_mode": "in_clinic",
+      "timing_preference": "weekend",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C44",
+      "name": "Diya Synthetic 44",
+      "email": "synthetic.dental.044@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "video",
+      "timing_preference": "next_week_morning",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C45",
+      "name": "Kabir Synthetic 45",
+      "email": "synthetic.dental.045@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": null,
+      "timing_preference": "next_week_evening",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C46",
+      "name": "Riya Synthetic 46",
+      "email": "synthetic.dental.046@example.invalid",
+      "requested_service": "consultation",
+      "visit_mode": "video",
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C47",
+      "name": "Pia Synthetic 47",
+      "email": "synthetic.dental.047@example.invalid",
+      "requested_service": "implant_enquiry",
+      "visit_mode": null,
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C48",
+      "name": "Anaya Synthetic 48",
+      "email": "synthetic.dental.048@example.invalid",
+      "requested_service": "implant_enquiry",
+      "visit_mode": "video",
+      "timing_preference": null,
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C49",
+      "name": "Zoya Synthetic 49",
+      "email": "synthetic.dental.049@example.invalid",
+      "requested_service": "implant_enquiry",
+      "visit_mode": null,
+      "timing_preference": "next_week_morning",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    },
+    {
+      "id": "C50",
+      "name": "Omar Synthetic 50",
+      "email": "synthetic.dental.050@example.invalid",
+      "requested_service": "whitening_enquiry",
+      "visit_mode": "video",
+      "timing_preference": "next_week",
+      "status": "new",
+      "consent": false,
+      "consent_record": null,
+      "opted_out": false,
+      "attempts": 0,
+      "last_attempt_at": null,
+      "history": [
+        "Synthetic generated fixture; no prior interaction or outbound permission."
+      ]
+    }
+  ]
+}
