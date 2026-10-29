@@ -163,7 +163,7 @@ We will finish expanded schema/content and seed/task integration checks, resolve
 | Member | M2 contribution and evidence |
 |---|---|
 | Srijan | Coordinated AI-assisted pilot authoring/review, source and contract checks, dental-validator repairs and rejection controls; organized the WIP branch and prepared submission documentation and contribution/acknowledgement updates. Pilot commits: `25ad148`, `2efa053`. |
-| Abhishek Jha | M2 review and coordination, as confirmed by Srijan. Entry and authorized acknowledgement recorded by Srijan because Abhishek is unavailable; no specific code authorship or blanket dataset approval is inferred. |
+| Abhishek Jha | Planned the M2 work division, formats and timeline; reviewed the dataset, validation results and M2 report; coordinated submission and repository updates. No data-generation code authorship or blanket dataset approval is claimed. |
 | Sarwar Karim Akhand | Expanded synthetic contacts, inbound/outbound artifacts, provisional review split, generation/checking scripts and progress documentation, evidenced by main commits `4fad21f` and `f2bd392`. Personal acknowledgement pending. |
 | Omkar Shankar Pawar | M2 contribution details and personal acknowledgement pending confirmation; no completed contribution is invented. |
 
@@ -171,12 +171,12 @@ See [WORKLOG.md](../../WORKLOG.md) for milestone-specific records. AI tools assi
 
 ## 11. Acknowledgement
 
-This acknowledgement records participation and responsibility for the disclosed submission, including its outstanding work. It is not a claim that all data is human-approved, all requirements are complete, or benchmark results exist. Srijan requested his acknowledgement and confirmed that Abhishek authorized him to acknowledge on Abhishek's behalf. The table uses the initials format used in M1. Abhishek's initials are entered by Srijan with authorization, not presented as a personally entered signature. Roll numbers remain pending for now.
+This acknowledgement records participation and responsibility for the disclosed submission, including its outstanding work. It is not a claim that all data is human-approved, all requirements are complete, or benchmark results exist. The table uses the initials format used in M1. Each signature is entered by the member personally. Omkar's roll number and signature remain pending.
 
 | Name | Roll No. | Signature | Date |
 |---|---|---|---|
 | Srijan | 22f3002208 | S. | 29 October 2026 |
-| Abhishek Jha | 23f3004013 | A.J. (entered by Srijan with authorization) | 29 October 2026 |
+| Abhishek Jha | 23f3004013 | A.J. | 29 October 2026 |
 | Sarwar Karim Akhand | 21f1006953 | S.K.A |29 October 2026 |
 | Omkar Shankar Pawar | Pending — member to supply | Pending personal acknowledgement | — |
 

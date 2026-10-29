@@ -24,7 +24,7 @@ Every member presents their own area at each milestone review and commits from t
 
 | Member | Contributions | Approx. hours |
 |---|---|---|
-| Abhishek Jha (A.J.) | Created the repository and structure; drafted the problem statement, scope, stakeholders and objectives; coordinated the M1 report; proposed the work division; prepared the review slides | |
+| Abhishek Jha (A.J.) | Created the repository and structure; drafted the problem statement, scope, stakeholders and objectives; coordinated the M1 report; proposed the work division; prepared the review slides | 4–5 |
 | Srijan (S.) | Contributed to the voice-agent proposal, backend workflow and single-agent vs multi-agent comparison | |
 | Sarwar Karim Akhand (S.K.A.) | Reviewed the project requirements and discussed M2 data and knowledge-base needs, including synthetic business documents, CRM seed data, consent/opt-out records, and test scenarios. | |
 | Omkar Shankar Pawar (O.S.P.) | Conducted research on the problem statement and evaluation of single-agent vs. multi-agent systems using automated tests, performance metrics, cost and latency tracking, and error analysis.| |
@@ -36,7 +36,7 @@ Status: dataset preparation submission in progress; generated expansions remain 
 | Member | Contributions | Approx. hours |
 |---|---|---|
 | Srijan (S.) | Coordinated AI-assisted pilot authoring and independent review; checked source/knowledge and CRM/tool contracts; addressed dental fixture-validation defects with negative controls; organized the WIP m2 branch; prepared milestone documentation and contribution/acknowledgement updates. Pilot work is recorded in commits 25ad148 and 2efa053. | Not recorded |
-| Abhishek Jha (A.J.) | M2 review and coordination, confirmed by Srijan. This entry is recorded by Srijan while Abhishek is unavailable, with explicit authorization for the proxy acknowledgement in the report. No unverified implementation or comprehensive data approval is attributed. | Not recorded |
+| Abhishek Jha (A.J.) | Planned the M2 work division, formats and timeline; reviewed the dataset, validation results and M2 report; coordinated submission and repository updates. No data-generation code authored; no blanket approval of every generated record. | 4–5 |
 | Sarwar Karim Akhand (S.K.A.) | Generated expanded contact, inbound and outbound artifacts and a provisional review-split manifest; added preparation/static-check scripts and progress documentation (commits 4fad21f and f2bd392). Entry summarized from commit evidence; personal confirmation/signature pending. | Not recorded |
 | Omkar Shankar Pawar (O.S.P.) | M2 contribution details awaiting the member's confirmation. | Not recorded |
 
@@ -47,3 +47,4 @@ AI tools assisted authoring, implementation, review and documentation. Generated
 | Date | Attendees | Decisions |
 |---|---|---|
 | 29 Oct 2026 | Srijan; Abhishek's authorization reported by Srijan | Record Srijan's acknowledgement and an explicitly labelled authorized proxy acknowledgement for Abhishek. Keep roll numbers and other members' signatures pending until supplied; do not imply a meeting or personal signature occurred. |
+| 29 Oct 2026 | Abhishek | Abhishek confirmed his M2 contribution and replaced the proxy acknowledgement with his personal signature. |
