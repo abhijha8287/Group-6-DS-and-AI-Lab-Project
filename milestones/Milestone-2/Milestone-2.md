@@ -175,8 +175,8 @@ This acknowledgement records participation and responsibility for the disclosed 
 
 | Name | Roll No. | Signature | Date |
 |---|---|---|---|
-| Srijan | Pending — member to supply | S. | 29 October 2026 |
-| Abhishek Jha | Pending — member to supply | A.J. (entered by Srijan with authorization) | 29 October 2026 |
+| Srijan | 22f3002208 | S. | 29 October 2026 |
+| Abhishek Jha | 23f3004013 | A.J. (entered by Srijan with authorization) | 29 October 2026 |
 | Sarwar Karim Akhand | Pending — member to supply | Pending personal acknowledgement | — |
 | Omkar Shankar Pawar | Pending — member to supply | Pending personal acknowledgement | — |
 
