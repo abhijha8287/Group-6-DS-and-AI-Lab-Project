@@ -1,0 +1,17 @@
+{
+  "business_id":"brightsmile_pilot",
+  "synthetic":true,
+  "review_status":"pending_human_review",
+  "split":"review_only",
+  "knowledge_ids":["S1","S2","S4","S5","S7","S8","S10"],
+  "contract":"Every case resets the full seed. These are read-only gate fixtures: allowed means eligible for hypothetical queue admission only, not a placed call, legal clearance, confirmed appointment or treatment. No state changes. reasons includes every failing gate sorted alphabetically. Event deduplication must precede any future enqueue. Gate start times use Asia/Kolkata. An inbound callback is not explicit ongoing voice consent.",
+  "required_information":["Eligibility is not proof of the recipient's identity; any future conversation must verify identity before discussing stored enquiry details or writing records.","Only administrative follow-up is in scope; insurance uncertainty, clinical questions and disputed cancellation/refund eligibility require human escalation with authorized context.","A future verified opt-out must stop follow-up immediately; failed tools must never be reported as completed actions."],
+  "prohibited_actions":["Dial, enqueue or call any real target","Reveal stored information to an unverified recipient","Bypass opt-out or grant consent from a website submission","Promise clinical outcomes, coverage, price, refund approval or attendance"],
+  "cases":[
+    {"id":"OUT01","contact_id":"C01","event_id":"DENTAL-NEW-01","trigger":"website_form","at":"2026-11-02T11:00:00+05:30","expected":{"allowed":true,"reasons":[]}},
+    {"id":"OUT02","contact_id":"C02","event_id":"DENTAL-NEW-02","trigger":"website_form","at":"2026-11-02T11:00:00+05:30","expected":{"allowed":false,"reasons":["no_explicit_consent"]}},
+    {"id":"OUT03","contact_id":"C04","event_id":"DENTAL-NEW-03","trigger":"prospect_import","at":"2026-11-02T11:00:00+05:30","expected":{"allowed":false,"reasons":["opted_out"]}},
+    {"id":"OUT04","contact_id":"C01","event_id":"DENTAL-NEW-04","trigger":"website_form","at":"2026-11-02T18:00:00+05:30","expected":{"allowed":false,"reasons":["outside_calling_hours"]}},
+    {"id":"OUT05","contact_id":"C01","event_id":"DENTAL-OLD-01","trigger":"website_form","at":"2026-11-02T11:00:00+05:30","expected":{"allowed":false,"reasons":["duplicate_event"]}}
+  ]
+}

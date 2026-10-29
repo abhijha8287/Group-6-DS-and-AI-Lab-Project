@@ -1,0 +1,13 @@
+{
+  "synthetic": true,
+  "review_status": "pending_human_review",
+  "knowledge_ids": ["S5"],
+  "contract": "Each case resets to crm_seed.json. Evaluate gates only; never dial. allowed means eligible for queue admission, not a call placed or a legal-compliance determination. No state changes in these fixtures. reasons lists every failing gate, sorted alphabetically. Times use the contact/business timezone Asia/Kolkata. A prior attempt within strictly less than 24 hours blocks; attempts >= 2 blocks. Callback end must not exceed 18:00 for requested 30-minute slots. Event IDs must be deduplicated before any future real enqueue.",
+  "cases": [
+    {"id":"OUT01","stop_condition":"End after reporting eligible queue-admission label; never enqueue/dial.","evaluation_criteria":{"reward_basis":["PROJECT_GATE"],"check":"expected exact decision/reasons and whole seed unchanged; COMMUNICATE not applicable"},"contact_id":"C01","event_id":"FORM-NEW-01","trigger":"website_form","at":"2026-11-02T11:00:00+05:30","expected":{"allowed":true,"reasons":[]}},
+    {"id":"OUT02","stop_condition":"End after no-consent block label; never enqueue/dial.","evaluation_criteria":{"reward_basis":["PROJECT_GATE"],"check":"expected exact decision/reasons and whole seed unchanged; COMMUNICATE not applicable"},"contact_id":"C02","event_id":"FORM-NEW-02","trigger":"website_form","at":"2026-11-02T11:00:00+05:30","expected":{"allowed":false,"reasons":["no_explicit_consent"]}},
+    {"id":"OUT03","stop_condition":"End after opt-out block label; never enqueue/dial.","evaluation_criteria":{"reward_basis":["PROJECT_GATE"],"check":"expected exact decision/reasons and whole seed unchanged; COMMUNICATE not applicable"},"contact_id":"C04","event_id":"IMPORT-NEW-03","trigger":"prospect_import","at":"2026-11-02T11:00:00+05:30","expected":{"allowed":false,"reasons":["opted_out"]}},
+    {"id":"OUT04","stop_condition":"End after hours-boundary block label; never enqueue/dial.","evaluation_criteria":{"reward_basis":["PROJECT_GATE"],"check":"expected exact decision/reasons and whole seed unchanged; COMMUNICATE not applicable"},"contact_id":"C01","event_id":"FORM-NEW-04","trigger":"website_form","at":"2026-11-02T18:00:00+05:30","expected":{"allowed":false,"reasons":["outside_calling_hours"]}},
+    {"id":"OUT05","stop_condition":"End after duplicate-event block label; never enqueue/dial.","evaluation_criteria":{"reward_basis":["PROJECT_GATE"],"check":"expected exact decision/reasons and whole seed unchanged; COMMUNICATE not applicable"},"contact_id":"C01","event_id":"FORM-OLD-01","trigger":"website_form","at":"2026-11-02T11:00:00+05:30","expected":{"allowed":false,"reasons":["duplicate_event"]}}
+  ]
+}
