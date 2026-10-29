@@ -24,15 +24,47 @@ def require(condition, message):
         raise ValueError(message)
 
 
+
 def validate_crm():
     rows = read_csv("raw/crm_seed.csv")
+    interactions = read_csv("raw/interaction_history.csv")
+
     require(len(rows) == 180, f"Expected 180 CRM rows, got {len(rows)}")
+    require(
+        len(interactions) == len(rows),
+        "Every CRM contact should have an interaction record",
+    )
 
     ids = [row["contact_id"] for row in rows]
     require(len(ids) == len(set(ids)), "Duplicate CRM contact IDs found")
 
+    interaction_ids = [row["interaction_id"] for row in interactions]
+    require(
+        len(interaction_ids) == len(set(interaction_ids)),
+        "Duplicate interaction IDs found",
+    )
+
     businesses = {row["business_id"] for row in rows}
-    require(businesses == EXPECTED_BUSINESSES, "Unexpected CRM business IDs")
+    require(
+        businesses == EXPECTED_BUSINESSES,
+        "Unexpected CRM business IDs",
+    )
+
+    contact_ids = set(ids)
+    for interaction in interactions:
+        require(
+            interaction["contact_id"] in contact_ids,
+            f"Unknown contact in interaction: {interaction['contact_id']}",
+        )
+        require(
+            interaction["business_id"]
+            == next(
+                row["business_id"]
+                for row in rows
+                if row["contact_id"] == interaction["contact_id"]
+            ),
+            f"Business mismatch for {interaction['interaction_id']}",
+        )
 
     for row in rows:
         require(row["consent_to_follow_up"] in {"True", "False"},
@@ -47,7 +79,20 @@ def validate_crm():
             f"Opted-out contact has consent: {row['contact_id']}",
         )
 
+    alex_records = [row for row in rows if row["name"] == "Alex Morgan"]
+    require(
+        len(alex_records) >= 2,
+        "Expected duplicate-name cases for identity matching",
+    )
+    require(
+        len({row["contact_id"] for row in alex_records}) == len(alex_records),
+        "Duplicate-name cases must have distinct contact IDs",
+    )
+
     print(f"PASS: CRM records ({len(rows)})")
+    print(f"PASS: Interaction history ({len(interactions)})")
+    print(f"PASS: Duplicate-name identity cases ({len(alex_records)})")
+
 
 
 def validate_scenarios():
@@ -78,27 +123,51 @@ def validate_scenarios():
     print(f"PASS: Scenarios (dev={len(dev)}, test={len(test)})")
 
 
+
 def validate_outbound():
+    """Validate outbound contact eligibility rules."""
     rows = read_csv("raw/outbound_checks.csv")
     require(len(rows) == 30, f"Expected 30 outbound cases, got {len(rows)}")
 
     ids = [row["case_id"] for row in rows]
     require(len(ids) == len(set(ids)), "Duplicate outbound case IDs")
 
-    for row in rows:
-        if row["consent"] != "True" or row["opted_out"] == "True":
-            require(
-                row["expected_action"] == "block_contact",
-                f"Unsafe outbound expectation: {row['case_id']}",
-            )
+    required_fields = {
+        "consent",
+        "opted_out",
+        "in_contact_hours",
+        "already_contacted",
+        "retry_limit_reached",
+        "duplicate_submission",
+        "expected_action",
+    }
 
-        if row["out_of_hours"] == "True":
-            require(
-                row["expected_action"] == "block_contact",
-                f"Out-of-hours case should be blocked: {row['case_id']}",
-            )
+    for row in rows:
+        missing = required_fields - row.keys()
+        require(
+            not missing,
+            f"Missing outbound fields in {row['case_id']}: {missing}",
+        )
+
+        should_block = (
+            row["consent"] != "True"
+            or row["opted_out"] == "True"
+            or row["in_contact_hours"] != "True"
+            or row["already_contacted"] == "True"
+            or row["retry_limit_reached"] == "True"
+            or row["duplicate_submission"] == "True"
+        )
+
+        expected = "block_contact" if should_block else "allow_contact"
+
+        require(
+            row["expected_action"] == expected,
+            f"Incorrect expected action for {row['case_id']}: "
+            f"expected {expected}, got {row['expected_action']}",
+        )
 
     print(f"PASS: Outbound checks ({len(rows)})")
+
 
 
 def validate_business_docs():
