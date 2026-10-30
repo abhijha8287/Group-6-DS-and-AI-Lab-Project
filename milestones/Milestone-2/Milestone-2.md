@@ -178,7 +178,7 @@ This acknowledgement records participation and responsibility for the disclosed 
 | Srijan | 22f3002208 | S. | 29 October 2026 |
 | Abhishek Jha | 23f3004013 | A.J. | 29 October 2026 |
 | Sarwar Karim Akhand | 21f1006953 | S.K.A |29 October 2026 |
-| Omkar Shankar Pawar | Pending — member to supply | Pending personal acknowledgement | — |
+| Omkar Shankar Pawar | 23f1001898 | O.S.P | 29 October 2026 |
 
 **Administrative limitation:** a proxy or pending roll/signature entry may not satisfy the course's final acknowledgement check. The bot preview requested Name / Roll No. / Signature on the default branch; its exact validation rules and acceptance of proxy acknowledgement have not been verified. Obtain missing roll numbers, remaining personal acknowledgements and TA confirmation if a personal signature is required. This report is on `main`; the automated check uses the default-branch version at the deadline.
 
