@@ -4,8 +4,16 @@ livekit-agents
 livekit-plugins-silero
 livekit-plugins-deepgram
 livekit-plugins-cartesia
-livekit-plugins-anthropic
+livekit-plugins-# LLM providers: the team keeps only the one(s) it chooses (see M3 report, Section 3.3)
 anthropic
+openai          # OpenAI API; also the client for OpenAI-compatible endpoints
+groq            # Groq free tier (hosted open models)
+ollama          # local models via Ollama (free, needs the Ollama app installed)
+# LLM providers: the team keeps only the one(s) it chooses (see M3 report, Section 3.3)
+anthropic
+openai          # OpenAI API; also the client for OpenAI-compatible endpoints
+groq            # Groq free tier (hosted open models)
+ollama          # local models via Ollama (free, needs the Ollama app installed)
 fastapi
 uvicorn
 sqlalchemy

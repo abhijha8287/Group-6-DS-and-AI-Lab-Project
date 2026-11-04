@@ -48,3 +48,14 @@ AI tools assisted authoring, implementation, review and documentation. Generated
 |---|---|---|
 | 29 Oct 2026 | Srijan; Abhishek's authorization reported by Srijan | Record Srijan's acknowledgement and an explicitly labelled authorized proxy acknowledgement for Abhishek. Keep roll numbers and other members' signatures pending until supplied; do not imply a meeting or personal signature occurred. |
 | 29 Oct 2026 | Abhishek | Abhishek confirmed his M2 contribution and replaced the proxy acknowledgement with his personal signature. |
+
+## Milestone 3: Model Architecture and End-to-End Pipeline (due 5 Nov 2026)
+
+Status: draft in progress. See the [M3 report](milestones/M3_architecture/report.md).
+
+| Member | Contributions | Approx. hours |
+|---|---|---|
+| Srijan (S.) | To be added by the member. | |
+| Abhishek Jha (A.J.) | Drafted the M3 report structure; drew the architecture, data-flow, evaluation-harness and single vs multi-agent diagrams; wrote the architecture justification and comparison table; researched LLM provider options and costs (Groq, Ollama, Grok, OpenAI, Claude) and proposed a budget; updated requirements and environment template; coordinated M3 task allocation. | |
+| Sarwar Karim Akhand (S.K.A.) | To be added by the member. | |
+| Omkar Shankar Pawar (O.S.P.) | To be added by the member. | |

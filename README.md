@@ -24,12 +24,12 @@ Instructors/TAs with access: @PulkitMangal09, @AlapeAniruddha
 | M1: Slides | [milestones/M1_problem_literature/slides.pdf](milestones/M1_problem_literature/slides.pdf) | ✅ |
 | M2: Dataset report | [milestones/M2_dataset/report.md](milestones/M2_dataset/report.md) | In progress (human review pending) |
 | M2: Dataset files | [milestones/M2_dataset](milestones/M2_dataset) | Synthetic data, validators, splits |
-| M3: Architecture | [milestones/M3_architecture](milestones/M3_architecture) | Upcoming |
+| M3: Architecture report | [milestones/M3_architecture/report.md](milestones/M3_architecture/report.md) | Draft in review |
 | M4: Development | [milestones/M4_training](milestones/M4_training) | Upcoming |
 | M5: Evaluation | [milestones/M5_evaluation](milestones/M5_evaluation) | Upcoming |
 | M6: Deployment | [milestones/M6_deployment](milestones/M6_deployment) | Upcoming |
 | Work log / contributions | [WORKLOG.md](WORKLOG.md) | Updated every milestone |
-| Architecture | [docs/architecture.md](docs/architecture.md) | Draft |
+| Architecture | [docs/architecture.md](docs/architecture.md) | Links to M3 diagrams |
 | Experiment log | [experiments/EXPERIMENT_LOG.md](experiments/EXPERIMENT_LOG.md) | — |
 | Final report / demo | [final/](final/) | End of project |
 
