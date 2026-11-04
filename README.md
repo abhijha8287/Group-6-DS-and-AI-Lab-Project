@@ -22,7 +22,8 @@ Instructors/TAs with access: @PulkitMangal09, @AlapeAniruddha
 | Problem statement (with score) | [problem_statement/problem_statement.md](problem_statement/problem_statement.md) | ✅ |
 | M1: Problem & literature review | [milestones/M1_problem_literature/report.md](milestones/M1_problem_literature/report.md) | ✅ Submitted |
 | M1: Slides | [milestones/M1_problem_literature/slides.pdf](milestones/M1_problem_literature/slides.pdf) | ✅ |
-| M2: Dataset report | [milestones/Milestone-2/Milestone-2.md](milestones/Milestone-2/Milestone-2.md) | M2 report uploaded |
+| M2: Dataset report | [milestones/M2_dataset/report.md](milestones/M2_dataset/report.md) | In progress (human review pending) |
+| M2: Dataset files | [milestones/M2_dataset](milestones/M2_dataset) | Synthetic data, validators, splits |
 | M3: Architecture | [milestones/M3_architecture](milestones/M3_architecture) | Upcoming |
 | M4: Development | [milestones/M4_training](milestones/M4_training) | Upcoming |
 | M5: Evaluation | [milestones/M5_evaluation](milestones/M5_evaluation) | Upcoming |
@@ -40,11 +41,11 @@ LiveKit (real-time audio, SIP telephony) · streaming STT · LLM with tool calli
 
 ```
 problem_statement/   approved problem, scope, stakeholders, objectives
-milestones/          one folder per milestone (report.md, slides.pdf, assets/)
+milestones/          one folder per milestone (report.md, slides.pdf, assets/); M2 data lives in M2_dataset/
 final/               final report, presentation, demo links
 src/voice_agent/     reusable code (data, pipelines, evaluation, inference, utils, ...)
 configs/             YAML configs (businesses, agents, evaluation)
-data/                git-ignored synthetic data (only README tracked)
+data/                local generated/processed data, git-ignored (M2 dataset is in milestones/M2_dataset/)
 scripts/             CLI entry points
 experiments/         experiment log and small run outputs
 notebooks/           exploration and analysis

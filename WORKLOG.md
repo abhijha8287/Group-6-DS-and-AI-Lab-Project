@@ -31,7 +31,7 @@ Every member presents their own area at each milestone review and commits from t
 
 ## Milestone 2: Dataset and Data Preparation (due 29 Oct 2026)
 
-Status: dataset preparation submission in progress; generated expansions remain review-only. See the [M2 report](milestones/Milestone-2/Milestone-2.md) for validation scope, pending work and acknowledgement details. Hours are not estimated retrospectively.
+Status: dataset preparation submission in progress; generated expansions remain review-only. See the [M2 report](milestones/M2_dataset/report.md) for validation scope, pending work and acknowledgement details. Hours are not estimated retrospectively.
 
 | Member | Contributions | Approx. hours |
 |---|---|---|

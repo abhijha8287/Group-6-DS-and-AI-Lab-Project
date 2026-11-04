@@ -20,9 +20,9 @@ The [M1 plan](../M1_problem_literature/report.md#6-datasets-and-baselines) propo
 
 | Fictional business | Public primary references | Local source register |
 |---|---|---|
-| UrbanNest Furniture | [IKEA India returns](https://www.ikea.com/in/en/customer-service/returns-claims/return-policy/) and [FAQ](https://www.ikea.com/in/en/customer-service/faq-pub7f08ed41/) | [Furniture knowledge](../M2_dataset/furniture_pilot/knowledge.md), accessed 28 October 2026 |
-| SunGrid Rooftop Solar | [SolarSquare](https://www.solarsquare.in/) and [cancellation policy](https://www.solarsquare.in/cancellation-policy/) | [Solar knowledge](../M2_dataset/solar_pilot/knowledge.md), accessed 29 October 2026 |
-| BrightSmile Dental Studio | [Toothmate](https://www.toothmate.co.in/) and [refund policy](https://www.toothmate.co.in/refund-policy) | [Dental knowledge](../M2_dataset/dental_pilot/knowledge.md), accessed 29 October 2026 |
+| UrbanNest Furniture | [IKEA India returns](https://www.ikea.com/in/en/customer-service/returns-claims/return-policy/) and [FAQ](https://www.ikea.com/in/en/customer-service/faq-pub7f08ed41/) | [Furniture knowledge](furniture_pilot/knowledge.md), accessed 28 October 2026 |
+| SunGrid Rooftop Solar | [SolarSquare](https://www.solarsquare.in/) and [cancellation policy](https://www.solarsquare.in/cancellation-policy/) | [Solar knowledge](solar_pilot/knowledge.md), accessed 29 October 2026 |
+| BrightSmile Dental Studio | [Toothmate](https://www.toothmate.co.in/) and [refund policy](https://www.toothmate.co.in/refund-policy) | [Dental knowledge](dental_pilot/knowledge.md), accessed 29 October 2026 |
 
 The primary pages were inspected during AI-assisted authoring/review; source registers record the narrow adopted facts and limits. Sources can change and are not live policy feeds. Reference businesses own their original material; citation does not grant redistribution rights. Our packs use bounded paraphrases, not copied customer records, images, testimonials or benchmark tasks. Comprehensive human rights/policy clearance is not claimed.
 
@@ -43,7 +43,7 @@ The dataset uses UTF-8 Markdown for knowledge, JSON for CRM/task/gate records an
 | Development-review manifest | 28 | 84 | Provisional organizational partition |
 | Test-review manifest | 12 | 36 | Exposed review partition, not a validated held-out set |
 
-Artifacts and script links are listed in the [dataset README](../M2_dataset/README.md). Pilot and expanded counts must not be added together as distinct tasks or contacts without checking their overlap and intended role.
+Artifacts and script links are listed in the [dataset README](README.md). Pilot and expanded counts must not be added together as distinct tasks or contacts without checking their overlap and intended role.
 
 ## 3. Feature distribution and dataset quality
 
@@ -152,7 +152,7 @@ python3 -B scripts/validate_m2_outbound.py
 
 **Results reproduced for this documentation:** all three pilot validators passed; the expanded outbound check matched 30/30 expected labels (6 allowed, 24 blocked). Independent offline extraction/regeneration reproduced the nine expanded contact/scenario/outbound JSON files byte-for-byte; manifest differences were path separators between Windows and POSIX, not evidence of a protected split. Existing contact field checks passed on 150 expanded contacts, and all 120 scenarios referenced defined knowledge IDs. No expanded end-to-end replay or comprehensive semantic evaluation was performed.
 
-A PASS establishes only the implemented fixture assertions or static gate-label consistency. No live CRM, phone call, agent conversation, semantic scoring, benchmark run or human approval follows from these commands. The [README](../M2_dataset/README.md) and [review histories](../M2_dataset/DENTAL_REVIEW.md) distinguish original and expanded validation scope.
+A PASS establishes only the implemented fixture assertions or static gate-label consistency. No live CRM, phone call, agent conversation, semantic scoring, benchmark run or human approval follows from these commands. The [README](README.md) and [review histories](DENTAL_REVIEW.md) distinguish original and expanded validation scope.
 
 ## 9. Remaining work and completion plan
 
@@ -186,6 +186,6 @@ This acknowledgement records participation and responsibility for the disclosed 
 
 - [Official milestone requirements](https://bsc-iitm.github.io/dsai-lab-project/milestones.html#milestone-2).
 - [M1 problem and literature report](../M1_problem_literature/report.md).
-- [Dataset inventory, artifacts and preparation status](../M2_dataset/README.md).
-- [Furniture source register](../M2_dataset/furniture_pilot/knowledge.md), [solar source register](../M2_dataset/solar_pilot/knowledge.md), [dental source register](../M2_dataset/dental_pilot/knowledge.md).
-- [τ-Voice source crosswalk and claims boundary](../M2_dataset/TAU_VOICE_ALIGNMENT.md). No upstream compatibility or benchmark score is asserted.
+- [Dataset inventory, artifacts and preparation status](README.md).
+- [Furniture source register](furniture_pilot/knowledge.md), [solar source register](solar_pilot/knowledge.md), [dental source register](dental_pilot/knowledge.md).
+- [τ-Voice source crosswalk and claims boundary](TAU_VOICE_ALIGNMENT.md). No upstream compatibility or benchmark score is asserted.

@@ -1,6 +1,6 @@
 # M2: Dataset — work in progress
 
-**Milestone submission document:** [Milestone-2/Milestone-2.md](../Milestone-2/Milestone-2.md). It records sources, inventory, quality/split limitations, preparation, contributions and acknowledgement status. Administrative fields and dataset review remain incomplete; this is not final evaluation readiness.
+**Milestone submission document:** [report.md](report.md). It records sources, inventory, quality/split limitations, preparation, contributions and acknowledgement status. Administrative fields and dataset review remain incomplete; this is not final evaluation readiness.
 
 ## Three-business review pilot
 
