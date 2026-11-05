@@ -508,7 +508,7 @@ See [WORKLOG.md](../../WORKLOG.md) for the full log. AI tools assisted with draf
 
 | Member | M3 contribution | Approx. hours |
 |---|---|---|
-| Srijan (S.) | To be added by the member | |
+| Srijan (S.) | Architecture review preparation for slides 4–8 and their speaker notes: caller-to-CRM data flow, component inputs and outputs, model messages and tool-call flow, single-agent baseline vs planned multi-agent design, and architecture trade-offs including BM25 retrieval and deterministic validation/outbound gates. | 2 |
 | Abhishek Jha (A.J.) | Planned M3 and allocated tasks; designed the architecture and drew the data-flow, harness and single vs multi-agent diagrams; researched LLM provider options and costs and led the provider decision; directed and reviewed the AI-assisted implementation of the text-mode pipeline (preprocessing, retrieval, CRM sandbox and validation layer, outbound gate, provider-neutral LLM client, single agent, simulated caller, evaluator, tests); ran the verification runs; wrote this report | 6–7 |
 | Sarwar Karim Akhand (S.K.A.) |Implemented M3 preprocessing validation, knowledge chunking, business isolation, task-view separation, token estimation, and source-reference validation across Solar, Dental and Furniture datasets; added tests (24/24 passed). | 2–3 |
 | Omkar Shankar Pawar (O.S.P.) | Developed evaluation methodologies, analyzed pipeline results, and conducted error analysis to assess model performance and identify areas for improvement. | 4–5 |
@@ -519,7 +519,7 @@ We, the members of Group 6, confirm that this submission is our own work. All ex
 
 | Name | Roll No. | Signature (initials) | Date |
 |---|---|---|---|
-| Srijan | 22f3002208 | | |
+| Srijan | 22f3002208 | S. | 5 November 2026 |
 | Abhishek Jha | 23f3004013 | A.J. | 5 November 2026 |
 | Sarwar Karim Akhand | 21f1006953 | S.K.A | 5 November 2026 |
 | Omkar Shankar Pawar | 23f1001898 | O.S.P. | 5 November 2026 |
