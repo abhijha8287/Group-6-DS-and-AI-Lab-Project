@@ -17,6 +17,7 @@ from voice_agent.inference.outbound_gate import evaluate  # noqa: E402
 from voice_agent.inference.retrieval import BM25Index  # noqa: E402
 from voice_agent.models.llm import AnthropicClient, OpenAICompatibleClient  # noqa: E402
 from voice_agent.pipelines.episode import run_subset  # noqa: E402
+from voice_agent.data.preprocess import validate_knowledge_sources
 
 SOLAR = load_business("solar")
 
@@ -205,6 +206,12 @@ class TestPreprocessing(unittest.TestCase):
         with self.assertRaises(AssertionError):
             from voice_agent.data.preprocess import check_views
             check_views(views)
+    
+    def test_all_knowledge_sources_exist(self):
+        for business in ("solar", "dental", "furniture"):
+            pack = load_business(business)
+            validate_knowledge_sources(pack)
+
 
 
 if __name__ == "__main__":
