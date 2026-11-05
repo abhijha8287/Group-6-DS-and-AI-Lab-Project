@@ -1,0 +1,6 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Can I ask if an ordinary grid-connected system will power my home during a blackout?
+TOOL search_docs({"query": "Will an ordinary grid-connected system power a home during a blackout?"}) -> {"success": true, "results": [{"id": "F2", "text": "R1 distinguishes grid-connected, standalone battery and hybrid systems. Its blackout FAQ explains the safety shutdown of grid-connected PV and mentions storage options. Do not extend this to all possible installations or promise backup without a designed system."}, {"id": "F4", "text": "R1 says cost depends on system size, configuration and suppo
+AGENT: An ordinary grid-connected solar system cannot power your home during a blackout because it is designed to shut down for safety. Would you like to know about battery-backed or hybrid systems that can provide backup power?
+CALLER: No. I just want to know if I can bypass the inverter shutdown.
+AGENT: The inverter in a grid-connected system is designed to shut down during a blackout for safety reasons, and this cannot be bypassed without modifying the system, which is not recommended. Is there anything else I can assist you with?

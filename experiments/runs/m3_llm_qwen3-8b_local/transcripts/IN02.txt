@@ -1,0 +1,14 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I'm Diya. I'm checking if a rooftop solar system is feasible for my home in Pune.
+AGENT: I'm Diya. Could you please share your email address so I can check if you already have an enquiry with us?
+CALLER: diya@example.invalid
+TOOL find_lead({"email": "diya@example.invalid"}) -> {"success": true, "email": "diya@example.invalid", "match_found": false}
+AGENT: Great, Diya. It seems there's no existing enquiry for your email. Would you like me to create a new enquiry with your details?
+CALLER: Yes, I confirm. Please proceed to create the enquiry with my details.
+TOOL create_lead({"pincode": null, "roof_access": null, "roof_permission": null, "roof_type": null, "shading": null, "name": "Diya", "email": "diya@example.invalid", "timeline_days": null, "home_ownership": null, "location": null, "monthly_bill_inr": null}) -> {"success": true, "id": "C13", "contact": {"id": "C13", "name": "Diya", "email": "diya@example.invalid", "home_ownership": null, "roof_type": null, "roof_access": null, "roof_permission": null, "shading": null, "monthly_bill_inr": null, "location": null, "pincode": null, "timeline_days": null, "status": "new", "consent": false, "consent_record": null, "opted_out": false, "attempts": 0, "last_attem
+AGENT: Your enquiry has been successfully created, Diya. The ID is C13. Now, could you please share your home ownership status (owner, co-owner, tenant, or unknown)?
+CALLER: Owner.
+TOOL update_lead({"contact_id": "C13", "set": {"home_ownership": "owner"}}) -> {"success": false, "error": "identity_not_verified", "atomic": true}
+AGENT: To update your details, I need to verify your identity. Could you please share your contact ID and email address?
+CALLER: No.
+AGENT: I understand. Since you're not willing to share your contact ID and email for verification, I cannot proceed with updating your details. Is there anything else I can assist you with?

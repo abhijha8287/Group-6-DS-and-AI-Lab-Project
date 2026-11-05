@@ -1,0 +1,3 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hello, I have a request about my enquiry.
+AGENT: Thank you for calling. Goodbye.

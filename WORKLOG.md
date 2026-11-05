@@ -51,11 +51,11 @@ AI tools assisted authoring, implementation, review and documentation. Generated
 
 ## Milestone 3: Model Architecture and End-to-End Pipeline (due 5 Nov 2026)
 
-Status: draft in progress. See the [M3 report](milestones/M3_architecture/report.md).
+Status: text-mode pipeline implemented and verified on 10 solar development tasks; paid-provider run pending API keys. See the [M3 report](milestones/M3_architecture/report.md).
 
 | Member | Contributions | Approx. hours |
 |---|---|---|
 | Srijan (S.) | To be added by the member. | |
-| Abhishek Jha (A.J.) | Drafted the M3 report structure; drew the architecture, data-flow, evaluation-harness and single vs multi-agent diagrams; wrote the architecture justification and comparison table; researched LLM provider options and costs (Groq, Ollama, Grok, OpenAI, Claude) and proposed a budget; updated requirements and environment template; coordinated M3 task allocation. | |
+| Abhishek Jha (A.J.) | Planned M3 and allocated tasks; designed the architecture and drew the data-flow, evaluation-harness and single vs multi-agent diagrams; researched LLM provider options and costs and led the paid-key decision; directed and reviewed the AI-assisted implementation of the text-mode pipeline (preprocessing, BM25 retrieval, CRM sandbox and validation layer, outbound gate, provider-neutral LLM client, single agent, simulated caller, evaluator, 17 tests); ran the outbound-gate, oracle, negative-control and local LLM verification runs; wrote the M3 report. | 6–7 |
 | Sarwar Karim Akhand (S.K.A.) | To be added by the member. | |
 | Omkar Shankar Pawar (O.S.P.) | To be added by the member. | |

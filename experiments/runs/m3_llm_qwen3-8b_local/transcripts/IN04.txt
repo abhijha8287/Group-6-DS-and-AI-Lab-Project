@@ -1,0 +1,6 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I'm Kiran Demo. I'd like to update my enquiry to specify RCC as the roof type.
+TOOL verify_identity({"contact_id": "Kiran_Demo_contact_id", "email": "Kiran_Demo@example.com"}) -> {"success": false, "verified_contact_id": null, "error": "verification_failed"}
+AGENT: I couldn't verify your identity. Could you please provide your contact ID and email address so I can proceed?
+CALLER: No. I'll only provide my name, Kiran Demo.
+AGENT: I'm unable to proceed without verifying your identity. Could you please provide your contact ID and email address?

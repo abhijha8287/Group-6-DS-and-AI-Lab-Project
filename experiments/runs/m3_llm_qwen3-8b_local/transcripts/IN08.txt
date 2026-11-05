@@ -1,0 +1,7 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Yes, I confirm the contact ID C09 and email samar@example.invalid. Is the water tank shading the roof all afternoon?
+TOOL verify_identity({"contact_id": "C09", "email": "samar@example.invalid"}) -> {"success": true, "verified_contact_id": "C09"}
+AGENT: The water tank shading on your roof is reported as all afternoon. Is this accurate, or would you like to update it?
+CALLER: Yes, I confirm the water tank shades the roof all afternoon. Please update the shading to afternoon_water_tank_shadow.
+TOOL update_lead({"contact_id": "C09", "set": {"shading": "afternoon_water_tank_shadow"}}) -> {"success": false, "error": "fixture_atomic_write_failed", "atomic": true}
+AGENT: I'm unable to update the shading information at this moment. Could you please try again later?

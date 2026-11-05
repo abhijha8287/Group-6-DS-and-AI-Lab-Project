@@ -1,25 +1,12 @@
-# Provisional dependency list (Milestone 1). Exact versions will be pinned at M3
-# once the prototype runs end-to-end.
-livekit-agents
-livekit-plugins-silero
-livekit-plugins-deepgram
-livekit-plugins-cartesia
-livekit-plugins-# LLM providers: the team keeps only the one(s) it chooses (see M3 report, Section 3.3)
-anthropic
-openai          # OpenAI API; also the client for OpenAI-compatible endpoints
-groq            # Groq free tier (hosted open models)
-ollama          # local models via Ollama (free, needs the Ollama app installed)
-# LLM providers: the team keeps only the one(s) it chooses (see M3 report, Section 3.3)
-anthropic
-openai          # OpenAI API; also the client for OpenAI-compatible endpoints
-groq            # Groq free tier (hosted open models)
-ollama          # local models via Ollama (free, needs the Ollama app installed)
-fastapi
-uvicorn
-sqlalchemy
-psycopg[binary]
-pydantic
-pyyaml
-python-dotenv
-pandas
-pytest
+# Milestone 3 pipeline: Python 3.9+ standard library only. Nothing to install.
+# The LLM clients use plain HTTPS (urllib), so OpenAI, Groq, Ollama and Anthropic
+# work without their SDKs. Tested with Python 3.15.2 on macOS.
+#
+# Optional for development:
+pytest                 # the tests also run with: python3 -m unittest discover -s tests
+
+# ---- Later milestones (not needed for M3; versions pinned when first used) ----
+# Voice (M4/M6): livekit-agents, livekit-plugins-silero, livekit-plugins-deepgram,
+#                livekit-plugins-cartesia
+# Persistent CRM (M6): fastapi, uvicorn, sqlalchemy, psycopg[binary], pydantic
+# Analysis (M5): pandas
