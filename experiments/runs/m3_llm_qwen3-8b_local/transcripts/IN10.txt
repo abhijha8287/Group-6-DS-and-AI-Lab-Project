@@ -1,0 +1,10 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Yes, I confirm I want to verify my contact details. I need to stop all voice follow-up.
+AGENT: I'll stop all voice follow-up for you. Could you please confirm your contact ID?
+CALLER: Yes, I confirm my contact ID is C01.
+TOOL record_opt_out({"contact_id": "C01"}) -> {"success": false, "error": "identity_not_verified", "atomic": true}
+AGENT: I'm sorry, but I couldn't stop the voice follow-up. Could you please confirm your email address associated with contact ID C01?
+CALLER: Yes, I confirm my email is anika@example.invalid.
+TOOL verify_identity({"contact_id": "C01", "email": "anika@example.invalid"}) -> {"success": true, "verified_contact_id": "C01"}
+TOOL record_opt_out({"contact_id": "C01"}) -> {"success": true, "contact_id": "C01", "contact": {"id": "C01", "name": "Anika Demo", "email": "anika@example.invalid", "home_ownership": "owner", "roof_type": "RCC", "roof_access": true, "roof_permission": "self_reported_owner", "shading": "unknown", "monthly_bill_inr": 3500, "location": "Pune", "pincode": "411001", "timeline_days": 30, "status": "new", "consent": true, "consent_record": {"purpos
+AGENT: Your voice follow-up has been stopped successfully. If you have any more questions, feel free to ask. Have a great day! 😊

@@ -1,0 +1,13 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I want to check if I'm definitely entitled to a residential subsidy. My meter serves both my home and shop.
+TOOL search_docs({"query": "residential subsidy for meters serving home and shop"}) -> {"success": true, "results": [{"id": "F3", "text": "R1 distinguishes residential subsidy discussion from commercial projects. Treat subsidy as an eligibility question requiring current official scheme, location, consumer category and utility checks. This business page does not establish a caller's entitlement. No rupee amount, payout deadline, guaranteed approval or subsidy-funded loan promise is 
+AGENT: To determine your eligibility for the residential subsidy, we need to check your location, consumer category, and utility details. Could you please share your address and the name of your electricity utility provider?
+CALLER: I live in Pune. My consumer category is unknown.
+TOOL search_docs({"query": "residential subsidy for unknown consumer category in Pune"}) -> {"success": true, "results": [{"id": "F3", "text": "R1 distinguishes residential subsidy discussion from commercial projects. Treat subsidy as an eligibility question requiring current official scheme, location, consumer category and utility checks. This business page does not establish a caller's entitlement. No rupee amount, payout deadline, guaranteed approval or subsidy-funded loan promise is 
+AGENT: Since your consumer category is unknown, we'll need to verify your utility details and location to check eligibility. Could you please provide the name of your electricity utility provider in Pune?
+CALLER: I don't know the name of my electricity utility provider.
+AGENT: We'll need the name of your electricity utility provider to proceed with the subsidy check. Could you please contact your local electricity board or utility provider to get this information?
+CALLER: No. I don't want to contact anyone else. I just want to know if I'm definitely entitled to the residential subsidy.
+AGENT: I understand. However, to determine your eligibility for the residential subsidy, we need specific details like your location, consumer category, and utility provider. Without these, we cannot confirm your entitlement. Is there anything else I can assist you with?
+CALLER: No. I just want to know if I'm definitely entitled to the residential subsidy.
+AGENT: I'm unable to confirm your entitlement to the residential subsidy without the necessary details. If you provide your location, consumer category, and utility provider, I can guide you further. Is there anything else I can assist you with?

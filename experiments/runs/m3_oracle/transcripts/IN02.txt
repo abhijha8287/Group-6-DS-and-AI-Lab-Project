@@ -1,0 +1,7 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hello, I have a request about my enquiry.
+TOOL find_lead({"email": "diya@example.invalid"}) -> {"success": true, "email": "diya@example.invalid", "match_found": false}
+AGENT: Shall I save these enquiry details?
+CALLER: Yes, I confirm.
+TOOL create_lead({"name": "Diya Demo", "email": "diya@example.invalid", "home_ownership": "owner", "roof_type": "RCC", "roof_access": true, "roof_permission": "self_reported_owner", "shading": "morning_neighbour_shadow", "monthly_bill_inr": 3700, "location": "Pune", "pincode": "411006", "timeline_days": 60}) -> {"success": true, "id": "C13", "contact": {"id": "C13", "name": "Diya Demo", "email": "diya@example.invalid", "home_ownership": "owner", "roof_type": "RCC", "roof_access": true, "roof_permission": "self_reported_owner", "shading": "morning_neighbour_shadow", "monthly_bill_inr": 3700, "location": "Pune", "pincode": "411006", "timeline_days": 60, "status": "new", "consent": false, "consent_record": 
+AGENT: Thank you for calling. Goodbye.

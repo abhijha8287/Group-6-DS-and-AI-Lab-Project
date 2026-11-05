@@ -48,3 +48,14 @@ AI tools assisted authoring, implementation, review and documentation. Generated
 |---|---|---|
 | 29 Oct 2026 | Srijan; Abhishek's authorization reported by Srijan | Record Srijan's acknowledgement and an explicitly labelled authorized proxy acknowledgement for Abhishek. Keep roll numbers and other members' signatures pending until supplied; do not imply a meeting or personal signature occurred. |
 | 29 Oct 2026 | Abhishek | Abhishek confirmed his M2 contribution and replaced the proxy acknowledgement with his personal signature. |
+
+## Milestone 3: Model Architecture and End-to-End Pipeline (due 5 Nov 2026)
+
+Status: text-mode pipeline implemented and verified on 10 solar development tasks; paid-provider run pending API keys. See the [M3 report](milestones/M3_architecture/report.md).
+
+| Member | Contributions | Approx. hours |
+|---|---|---|
+| Srijan (S.) | Architecture review preparation for slides 4–8 and their speaker notes: caller-to-CRM data flow, component inputs and outputs, model messages and tool-call flow, single-agent baseline vs planned multi-agent design, and architecture trade-offs including BM25 retrieval and deterministic validation/outbound gates. | 2 |
+| Abhishek Jha (A.J.) | Planned M3 and allocated tasks; designed the architecture and drew the data-flow, evaluation-harness and single vs multi-agent diagrams; researched LLM provider options and costs and led the paid-key decision; directed and reviewed the AI-assisted implementation of the text-mode pipeline (preprocessing, BM25 retrieval, CRM sandbox and validation layer, outbound gate, provider-neutral LLM client, single agent, simulated caller, evaluator, 17 tests); ran the outbound-gate, oracle, negative-control and local LLM verification runs; wrote the M3 report. | 6–7 |
+| Sarwar Karim Akhand (S.K.A.) | Implemented M3 preprocessing validation, knowledge chunking, business isolation, task-view separation, token estimation, and source-reference validation across Solar, Dental and Furniture datasets; added tests (24/24 passed). | 2–3 |
+| Omkar Shankar Pawar (O.S.P.) | Developed evaluation methodologies, analyzed pipeline results, and conducted error analysis to assess model performance and identify areas for improvement. | 4–5 |
