@@ -10,7 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from voice_agent.data.loader import load_business, select_tasks  # noqa: E402
-from voice_agent.data.preprocess import AGENT_FORBIDDEN, chunk_knowledge, task_views  # noqa: E402
+from voice_agent.data.preprocess import AGENT_FORBIDDEN, chunk_knowledge, task_views, estimate_tokens # noqa: E402
 from voice_agent.evaluation.evaluator import expected_state  # noqa: E402
 from voice_agent.inference.crm import CRMSandbox, is_confirmation  # noqa: E402
 from voice_agent.inference.outbound_gate import evaluate  # noqa: E402
@@ -151,6 +151,60 @@ class TestProviderAdapters(unittest.TestCase):
                  "usage": {"input_tokens": 7, "output_tokens": 3}}
         parsed = AnthropicClient.from_wire(reply)
         self.assertEqual((parsed.content, parsed.tool_calls[0]["name"]), ("ok", "find_lead"))
+
+
+
+class TestPreprocessing(unittest.TestCase):
+
+    def test_token_estimation_is_positive(self):
+        self.assertGreater(estimate_tokens("Hello world"), 0)
+
+    def test_empty_text_token_estimation(self):
+        self.assertEqual(estimate_tokens(""), 1)
+
+    def test_token_estimation_is_deterministic(self):
+        text = "This is a sample knowledge chunk."
+        self.assertEqual(
+            estimate_tokens(text),
+            estimate_tokens(text)
+        )
+
+    def test_business_isolation_in_chunks(self):
+        dental = load_business("dental")
+        furniture = load_business("furniture")
+
+        dental_chunks = chunk_knowledge(dental)
+        furniture_chunks = chunk_knowledge(furniture)
+
+        for chunk in dental_chunks:
+            self.assertEqual(
+                chunk["business_id"],
+                "brightsmile_pilot"
+            )
+
+        for chunk in furniture_chunks:
+            self.assertEqual(
+                chunk["business_id"],
+                "urbannest_pilot"
+            )
+
+    def test_agent_view_contains_only_task_id(self):
+        for task in SOLAR.scenarios:
+            views = task_views(task)
+
+            self.assertEqual(
+                set(views["agent"].keys()),
+                {"id"}
+            )
+
+    def test_agent_view_rejects_answer_key_leakage(self):
+        views = task_views(SOLAR.scenarios[0])
+
+        views["agent"]["gold"] = {"some": "answer"}
+
+        with self.assertRaises(AssertionError):
+            from voice_agent.data.preprocess import check_views
+            check_views(views)
 
 
 if __name__ == "__main__":
