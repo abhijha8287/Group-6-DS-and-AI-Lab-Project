@@ -1,0 +1,9 @@
+{
+  "snapshot_at_utc": "2026-11-19T16:19:48.563288+00:00",
+  "scope": "Step 6 visible conversation including user self-review handoff; excludes this command result/final reply",
+  "rows": 140,
+  "reasoning_and_signatures": "omitted",
+  "known_environment_secrets": "redacted",
+  "project_paid_calls_this_step": 0,
+  "pi_harness_usage": "separate from project-key ledger"
+}

@@ -1,0 +1,8 @@
+{
+  "snapshot_at_utc": "2026-11-19T17:39:21.586359+00:00",
+  "scope": "Step 8 visible messages/tools through final verification setup; excludes helper output and final reply",
+  "visible_rows": 147,
+  "private_reasoning_and_signatures": "omitted",
+  "known_environment_secrets": "redacted",
+  "pi_harness_usage": "separate from project-key ledger"
+}

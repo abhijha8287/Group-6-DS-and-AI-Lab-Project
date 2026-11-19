@@ -1,0 +1,17 @@
+{
+  "id": "DEV12",
+  "environment": {
+    "identity_fixture": {
+      "contact_id": "C02",
+      "email": "kiran.a@example.invalid",
+      "verification_succeeds": false
+    }
+  },
+  "tool_results": {
+    "verify_identity": {
+      "success": false,
+      "verified_contact_id": null,
+      "error": "verification_failed"
+    }
+  }
+}

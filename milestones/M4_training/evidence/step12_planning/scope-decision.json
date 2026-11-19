@@ -1,0 +1,28 @@
+{
+  "status": "offline_preparation_no_execution_approval",
+  "requested_step": 12,
+  "later_steps": "13 and 14 deferred until prior results and separate approvals",
+  "local_candidate_decision": "User: lets use openrouter and some other agents ig",
+  "interpretation_pending_model_choice": "Cloud OpenRouter model versus direct OpenAI; not a local benchmark; retain single-agent architecture",
+  "scope_decision": "User selected Six-attempt pilot only",
+  "scenario_ids": [
+    "IN02"
+  ],
+  "repetitions_per_candidate": 3,
+  "candidate_count": 2,
+  "planned_attempts": 6,
+  "shared_simulator_and_judge": "direct OpenAI gpt-4o-mini-2024-07-18",
+  "openrouter_candidate": "google/gemma-4-26b-a4b-it:free",
+  "openrouter_key_presence_checked": true,
+  "openrouter_key_configured": true,
+  "openrouter_inference_calls": 0,
+  "openai_inference_calls_this_step": 0,
+  "paid_batch_approved": false,
+  "warnings": [
+    "OpenRouter credentials and credits are separate from OpenAI credits; no BYOK or provider-console changes authorized",
+    "Public free model catalog is not authenticated access/availability verification",
+    "Do not use openrouter/free random model routing, silent provider/model fallback, or paid substitute",
+    "Single-scenario pilot cannot certify broad model superiority or final architecture selection",
+    "Existing transport/ledger permits only direct OpenAI paid text; bounded OpenRouter integration and prospective settings amendment required before execution"
+  ]
+}

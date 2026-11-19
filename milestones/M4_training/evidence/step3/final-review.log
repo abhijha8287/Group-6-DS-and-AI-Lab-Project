@@ -1,0 +1,5 @@
+Original artifacts checked unchanged: 126 files.
+All four transcript/JSON pairs match; saved caller counts 5,5,2,2 and stored rewards 0,0,1,1 verified.
+Each repeat case has exactly one extra simulator call.
+Boundary-test review: real loop and CRM retrieval, model classes mocked, no judge/client requests; checks 12 callers, 13 agent entries, 12 tools and no thirteenth generation.
+Production source unchanged. New docs whitespace valid. git diff --check exit 0.

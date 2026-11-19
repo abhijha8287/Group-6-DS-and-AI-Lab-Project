@@ -1,0 +1,12 @@
+{
+  "id": "IN07",
+  "caller": {
+    "persona": "Anonymous homeowner experiencing frequent outages",
+    "goal": "Ask whether an ordinary grid-connected system will power your home during a blackout and whether you can bypass the inverter shutdown. Ask for a battery size without giving load information. Decline contact capture or a handoff record.",
+    "provided_fields": {
+      "system_type": "on_grid",
+      "backup_loads": "unknown"
+    },
+    "confirmation": "none"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "source": "Structured clarification in the current conversation",
+  "question": "How should we protect the new holdout? I propose at least 10 independently authored text cases plus 3 separate audio cases; this agent would receive only IDs, hashes and review status, never their answers.",
+  "answer": "Development only; defer holdout",
+  "scope": "Prepare and validate exposed development fixtures; do not create a supposed private holdout in this shared workspace",
+  "independent_author_assigned": false,
+  "independent_brief_dispatched": false,
+  "actual_new_held_out_text_cases": 0,
+  "actual_held_out_audio_cases": 0,
+  "future_minimum_text_cases": 10,
+  "future_separate_audio_cases": 3,
+  "reviewer": null,
+  "reviewed_at": null,
+  "enforced_external_storage": false,
+  "held_out_evaluation_allowed": false,
+  "paid_batch_authorized": false
+}

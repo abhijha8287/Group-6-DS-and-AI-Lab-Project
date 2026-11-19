@@ -1,0 +1,16 @@
+{
+  "pre_step5_run_files_verified_unchanged": 196,
+  "step4_evidence_files_unchanged": 27,
+  "adjudication_sha256_unchanged": true,
+  "tested_python_source_files_unchanged": 32,
+  "tests": 73,
+  "skipped": 0,
+  "test_exit_code": 0,
+  "oracle_exact_crm_matches": 10,
+  "oracle_judged_tasks": 0,
+  "git_diff_check_exit_code": 0,
+  "approved_paid_batches": 0,
+  "project_recorded_usage_usd": "0.000000",
+  "project_unreconciled_usd": "0.000000",
+  "estimated_remaining_credit_usd": "20.000000"
+}

@@ -1,0 +1,98 @@
+{
+  "python_version": "3.15.2 (main, Oct 25 2026, 16:57:51) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "unit_tests": 89,
+  "skipped": 0,
+  "unit_test_exit_code": 0,
+  "preprocess_exit_code": 0,
+  "repeat_build_byte_identical": true,
+  "protected_preexisting_files_unchanged": 221,
+  "original_solar_pilot": "unchanged",
+  "original_human_adjudications": "unchanged/pending",
+  "cost_ledger": "byte-identical; no new paid requests or approvals",
+  "paid_requests_this_step": 0,
+  "git_diff_check_exit_code": 0,
+  "new_file_whitespace_check": "passed",
+  "initial_attempt_inputs_and_builder_hashes": "verified against archived snapshots",
+  "human_review": "user accepted self-review; findings and approval pending; no external teammate contacted",
+  "scope": "2 documents; 15/53 chunks; 14 answerable + 6 unanswerable; BM25 retrieval only",
+  "final_statistics": {
+    "short": {
+      "document_count": 1,
+      "document_path": "short/knowledge.md",
+      "document_sha256": "64782cfcfedb66d818ae5cbf2bdc9cf22990075cf099de416d13cb063df3557d",
+      "word_count_whitespace_including_markdown": 979,
+      "estimated_document_tokens_char4": 1718,
+      "section_text_word_count_whitespace": 597,
+      "estimated_section_tokens_sum_char4": 1095,
+      "section_count": 15,
+      "chunk_count": 15,
+      "markdown_heading_count": 5,
+      "sourced_fact_count": 5,
+      "sandbox_rule_count": 10
+    },
+    "large": {
+      "document_count": 1,
+      "document_path": "large/knowledge.md",
+      "document_sha256": "9d6ed54bbab5068a3c40bff1fc3dd55117c09b293342f907b8bacae8c2270a9c",
+      "word_count_whitespace_including_markdown": 5523,
+      "estimated_document_tokens_char4": 9048,
+      "section_text_word_count_whitespace": 4844,
+      "estimated_section_tokens_sum_char4": 8074,
+      "section_count": 53,
+      "chunk_count": 53,
+      "markdown_heading_count": 7,
+      "sourced_fact_count": 5,
+      "sandbox_rule_count": 48
+    }
+  },
+  "metrics": {
+    "short": {
+      "answerable_denominator": 14,
+      "unanswerable_count_excluded_from_recall": 6,
+      "macro_recall_at_k": {
+        "1": 0.8095238095238095,
+        "3": 0.9047619047619048,
+        "5": 0.9404761904761905,
+        "10": 0.9761904761904762
+      },
+      "macro_canonical_core_recall_at_k": {
+        "1": 0.8928571428571429,
+        "3": 1.0,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "any_relevant_hit_rate_at_k": {
+        "1": 0.9285714285714286,
+        "3": 1.0,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "answer_accuracy": null,
+      "abstention_accuracy": null
+    },
+    "large": {
+      "answerable_denominator": 14,
+      "unanswerable_count_excluded_from_recall": 6,
+      "macro_recall_at_k": {
+        "1": 0.33115079365079364,
+        "3": 0.7426587301587302,
+        "5": 0.8273809523809524,
+        "10": 0.9218253968253968
+      },
+      "macro_canonical_core_recall_at_k": {
+        "1": 0.5714285714285714,
+        "3": 0.7857142857142857,
+        "5": 0.8928571428571429,
+        "10": 1.0
+      },
+      "any_relevant_hit_rate_at_k": {
+        "1": 1.0,
+        "3": 1.0,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "answer_accuracy": null,
+      "abstention_accuracy": null
+    }
+  }
+}

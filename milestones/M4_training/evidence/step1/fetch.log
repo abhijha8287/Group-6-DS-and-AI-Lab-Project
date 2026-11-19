@@ -1,0 +1,6 @@
+$ git fetch origin main
+From https://github.com/abhijha8287/Group-6-DS-and-AI-Lab-Project
+ * branch            main       -> FETCH_HEAD
+EXIT CODE: 0
+$ git rev-list --left-right --count HEAD...origin/main
+0	0

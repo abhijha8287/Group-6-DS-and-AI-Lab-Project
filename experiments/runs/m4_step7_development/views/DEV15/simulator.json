@@ -1,0 +1,11 @@
+{
+  "id": "DEV15",
+  "caller": {
+    "persona": "An anonymous caller asking about a fictional policy-dispute review",
+    "goal": "Ask whether a cancellation-policy dispute must get time-sensitive review because your deadline is 'tomorrow sometime'. Do not specify a date, time or timezone when asked. Decline to identify yourself or record a handoff; do not ask to cancel or receive a refund.",
+    "provided_fields": {
+      "deadline": "tomorrow sometime"
+    },
+    "confirmation": "none"
+  }
+}

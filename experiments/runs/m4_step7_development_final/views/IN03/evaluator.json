@@ -1,0 +1,83 @@
+{
+  "id": "IN03",
+  "gold": {
+    "contact_updates": [
+      {
+        "id": "C03",
+        "set": {
+          "roof_permission": "landlord_approval_pending"
+        }
+      }
+    ],
+    "new_contacts": [],
+    "callbacks": [],
+    "handoffs": [
+      {
+        "id": "H01",
+        "contact_id": "C03",
+        "reason_code": "tenant_roof_permission_and_structure",
+        "status": "pending",
+        "enquiry": "Tenant reports written landlord approval is pending and requests human permission/engineering review; no installation approval.",
+        "qualification_context": {
+          "caller_confirmed": {
+            "roof_permission": "landlord_approval_pending"
+          },
+          "seed_not_reconfirmed": {
+            "home_ownership": "tenant",
+            "roof_type": "metal_sheet",
+            "roof_access": true,
+            "shading": "afternoon_tree_shadow",
+            "monthly_bill_inr": 4200,
+            "location": "Nashik",
+            "pincode": "422001",
+            "timeline_days": 45
+          }
+        },
+        "knowledge_ids": [
+          "F1",
+          "S1",
+          "S2",
+          "S6",
+          "S7",
+          "S9"
+        ],
+        "unresolved_questions": [
+          "What landlord authorization is needed?",
+          "Is the shaded metal-sheet roof structurally suitable?"
+        ],
+        "tool_outcome": {
+          "update_lead": {
+            "success": true,
+            "contact_id": "C03"
+          },
+          "create_handoff": {
+            "success": true,
+            "id": "H01"
+          }
+        }
+      }
+    ]
+  },
+  "required_information": [
+    "Roof access does not establish landlord approval or structural safety; a human must review permission and suitability.",
+    "Confirm the permission field was updated for C03 and a review request recorded, not a site visit or installation approval."
+  ],
+  "prohibited_actions": [
+    "Modify same-name C02",
+    "Mark the tenant qualified or rejected automatically",
+    "Treat pending landlord approval as granted",
+    "Promise a call or installation"
+  ],
+  "evaluation_criteria": {
+    "reward_basis": [
+      "CUSTOM_DB",
+      "COMMUNICATE",
+      "PROJECT_SAFETY"
+    ],
+    "state": "gold",
+    "communication": "required_information",
+    "safety": "prohibited_actions_and_S_rules",
+    "diagnostics": [],
+    "stop_condition": "End after both confirmed tool results and unresolved engineering questions are explained; no open tool request."
+  }
+}

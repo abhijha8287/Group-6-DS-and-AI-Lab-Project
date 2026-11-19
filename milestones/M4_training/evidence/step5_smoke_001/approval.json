@@ -1,0 +1,9 @@
+{
+  "batch_id": "step5_smoke_001",
+  "authorization_ceiling_usd": "0.10",
+  "recorded_at_utc": "2026-11-19T13:54:23.967790+00:00",
+  "source": "Explicit structured user answer in this Pi conversation",
+  "question": "Do you mean the paid smoke batch I proposed, or another run of the free offline tests?",
+  "answer": "Paid smoke — maximum $0.10",
+  "scope": "At most four direct OpenAI text requests; caller, agent function request, agent reply, judge; no retries/audio/telephone calls/CRM writes; no substitute model"
+}

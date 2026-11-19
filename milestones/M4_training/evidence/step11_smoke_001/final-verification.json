@@ -1,0 +1,120 @@
+{
+  "batch_id": "step11_smoke_001",
+  "paid_exit_code": 0,
+  "status": "passed",
+  "requests": 4,
+  "retries": 0,
+  "approval_consumed": true,
+  "no_more_calls_authorized": true,
+  "preflight_tests": 123,
+  "postrun_tests": 124,
+  "skipped": 0,
+  "tested_hashes_match": true,
+  "runtime_sources_match_approval": true,
+  "new_postrun_test": "actual paid verdict replay only",
+  "protected_files_unchanged": 769,
+  "expected_changed_files": [
+    "experiments/EXPERIMENT_LOG.md",
+    "experiments/cost_ledger.json",
+    "milestones/M4_training/progress.md",
+    "scripts/run_text_smoke.py"
+  ],
+  "progress_log_original_prefixes_preserved": {
+    "milestones/M4_training/progress.md": 52149,
+    "experiments/EXPERIMENT_LOG.md": 11167
+  },
+  "old_batch_and_all_requests_unchanged": true,
+  "ledger_reconciled": true,
+  "held_reservations_usd": "0",
+  "usage_priced_batch_estimate_usd": "0.00023535",
+  "remaining_credit_estimate_usd": "19.99955015",
+  "provider_balance_or_invoice_verified": false,
+  "wire_checks": [
+    {
+      "stage": "caller",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 45,
+        "completion_tokens": 9,
+        "total_tokens": 54,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      }
+    },
+    {
+      "stage": "agent-tool",
+      "http_status": 200,
+      "finish_reason": "tool_calls",
+      "usage": {
+        "prompt_tokens": 123,
+        "completion_tokens": 17,
+        "total_tokens": 140,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      }
+    },
+    {
+      "stage": "agent-answer",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 161,
+        "completion_tokens": 14,
+        "total_tokens": 175,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      }
+    },
+    {
+      "stage": "judge",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 576,
+        "completion_tokens": 126,
+        "total_tokens": 702,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      }
+    }
+  ],
+  "comparison_settings_unchanged": true,
+  "comparison_drift_detection": "expected fail; prospective amendment needed",
+  "crm_scope": "read-only isolated seed; no write path exercised",
+  "audio_seconds": 0,
+  "heldout_cases_created_or_inspected": 0,
+  "git_diff_check_exit_code": 0
+}

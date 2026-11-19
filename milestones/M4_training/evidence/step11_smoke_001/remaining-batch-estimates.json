@@ -1,0 +1,33 @@
+{
+  "scope": "Planning only, not approval; same M0 model only. Other candidate model not enabled/access-verified.",
+  "measured_one_turn_diagnostic_estimate_usd": "0.00023535",
+  "conservative_four_request_full_context_bound_usd": "0.07968",
+  "future_same_diagnostic_at_10x_measured_usage_usd": "0.00235350",
+  "future_same_diagnostic_at_100x_measured_usage_usd": "0.02353500",
+  "warnings": [
+    "One tiny read-only diagnostic is not representative of long documents, multiple turns, writes or specialists.",
+    "No remaining batch is authorized.",
+    "Full matrix cannot be guaranteed within $9 under conservative bounds.",
+    "Existing ledger hard maximum 100 requests/batch is less than a 109-request worst-case conversation; need prospective execution/budget design, not a silent cap increase.",
+    "No text wall-clock minutes are voice call minutes."
+  ],
+  "frozen_conversation_request_bound": {
+    "agent": 96,
+    "simulator": 12,
+    "judge": 1,
+    "total": 109
+  },
+  "full_context_uncached_M0_upper_bounds_usd": {
+    "one_conversation": "2.14104",
+    "one_scenario_three_repetitions": "6.42312",
+    "paired_architectures_one_scenario_three_repetitions": "12.84624",
+    "one_30_attempt_core_cell": "64.23120",
+    "M0_half_matrix_132_attempts": "282.61728"
+  },
+  "smoke_shaped_proxy_M0_132_attempts_usd": "0.03106620",
+  "proxy_is_not_forecast": true,
+  "text_allocation_usd": "9.00; unspent, not approved",
+  "M0_conversation_bounds_covered_by_9usd_financially_only_not_execution_ready": 4,
+  "M1_model_half_cost": "not certified/dispatchable; do not substitute M0 prices",
+  "pricing_basis": "ledger frozen prices; usage-priced estimate, not verified billing; conservative bounds assume full input context per request"
+}

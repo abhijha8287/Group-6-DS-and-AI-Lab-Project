@@ -1,0 +1,17 @@
+{
+  "offline_tests": 81,
+  "offline_exit_code": 0,
+  "paid_cli_exit_code": 1,
+  "paid_outcome": "judge_validation_error",
+  "protected_files_unchanged": 211,
+  "live_run_files_unchanged": 6,
+  "project_http_requests": 4,
+  "retries": 0,
+  "recorded_usage_usd": "0.00021450",
+  "unresolved_usd": "0",
+  "remaining_credit_estimate_usd": "19.99978550",
+  "remaining_authorized_requests": 0,
+  "git_diff_check_exit_code": 0,
+  "known_secret_scan": "passed",
+  "original_labels": "unchanged; no human adjudication"
+}

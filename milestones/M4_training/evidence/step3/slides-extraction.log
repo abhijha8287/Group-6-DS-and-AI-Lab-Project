@@ -1,0 +1,4 @@
+$ pdftotext -layout milestones/M3_architecture/slides.pdf milestones/M4_training/evidence/step3/slides-pdf-text.txt
+
+EXIT CODE: 0
+PPTX: ZIP/XML text extraction includes speaker notes where present; no slide editing.

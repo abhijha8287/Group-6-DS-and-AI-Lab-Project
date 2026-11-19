@@ -8,6 +8,7 @@ from __future__ import annotations
 import copy
 import json
 import os
+import tempfile
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -35,7 +36,16 @@ def read_json(path: Path):
 def write_json(path: Path, data) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    text = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+    handle = tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent,
+                                         prefix=f".{path.name}.", delete=False)
+    temporary = Path(handle.name)
+    try:
+        with handle:
+            handle.write(text)
+        temporary.replace(path)  # an interrupted checkpoint must not truncate the previous one
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def deep_copy(data):

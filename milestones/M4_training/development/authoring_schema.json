@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Future independent Solar scenario contract — schema only, not a holdout",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "category", "title", "document_variant", "environment", "evaluation_criteria", "knowledge_ids", "caller", "tool_results", "required_information", "prohibited_actions", "gold"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^HO-(TXT|AUD)-[0-9]{3}$"},
+    "category": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "document_variant": {"enum": ["short", "large"]},
+    "environment": {
+      "type": "object", "additionalProperties": false, "required": ["identity_fixture"],
+      "properties": {
+        "snapshot_at": {"type": "string", "format": "date-time"},
+        "identity_fixture": {"oneOf": [{"type": "null"}, {
+          "type": "object", "additionalProperties": false,
+          "required": ["contact_id", "email", "verification_succeeds"],
+          "properties": {"contact_id": {"type": "string"}, "email": {"type": "string"}, "verification_succeeds": {"type": "boolean"}}
+        }]}
+      }
+    },
+    "evaluation_criteria": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reward_basis", "state", "communication", "safety", "diagnostics", "stop_condition"],
+      "properties": {
+        "reward_basis": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["CUSTOM_DB", "COMMUNICATE", "PROJECT_SAFETY"]}},
+        "state": {"const": "gold"}, "communication": {"const": "required_information"},
+        "safety": {"const": "prohibited_actions_and_S_rules"},
+        "diagnostics": {"type": "array", "items": {"type": "string"}},
+        "stop_condition": {"type": "string", "minLength": 1}
+      }
+    },
+    "knowledge_ids": {"$ref": "#/$defs/text_list"},
+    "caller": {
+      "type": "object", "additionalProperties": false,
+      "required": ["persona", "goal", "provided_fields", "confirmation"],
+      "properties": {"persona": {"type": "string", "minLength": 1}, "goal": {"type": "string", "minLength": 1},
+        "provided_fields": {"type": "object", "description": "Caller-known facts only; no evaluator or trusted fixture fields"},
+        "confirmation": {"type": "string", "minLength": 1}}
+    },
+    "tool_results": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "verify_identity": {"type": "object"}, "find_lead": {"type": "object"},
+        "create_lead": {"type": "object"}, "update_lead": {"type": "object"},
+        "check_availability": {"type": "object"}, "schedule_callback": {"type": "object"},
+        "create_handoff": {"type": "object"}, "record_opt_out": {"type": "object"}
+      }
+    },
+    "required_information": {"$ref": "#/$defs/text_list"},
+    "prohibited_actions": {"$ref": "#/$defs/text_list"},
+    "gold": {
+      "type": "object", "additionalProperties": false,
+      "required": ["contact_updates", "new_contacts", "callbacks", "handoffs"],
+      "properties": {
+        "contact_updates": {"type": "array", "items": {"type": "object", "additionalProperties": false,
+          "required": ["id", "set"], "properties": {"id": {"type": "string"}, "set": {"type": "object", "minProperties": 1}}}},
+        "new_contacts": {"type": "array", "items": {"type": "object"}},
+        "callbacks": {"type": "array", "items": {"type": "object"}},
+        "handoffs": {"type": "array", "items": {"type": "object"}}
+      }
+    }
+  },
+  "$defs": {"text_list": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}},
+  "$comment": "Public structural brief only. No held-out case or answer is supplied. Tool-owned defaults, full seed reset, source semantics, rights and review roster require independent checks; this repo does not install a JSON Schema validator or enforce external custody."
+}

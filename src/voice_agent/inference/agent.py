@@ -16,8 +16,10 @@ import json
 import re
 
 from voice_agent.inference.crm import LEAD_FIELDS, TOOL_SCHEMAS, UPDATABLE
+from voice_agent.models.budget import CostLedger
 
 MAX_TOOL_ROUNDS = 8
+MAX_TOOL_STEPS = 8
 THINK = re.compile(r"<think>.*?</think>", re.S)
 
 
@@ -55,6 +57,9 @@ class SingleAgent:
 
     def turn(self, caller_text: str, sandbox, trace: list) -> str:
         self.messages.append({"role": "user", "content": caller_text})
+        budget = getattr(self.client, "budget", None)
+        max_steps = budget.limits["max_tool_steps"] if isinstance(budget, CostLedger) else MAX_TOOL_STEPS
+        tool_steps = 0
         for _ in range(MAX_TOOL_ROUNDS):
             out = self.client.complete(self.messages, tools=TOOL_SCHEMAS, temperature=0.0)
             self.usage["input_tokens"] += out.usage.get("input_tokens", 0)
@@ -66,14 +71,20 @@ class SingleAgent:
                 text = text or "Sorry, could you repeat that?"
                 self.messages.append({"role": "assistant", "content": text})
                 return text
+            if tool_steps + len(out.tool_calls) > max_steps:
+                trace.append({"type": "error", "error": "tool_step_limit",
+                              "discarded_agent_text": text, "requested_tool_calls": out.tool_calls})
+                break
             self.messages.append({"role": "assistant", "content": text, "tool_calls": out.tool_calls})
             for call in out.tool_calls:
+                tool_steps += 1
                 result = sandbox.execute(call["name"], call["arguments"])
                 trace.append({"type": "tool", "name": call["name"], "arguments": call["arguments"],
                               "result": result})
                 self.messages.append({"role": "tool", "tool_call_id": call["id"],
                                       "content": json.dumps(result, ensure_ascii=False)})
-        trace.append({"type": "error", "error": "tool_round_limit"})
+        else:
+            trace.append({"type": "error", "error": "tool_round_limit"})
         text = "Sorry, I could not complete that. A team member will need to help."
         self.messages.append({"role": "assistant", "content": text})
         return text

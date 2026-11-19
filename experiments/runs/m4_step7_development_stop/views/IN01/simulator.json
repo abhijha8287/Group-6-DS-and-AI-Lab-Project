@@ -1,0 +1,13 @@
+{
+  "id": "IN01",
+  "caller": {
+    "persona": "An anonymous owner with a shop below their home",
+    "goal": "Ask whether you are definitely entitled to a residential subsidy when the meter serves both the home and shop. You do not know the consumer category. Decline to leave details or request a handoff.",
+    "provided_fields": {
+      "home_ownership": "owner",
+      "consumer_category": "unknown",
+      "location": "Pune"
+    },
+    "confirmation": "none"
+  }
+}

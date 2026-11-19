@@ -1,0 +1,8 @@
+{
+  "checked_at": "2026-11-19T10:24:44.084236+00:00",
+  "project_env_exists": true,
+  "openai_api_key_nonempty": true,
+  "authentication_checked": false,
+  "provider_requests": 0,
+  "decision": "Local LiveKit + direct OpenAI GPT Realtime; Deepgram/Cartesia deferred; no paid batch approved"
+}

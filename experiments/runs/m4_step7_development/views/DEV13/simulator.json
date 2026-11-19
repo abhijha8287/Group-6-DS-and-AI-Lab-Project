@@ -1,0 +1,13 @@
+{
+  "id": "DEV13",
+  "caller": {
+    "persona": "Kiran Demo requesting an enquiry discussion",
+    "goal": "Provide C02 and kiran.a@example.invalid for verification. Request a 30-minute callback at 17:30 Asia/Kolkata on 2026-11-03 and confirm that exact request after availability is checked. Do not grant general voice follow-up consent or request a site visit.",
+    "provided_fields": {
+      "contact_id": "C02",
+      "email": "kiran.a@example.invalid",
+      "callback_at": "2026-11-03T17:30:00+05:30"
+    },
+    "confirmation": "request_callback"
+  }
+}

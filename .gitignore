@@ -5,6 +5,7 @@
 data/*
 !data/README.md
 experiments/checkpoints/
+experiments/cost_ledger.json.lock
 *.wav
 *.mp3
 recordings/

@@ -1,0 +1,17 @@
+{
+  "scope": "read-only authenticated key metadata; no inference or account changes",
+  "at_utc": "2026-11-19T18:21:01.475672+00:00",
+  "key": {
+    "is_free_tier": false,
+    "limit": 50,
+    "limit_remaining": 50,
+    "usage": 0,
+    "usage_daily": 0,
+    "http_status": 200
+  },
+  "credits": {
+    "total_credits": 23,
+    "total_usage": 19.787888751,
+    "http_status": 200
+  }
+}

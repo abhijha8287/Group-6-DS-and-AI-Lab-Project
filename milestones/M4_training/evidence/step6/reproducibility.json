@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/homebrew/opt/python@3.15/bin/python3.15",
+    "scripts/preprocess_policy_packs.py",
+    "--output",
+    "/var/folders/wg/c0d7s4r53kxfcdy74t3pyynm0000gn/T/tmp3zgy_sp5/repeat"
+  ],
+  "exit_code": 0,
+  "separate_process_builds_byte_identical": true,
+  "output_sha256": {
+    "short_chunks.json": "0a49461de2c8d14412fb9b1856e9a65703345f4a46ea1a6599fa03b471d31624",
+    "manifest.json": "79ae70c671c9e8e507f47b8c8caa08e94259a956417e26301e5c630b8b2cdcdf",
+    "large_chunks.json": "4c2e255185809d4b200c3ce57c2c3034f6ae3351f0f7bd9e37ee3060fbaa9d51",
+    "retrieval.json": "0f1c8dd4aa9d1fc4d3c9b812e18f155aabdaf898dbda324369cacc444b70390f"
+  }
+}

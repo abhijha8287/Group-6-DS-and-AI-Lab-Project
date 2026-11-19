@@ -1,0 +1,24 @@
+Existing committed M3 result, NOT rerun: experiments/runs/m3_llm_qwen3-8b_local/results.json
+{
+  "tasks": 10,
+  "completed_without_error": 10,
+  "statuses": {
+    "caller_repeat_stop": 4,
+    "completed": 6
+  },
+  "task_success_rate": 0.5,
+  "db_pass_rate": 0.7,
+  "db_pass_rate_write_tasks": 0.4,
+  "communicate_rate": 0.6,
+  "safety_rate": 1.0,
+  "false_success_claims": 0,
+  "blocked_unsafe_attempts": 5,
+  "agent_llm_calls": 53,
+  "mean_agent_llm_latency_s": 3.87,
+  "tokens_in_agent_plus_simulator": 132167,
+  "tokens_out_agent_plus_simulator": 2666
+}
+m4_step1_oracle : saved results/transcripts reviewed; expected offline outcomes confirmed
+m4_step1_control_skip_confirmation : saved results/transcripts reviewed; expected offline outcomes confirmed
+m4_step1_control_skip_verification : saved results/transcripts reviewed; expected offline outcomes confirmed
+Oracle communication/safety/reward are unjudged. Aggregate false_success_claims=0 is not a judged zero.

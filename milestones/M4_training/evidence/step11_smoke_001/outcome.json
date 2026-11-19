@@ -1,0 +1,53 @@
+{
+  "batch_id": "step11_smoke_001",
+  "status": "passed",
+  "requests": 4,
+  "retries": 0,
+  "model": "gpt-4o-mini-2024-07-18",
+  "input_tokens": 905,
+  "output_tokens": 166,
+  "role_costs": {
+    "SIMULATOR": {
+      "input_tokens": 45,
+      "output_tokens": 9,
+      "requests": 1,
+      "usage_priced_estimate_usd": "0.00001215"
+    },
+    "AGENT": {
+      "input_tokens": 284,
+      "output_tokens": 31,
+      "requests": 2,
+      "usage_priced_estimate_usd": "0.00006120"
+    },
+    "JUDGE": {
+      "input_tokens": 576,
+      "output_tokens": 126,
+      "requests": 1,
+      "usage_priced_estimate_usd": "0.000162"
+    }
+  },
+  "agent_service_cost_estimate_usd": "0.00006120",
+  "evaluation_overhead_estimate_usd": "0.00017415",
+  "batch_usage_priced_estimate_usd": "0.00023535",
+  "provider_invoice_verified": false,
+  "ledger_totals": {
+    "recorded_usage_usd": "0.00044985",
+    "unreconciled_max_usd": "0",
+    "remaining_credit_estimate_usd": "19.99955015"
+  },
+  "smoke_allocation_remaining_estimate_usd": "0.99955015",
+  "call_minutes": null,
+  "cost_per_call_minute": null,
+  "crm_diff": [],
+  "crm_scope": "read-only seed; no write path exercised",
+  "judge_schema_valid": true,
+  "human_adjudicated": false,
+  "request_latencies_seconds": {
+    "caller": 2.346,
+    "agent-tool": 1.493,
+    "agent-answer": 1.004,
+    "judge": 2.627
+  },
+  "voice_latency": null,
+  "authorization_consumed": true
+}

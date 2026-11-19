@@ -1,0 +1,21 @@
+{
+  "id": "IN02",
+  "caller": {
+    "persona": "Diya Demo exploring rooftop feasibility",
+    "goal": "Provide the listed qualification details when asked and explicitly confirm saving an enquiry. Describe morning shade from a neighbouring building. Decline voice follow-up permission and any callback. Ask whether your bill alone guarantees a suitable system.",
+    "provided_fields": {
+      "name": "Diya Demo",
+      "email": "diya@example.invalid",
+      "home_ownership": "owner",
+      "roof_type": "RCC",
+      "roof_access": true,
+      "roof_permission": "self_reported_owner",
+      "shading": "morning_neighbour_shadow",
+      "monthly_bill_inr": 3700,
+      "location": "Pune",
+      "pincode": "411006",
+      "timeline_days": 60
+    },
+    "confirmation": "save_enquiry_only"
+  }
+}

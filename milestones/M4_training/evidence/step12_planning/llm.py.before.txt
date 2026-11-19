@@ -1,0 +1,274 @@
+"""Provider-neutral LLM client with tool calling (standard library HTTP only).
+
+Two wire formats cover every provider the team considered:
+
+* ``OpenAICompatibleClient``: OpenAI, Groq and Ollama all expose the same
+  ``/chat/completions`` API with tool calls, so one adapter serves all three.
+* ``AnthropicClient``: Anthropic's ``/v1/messages`` API.
+
+Internally every message uses one neutral format::
+
+    {"role": "system" | "user" | "assistant" | "tool", "content": str,
+     "tool_calls": [{"id": str, "name": str, "arguments": dict}],   # assistant only
+     "tool_call_id": str}                                          # tool only
+
+so the agent, simulator and judge never depend on a provider. The provider is
+picked with environment variables (see .env.example). Wire-format support is
+not spending authorization: remote execution currently permits only approved,
+priced direct-OpenAI text batches. Responses, Realtime, STT and TTS are absent.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import time
+import urllib.error
+import urllib.request
+from dataclasses import dataclass, field
+
+from voice_agent.models.budget import BudgetError, CostLedger
+
+PROVIDERS = {
+    # name: (wire format, default base URL, API key variable)
+    "openai": ("openai", "https://api.openai.com/v1", "OPENAI_API_KEY"),
+    "groq": ("openai", "https://api.groq.com/openai/v1", "GROQ_API_KEY"),
+    "ollama": ("openai", "http://localhost:11434/v1", None),
+    "anthropic": ("anthropic", "https://api.anthropic.com/v1", "ANTHROPIC_API_KEY"),
+}
+
+
+@dataclass
+class Completion:
+    content: str
+    tool_calls: list = field(default_factory=list)
+    usage: dict = field(default_factory=dict)
+    latency_s: float = 0.0
+
+
+class LLMError(RuntimeError):
+    pass
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        raise LLMError("Model HTTP redirects are disabled")
+
+
+_HTTP = urllib.request.build_opener(_NoRedirect())
+LOCAL_URLS = {f"http://{host}:11434/v1/chat/completions" for host in ("localhost", "127.0.0.1")}
+OPENAI_URL = "https://api.openai.com/v1/chat/completions"
+
+
+def _post(url: str, payload: dict, headers: dict, timeout: float, retries: int | None = None,
+          *, budget: CostLedger | None = None, role: str = "AGENT", journal=None) -> dict:
+    local = url in LOCAL_URLS
+    if not local and (url != OPENAI_URL or budget is None):
+        raise BudgetError("Remote calls require an approved direct-OpenAI text batch; other providers/audio are blocked")
+    if local:
+        budget = None  # Local roles share runtime limits, but do not spend OpenAI credit.
+    token_key = "max_tokens" if local else "max_completion_tokens"
+    cap = payload.get(token_key)
+    if type(cap) is not int or not 1 <= cap <= 1200:
+        raise BudgetError("Output token cap must be an integer from 1 to 1200")
+    allowed = {"model", "messages", "temperature", token_key, "tools", "response_format"}
+    allowed |= {"reasoning_effort"} if local else {"service_tier", "n"}
+    if set(payload) - allowed:
+        raise BudgetError("Only bounded text Chat Completions fields are allowed")
+    if not local and (payload.get("service_tier") != "default" or payload.get("n") != 1):
+        raise BudgetError("Paid requests require standard tier and n=1")
+    if not isinstance(payload.get("messages"), list) or any(
+            not isinstance(m, dict) or set(m) - {"role", "content", "tool_calls", "tool_call_id"}
+            or not (isinstance(m.get("content"), str) or m.get("content") is None)
+            for m in payload["messages"]):
+        raise BudgetError("Only text messages are allowed; audio and images are blocked")
+    if any(not isinstance(t, dict) or t.get("type") != "function" for t in payload.get("tools", [])):
+        raise BudgetError("Only local function tools are allowed, not separately billed hosted tools")
+    body = json.dumps(payload).encode("utf-8")
+    if len(body) > 256000:
+        raise BudgetError("Request exceeds the hard 256000-byte text limit")
+    retry_limit = budget.limits["max_retries"] if budget is not None else 0
+    retries = retry_limit if retries is None else retries
+    if type(retries) is not int or not 0 <= retries <= retry_limit:
+        raise BudgetError("Retry count exceeds batch limits")
+    for attempt in range(retries + 1):
+        reservation = (budget.reserve(payload["model"], cap, len(body), role, attempt)
+                       if budget is not None else None)
+        request = urllib.request.Request(url, data=body, method="POST",
+                                         headers={"Content-Type": "application/json", **headers})
+        try:
+            if journal is not None:
+                journal({"event": "request", "request_id": reservation, "role": role,
+                         "attempt": attempt, "payload": payload})  # never journal authorization headers
+            with _HTTP.open(request, timeout=min(timeout, 30.0)) as response:
+                raw = response.read()
+                if journal is not None:
+                    journal({"event": "response", "request_id": reservation,
+                             "http_status": response.status, "raw_response": raw})
+                data = json.loads(raw.decode("utf-8"))
+            if budget is not None:
+                if not isinstance(data, dict):
+                    budget.fail(reservation, "MalformedResponse", halt=True)
+                    raise BudgetError("Non-object response; batch halted")
+                if data.get("service_tier") != "default" or data.get("model") != payload["model"]:
+                    budget.fail(reservation, "UnexpectedModelOrServiceTier", halt=True)
+                    raise BudgetError("Unexpected response model/service tier; batch halted")
+                budget.reconcile(reservation, data.get("usage"))
+            return data
+        except BudgetError:
+            raise
+        except Exception as err:
+            if isinstance(err, urllib.error.HTTPError):
+                try:
+                    error_body = err.read() if journal is not None else None
+                finally:
+                    err.close()
+            if journal is not None:
+                event = {"event": "error", "request_id": reservation, "error_type": type(err).__name__}
+                if isinstance(err, urllib.error.HTTPError):
+                    event.update(http_status=err.code, raw_response=error_body)
+                journal(event)
+            retryable = (isinstance(err, (urllib.error.URLError, TimeoutError))
+                         and not isinstance(err, urllib.error.HTTPError)) or (
+                isinstance(err, urllib.error.HTTPError) and err.code in (429, 500, 502, 503, 529))
+            if budget is not None:
+                budget.fail(reservation, type(err).__name__, halt=not retryable)
+            if retryable and attempt < retries:
+                time.sleep(2 ** attempt)
+                continue
+            raise LLMError(f"Model request failed ({type(err).__name__}); uncertain usage remains reserved") from None
+    raise LLMError("unreachable")
+
+
+class OpenAICompatibleClient:
+    def __init__(self, model: str, base_url: str, api_key: str | None = None,
+                 timeout: float = 30.0, extra: dict | None = None,
+                 budget: CostLedger | None = None, role: str = "AGENT"):
+        self.model, self.base_url, self.api_key = model, base_url.rstrip("/"), api_key
+        self.timeout, self.extra = timeout, extra or {}
+        self.budget, self.role = budget, role
+
+    @staticmethod
+    def to_wire(messages: list[dict]) -> list[dict]:
+        wire = []
+        for m in messages:
+            if m["role"] == "assistant" and m.get("tool_calls"):
+                wire.append({"role": "assistant", "content": m.get("content") or None,
+                             "tool_calls": [{"id": c["id"], "type": "function",
+                                             "function": {"name": c["name"],
+                                                          "arguments": json.dumps(c["arguments"])}}
+                                            for c in m["tool_calls"]]})
+            elif m["role"] == "tool":
+                wire.append({"role": "tool", "tool_call_id": m["tool_call_id"], "content": m["content"]})
+            else:
+                wire.append({"role": m["role"], "content": m["content"]})
+        return wire
+
+    @staticmethod
+    def from_wire(data: dict) -> Completion:
+        message = data["choices"][0]["message"]
+        calls = []
+        for i, c in enumerate(message.get("tool_calls") or []):
+            raw = c["function"].get("arguments") or "{}"
+            try:
+                args = json.loads(raw) if isinstance(raw, str) else raw
+            except json.JSONDecodeError:
+                args = {"_unparsed": raw}
+            calls.append({"id": c.get("id") or f"call_{i}", "name": c["function"]["name"], "arguments": args})
+        usage = data.get("usage") or {}
+        return Completion(content=message.get("content") or "", tool_calls=calls,
+                          usage={"input_tokens": usage.get("prompt_tokens", 0),
+                                 "output_tokens": usage.get("completion_tokens", 0)})
+
+    def complete(self, messages, tools=None, temperature=0.0, max_tokens=800, json_mode=False) -> Completion:
+        direct_openai = self.base_url == "https://api.openai.com/v1"
+        token_key = "max_completion_tokens" if direct_openai else "max_tokens"
+        payload = {"model": self.model, "messages": self.to_wire(messages),
+                   "temperature": temperature, token_key: max_tokens, **self.extra}
+        if direct_openai:
+            payload.update(service_tier="default", n=1)
+        if tools:
+            payload["tools"] = [{"type": "function", "function": t} for t in tools]
+        if json_mode:
+            payload["response_format"] = {"type": "json_object"}
+        headers = {"Authorization": f"Bearer {self.api_key}"} if self.api_key else {}
+        start = time.perf_counter()
+        result = self.from_wire(_post(f"{self.base_url}/chat/completions", payload, headers, self.timeout,
+                                      budget=self.budget, role=self.role))
+        result.latency_s = time.perf_counter() - start
+        return result
+
+
+class AnthropicClient:
+    def __init__(self, model: str, api_key: str, base_url: str = "https://api.anthropic.com/v1",
+                 timeout: float = 180.0):
+        self.model, self.api_key, self.base_url, self.timeout = model, api_key, base_url.rstrip("/"), timeout
+
+    @staticmethod
+    def to_wire(messages: list[dict]) -> tuple[str, list[dict]]:
+        system = "\n\n".join(m["content"] for m in messages if m["role"] == "system")
+        wire: list[dict] = []
+        for m in messages:
+            if m["role"] == "system":
+                continue
+            if m["role"] == "assistant":
+                blocks = [{"type": "text", "text": m["content"]}] if m.get("content") else []
+                blocks += [{"type": "tool_use", "id": c["id"], "name": c["name"], "input": c["arguments"]}
+                           for c in m.get("tool_calls") or []]
+                wire.append({"role": "assistant", "content": blocks or [{"type": "text", "text": "..."}]})
+            elif m["role"] == "tool":
+                block = {"type": "tool_result", "tool_use_id": m["tool_call_id"], "content": m["content"]}
+                if wire and wire[-1]["role"] == "user" and isinstance(wire[-1]["content"], list) \
+                        and wire[-1]["content"] and wire[-1]["content"][0].get("type") == "tool_result":
+                    wire[-1]["content"].append(block)  # results of parallel calls share one turn
+                else:
+                    wire.append({"role": "user", "content": [block]})
+            else:
+                wire.append({"role": "user", "content": m["content"]})
+        return system, wire
+
+    @staticmethod
+    def from_wire(data: dict) -> Completion:
+        text = "".join(b.get("text", "") for b in data.get("content", []) if b["type"] == "text")
+        calls = [{"id": b["id"], "name": b["name"], "arguments": b.get("input") or {}}
+                 for b in data.get("content", []) if b["type"] == "tool_use"]
+        usage = data.get("usage") or {}
+        return Completion(content=text, tool_calls=calls,
+                          usage={"input_tokens": usage.get("input_tokens", 0),
+                                 "output_tokens": usage.get("output_tokens", 0)})
+
+    def complete(self, messages, tools=None, temperature=0.0, max_tokens=800, json_mode=False) -> Completion:
+        system, wire = self.to_wire(messages)
+        payload = {"model": self.model, "system": system, "messages": wire,
+                   "temperature": temperature, "max_tokens": max_tokens}
+        if tools:
+            payload["tools"] = [{"name": t["name"], "description": t["description"],
+                                 "input_schema": t["parameters"]} for t in tools]
+        headers = {"x-api-key": self.api_key, "anthropic-version": "2023-06-01"}
+        start = time.perf_counter()
+        result = self.from_wire(_post(f"{self.base_url}/messages", payload, headers, self.timeout))
+        result.latency_s = time.perf_counter() - start
+        return result
+
+
+def make_client(role: str = "AGENT", budget: CostLedger | None = None):
+    """Build a client from env vars, e.g. AGENT_PROVIDER / AGENT_MODEL.
+
+    Falls back to LLM_PROVIDER / LLM_MODEL so one setting can drive the agent,
+    simulator and judge. Roles: AGENT, SIMULATOR, JUDGE.
+    """
+    provider = (os.getenv(f"{role}_PROVIDER") or os.getenv("LLM_PROVIDER") or "").lower()
+    model = os.getenv(f"{role}_MODEL") or os.getenv("LLM_MODEL")
+    if provider not in PROVIDERS or not model:
+        raise LLMError(f"Set LLM_PROVIDER ({'/'.join(PROVIDERS)}) and LLM_MODEL (or {role}_*) in .env")
+    wire, default_url, key_var = PROVIDERS[provider]
+    api_key = os.getenv(key_var) if key_var else None
+    if key_var and not api_key:
+        raise LLMError(f"{key_var} is not set")
+    base_url = os.getenv(f"{provider.upper()}_BASE_URL") or default_url
+    if provider == "ollama" and not base_url.rstrip("/").endswith("/v1"):
+        base_url = base_url.rstrip("/") + "/v1"
+    if wire == "anthropic":
+        return AnthropicClient(model, api_key, base_url)
+    extra = {"reasoning_effort": "none"} if provider == "ollama" else {}
+    return OpenAICompatibleClient(model, base_url, api_key, extra=extra, budget=budget, role=role)

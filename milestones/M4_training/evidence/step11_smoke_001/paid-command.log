@@ -1,0 +1,12 @@
+{
+  "batch_id": "step11_smoke_001",
+  "model": "gpt-4o-mini-2024-07-18",
+  "status": "passed",
+  "checks": {
+    "caller_text": true,
+    "one_read_only_tool": true,
+    "agent_answer_text": true,
+    "judge_schema_valid": true,
+    "rubric_pass_by_model": true
+  }
+}

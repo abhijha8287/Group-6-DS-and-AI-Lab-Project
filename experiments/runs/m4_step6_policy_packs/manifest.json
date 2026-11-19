@@ -1,0 +1,680 @@
+{
+  "as_of": "2026-11-19",
+  "business": "solar",
+  "business_id": "sungrid_policy_draft",
+  "variants": {
+    "short": {
+      "document_count": 1,
+      "document_path": "short/knowledge.md",
+      "document_sha256": "64782cfcfedb66d818ae5cbf2bdc9cf22990075cf099de416d13cb063df3557d",
+      "word_count_whitespace_including_markdown": 979,
+      "estimated_document_tokens_char4": 1718,
+      "section_text_word_count_whitespace": 597,
+      "estimated_section_tokens_sum_char4": 1095,
+      "section_count": 15,
+      "chunk_count": 15,
+      "markdown_heading_count": 5,
+      "sourced_fact_count": 5,
+      "sandbox_rule_count": 10,
+      "sections": [
+        {
+          "section_id": "F1",
+          "chunk_id": "short/knowledge#F1",
+          "line_number": 20,
+          "source_ids": [
+            "R1"
+          ],
+          "text_sha256": "189e20c347c101d3b4ffde5253b0cd1d027b1b3b0f18a9a70392a1f0a334a5bc"
+        },
+        {
+          "section_id": "F2",
+          "chunk_id": "short/knowledge#F2",
+          "line_number": 21,
+          "source_ids": [
+            "R1"
+          ],
+          "text_sha256": "14775c5f9c9a746927c5deefa4c4b587036e38e387aec1e545f34279a45a39ba"
+        },
+        {
+          "section_id": "F3",
+          "chunk_id": "short/knowledge#F3",
+          "line_number": 22,
+          "source_ids": [
+            "R1"
+          ],
+          "text_sha256": "9fc4372dd234ad9b672f01bc65069d3c60b52e25b0e7e28b5e7b89bb43150d5a"
+        },
+        {
+          "section_id": "F4",
+          "chunk_id": "short/knowledge#F4",
+          "line_number": 23,
+          "source_ids": [
+            "R1"
+          ],
+          "text_sha256": "2c0eae08879e35c017027da43cb538aa273a4614f00b4964b65f7cedbb35ed4a"
+        },
+        {
+          "section_id": "F5",
+          "chunk_id": "short/knowledge#F5",
+          "line_number": 24,
+          "source_ids": [
+            "R2"
+          ],
+          "text_sha256": "819a77391780dea1f04917269192401b33755500a9e16a762a089ca2aa5ee6a2"
+        },
+        {
+          "section_id": "S1",
+          "chunk_id": "short/knowledge#S1",
+          "line_number": 32,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "0291e78d66e709b7097f3af591f1ba36e46d1b05b6cdc6d63d02364bc93457cf"
+        },
+        {
+          "section_id": "S2",
+          "chunk_id": "short/knowledge#S2",
+          "line_number": 33,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "0ab879385c880d9f69f52b9f971d5e303e5b61486ab9ec369e7c0cd6ccc16a10"
+        },
+        {
+          "section_id": "S3",
+          "chunk_id": "short/knowledge#S3",
+          "line_number": 34,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "a722b5b32a6cafc651260b0f3c3df57960a25171ad14500081a8d64c2711b4f0"
+        },
+        {
+          "section_id": "S4",
+          "chunk_id": "short/knowledge#S4",
+          "line_number": 35,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "a10621896f7118955e113d8c10d54c76f991080794fa882f3f2b4ac3954a1ee9"
+        },
+        {
+          "section_id": "S5",
+          "chunk_id": "short/knowledge#S5",
+          "line_number": 36,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "cd3fd34f92b3f40dba5ae9cbf7a4c70274562f44813cb05b7b871ff0f5570f50"
+        },
+        {
+          "section_id": "S6",
+          "chunk_id": "short/knowledge#S6",
+          "line_number": 37,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "46c069f4bf39c0b93602db97b0eb92eb3e472ba26507ef3cbeb2b2912671b01b"
+        },
+        {
+          "section_id": "S7",
+          "chunk_id": "short/knowledge#S7",
+          "line_number": 38,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "97455cdd12dc08285e7d0bdbe0ae5ab301f037c90fc097cf75945b1f14006c19"
+        },
+        {
+          "section_id": "S8",
+          "chunk_id": "short/knowledge#S8",
+          "line_number": 39,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "ba36f2d30994510d3c1b08b20fd2f13a43f53eb0666dbd036b807e79e3ad2a54"
+        },
+        {
+          "section_id": "S9",
+          "chunk_id": "short/knowledge#S9",
+          "line_number": 40,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "4a44a197ad305db7c03fb1f448f03812d6d5b492bc4a499bc1838bf8bd003dcf"
+        },
+        {
+          "section_id": "S10",
+          "chunk_id": "short/knowledge#S10",
+          "line_number": 41,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "414924bb9670f9c4a19b68c97d8a6a362395133fd37af73b6171c845d5e23ab8"
+        }
+      ]
+    },
+    "large": {
+      "document_count": 1,
+      "document_path": "large/knowledge.md",
+      "document_sha256": "de4eece73c4a0105c5f77930eabb2d65a8dd1dcf1a12c6757f837e0fe40b88c8",
+      "word_count_whitespace_including_markdown": 5064,
+      "estimated_document_tokens_char4": 8290,
+      "section_text_word_count_whitespace": 4475,
+      "estimated_section_tokens_sum_char4": 7462,
+      "section_count": 50,
+      "chunk_count": 50,
+      "markdown_heading_count": 6,
+      "sourced_fact_count": 5,
+      "sandbox_rule_count": 45,
+      "sections": [
+        {
+          "section_id": "F1",
+          "chunk_id": "large/knowledge#F1",
+          "line_number": 20,
+          "source_ids": [
+            "R1"
+          ],
+          "text_sha256": "189e20c347c101d3b4ffde5253b0cd1d027b1b3b0f18a9a70392a1f0a334a5bc"
+        },
+        {
+          "section_id": "F2",
+          "chunk_id": "large/knowledge#F2",
+          "line_number": 21,
+          "source_ids": [
+            "R1"
+          ],
+          "text_sha256": "14775c5f9c9a746927c5deefa4c4b587036e38e387aec1e545f34279a45a39ba"
+        },
+        {
+          "section_id": "F3",
+          "chunk_id": "large/knowledge#F3",
+          "line_number": 22,
+          "source_ids": [
+            "R1"
+          ],
+          "text_sha256": "9fc4372dd234ad9b672f01bc65069d3c60b52e25b0e7e28b5e7b89bb43150d5a"
+        },
+        {
+          "section_id": "F4",
+          "chunk_id": "large/knowledge#F4",
+          "line_number": 23,
+          "source_ids": [
+            "R1"
+          ],
+          "text_sha256": "2c0eae08879e35c017027da43cb538aa273a4614f00b4964b65f7cedbb35ed4a"
+        },
+        {
+          "section_id": "F5",
+          "chunk_id": "large/knowledge#F5",
+          "line_number": 24,
+          "source_ids": [
+            "R2"
+          ],
+          "text_sha256": "819a77391780dea1f04917269192401b33755500a9e16a762a089ca2aa5ee6a2"
+        },
+        {
+          "section_id": "S1",
+          "chunk_id": "large/knowledge#S1",
+          "line_number": 32,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "0291e78d66e709b7097f3af591f1ba36e46d1b05b6cdc6d63d02364bc93457cf"
+        },
+        {
+          "section_id": "S2",
+          "chunk_id": "large/knowledge#S2",
+          "line_number": 33,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "0ab879385c880d9f69f52b9f971d5e303e5b61486ab9ec369e7c0cd6ccc16a10"
+        },
+        {
+          "section_id": "S3",
+          "chunk_id": "large/knowledge#S3",
+          "line_number": 34,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "a722b5b32a6cafc651260b0f3c3df57960a25171ad14500081a8d64c2711b4f0"
+        },
+        {
+          "section_id": "S4",
+          "chunk_id": "large/knowledge#S4",
+          "line_number": 35,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "a10621896f7118955e113d8c10d54c76f991080794fa882f3f2b4ac3954a1ee9"
+        },
+        {
+          "section_id": "S5",
+          "chunk_id": "large/knowledge#S5",
+          "line_number": 36,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "cd3fd34f92b3f40dba5ae9cbf7a4c70274562f44813cb05b7b871ff0f5570f50"
+        },
+        {
+          "section_id": "S6",
+          "chunk_id": "large/knowledge#S6",
+          "line_number": 37,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "46c069f4bf39c0b93602db97b0eb92eb3e472ba26507ef3cbeb2b2912671b01b"
+        },
+        {
+          "section_id": "S7",
+          "chunk_id": "large/knowledge#S7",
+          "line_number": 38,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "97455cdd12dc08285e7d0bdbe0ae5ab301f037c90fc097cf75945b1f14006c19"
+        },
+        {
+          "section_id": "S8",
+          "chunk_id": "large/knowledge#S8",
+          "line_number": 39,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "ba36f2d30994510d3c1b08b20fd2f13a43f53eb0666dbd036b807e79e3ad2a54"
+        },
+        {
+          "section_id": "S9",
+          "chunk_id": "large/knowledge#S9",
+          "line_number": 40,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "4a44a197ad305db7c03fb1f448f03812d6d5b492bc4a499bc1838bf8bd003dcf"
+        },
+        {
+          "section_id": "S10",
+          "chunk_id": "large/knowledge#S10",
+          "line_number": 41,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "414924bb9670f9c4a19b68c97d8a6a362395133fd37af73b6171c845d5e23ab8"
+        },
+        {
+          "section_id": "S11",
+          "chunk_id": "large/knowledge#S11",
+          "line_number": 55,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "b084c38a8b85bd0a421bf2036d703c5889680a6f8f233ac5f5a84e52129941e4"
+        },
+        {
+          "section_id": "S12",
+          "chunk_id": "large/knowledge#S12",
+          "line_number": 56,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "610709f0750e58c8632ae3b71766bd666c8419c381d1f082407fb6915c1e42ec"
+        },
+        {
+          "section_id": "S13",
+          "chunk_id": "large/knowledge#S13",
+          "line_number": 57,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "d3d6412a9db9a5dbc6814bb65c6b85aa69872c9d29640e6344688a29fc840069"
+        },
+        {
+          "section_id": "S14",
+          "chunk_id": "large/knowledge#S14",
+          "line_number": 58,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "236da56fe69ae730172890d1f343182fa57152050051e103438e4b3eff68b9bb"
+        },
+        {
+          "section_id": "S15",
+          "chunk_id": "large/knowledge#S15",
+          "line_number": 59,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "7f1b5ddb39eba94b922d1d60b90f64bba95c9fde32edc05765e576b09f1c05b2"
+        },
+        {
+          "section_id": "S16",
+          "chunk_id": "large/knowledge#S16",
+          "line_number": 60,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "3decbf3825b9cab054295212e3b117b240e26cada3c3ab8dfba350b55aa05335"
+        },
+        {
+          "section_id": "S17",
+          "chunk_id": "large/knowledge#S17",
+          "line_number": 61,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "9708d5cd9bd61d60316d5d8ea5f1abe3cd65c9622b843c5772267dc640a50b83"
+        },
+        {
+          "section_id": "S18",
+          "chunk_id": "large/knowledge#S18",
+          "line_number": 62,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "940b324019de65c5d166652bab59d85482cfe8630e624f9e60edc2d0122b0819"
+        },
+        {
+          "section_id": "S19",
+          "chunk_id": "large/knowledge#S19",
+          "line_number": 63,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "22c208817db5867841d6efdc5561fd11e9dddff04bece3d2ab48794c3af3ca29"
+        },
+        {
+          "section_id": "S20",
+          "chunk_id": "large/knowledge#S20",
+          "line_number": 64,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "418aa44c750f550179e1105e92fb257ddc1201ed5632e83e8b4079a34a9dd77e"
+        },
+        {
+          "section_id": "S21",
+          "chunk_id": "large/knowledge#S21",
+          "line_number": 65,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "40420c4965a93d63cbfd086b9f0ba387a61ff76c0dd958a3fc089dc1a4f92550"
+        },
+        {
+          "section_id": "S22",
+          "chunk_id": "large/knowledge#S22",
+          "line_number": 66,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "54b170c4ce854971625d91db34379894c10ef2dd152b547879f6f869059a52fd"
+        },
+        {
+          "section_id": "S23",
+          "chunk_id": "large/knowledge#S23",
+          "line_number": 67,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "35486af9cd184065b637715f78ca20878c86fc410c329bea2f4d4d87312e2c63"
+        },
+        {
+          "section_id": "S24",
+          "chunk_id": "large/knowledge#S24",
+          "line_number": 68,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "d8180678126c5985c164b4f4c141f77c3cb1d31d5f53d78f901b6f26fc144ad6"
+        },
+        {
+          "section_id": "S25",
+          "chunk_id": "large/knowledge#S25",
+          "line_number": 69,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "fc69d32ccfff65f03de8b1d4a17ce21a8a5988b5aba1ebcaa6ed3ed74d39b09b"
+        },
+        {
+          "section_id": "S26",
+          "chunk_id": "large/knowledge#S26",
+          "line_number": 70,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "6010610f2da4e3ed03e4af5d743654fdfe823a5807a74a98369dc2592cedebd6"
+        },
+        {
+          "section_id": "S27",
+          "chunk_id": "large/knowledge#S27",
+          "line_number": 71,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "256aea1e42a738f62435c87baf8fd50330316d2b7bb2b82594ff0631c2aa6072"
+        },
+        {
+          "section_id": "S28",
+          "chunk_id": "large/knowledge#S28",
+          "line_number": 72,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "5d4d11b15493d5fd8aa8877f747d58fe64cb7a11c1961459d1d844fd6f56e868"
+        },
+        {
+          "section_id": "S29",
+          "chunk_id": "large/knowledge#S29",
+          "line_number": 73,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "3b1410f79193b96685ba0b38f5843b0a2064bd76e5677ca38312e3e211eab23c"
+        },
+        {
+          "section_id": "S30",
+          "chunk_id": "large/knowledge#S30",
+          "line_number": 74,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "fb95e103e558ec067e49011fdb576640b1c59d7359397a4865a9339b9bfbdc22"
+        },
+        {
+          "section_id": "S31",
+          "chunk_id": "large/knowledge#S31",
+          "line_number": 75,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "fd789af7041b4cc9d6daad5d7ab60a045a5cc1f62e7a8e715aff0dea822d1170"
+        },
+        {
+          "section_id": "S32",
+          "chunk_id": "large/knowledge#S32",
+          "line_number": 76,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "215260c2fe7abe64a5572c56456bfc4a26a1bd19e5c4285e6bed153770fe7e52"
+        },
+        {
+          "section_id": "S33",
+          "chunk_id": "large/knowledge#S33",
+          "line_number": 77,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "9fbdc868a87374f76198d6115cc287d3632c964b6eac558986d2a99c28b123d4"
+        },
+        {
+          "section_id": "S34",
+          "chunk_id": "large/knowledge#S34",
+          "line_number": 78,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "1f8fba76b3debb82b416b2dc3ebe39917e8db0087638f25d216ea0a0accff4bb"
+        },
+        {
+          "section_id": "S35",
+          "chunk_id": "large/knowledge#S35",
+          "line_number": 79,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "3a7d490e44d2050815d00702cdd19ea1c56b39654d77da1d41e0b0483af67728"
+        },
+        {
+          "section_id": "S36",
+          "chunk_id": "large/knowledge#S36",
+          "line_number": 80,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "81bd88142f6319f085e160a2b9b0d1f48eeaff81b07e0754d8d47bcb12ff10d7"
+        },
+        {
+          "section_id": "S37",
+          "chunk_id": "large/knowledge#S37",
+          "line_number": 81,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "8e8807b88025c1756839839f2d36cca4097214fea5f66ad86cf21e98074c35a4"
+        },
+        {
+          "section_id": "S38",
+          "chunk_id": "large/knowledge#S38",
+          "line_number": 82,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "445a336d27ba211c2fabcdb5b155f69e780a2c81301e7f16c0c7f632ec53d1c0"
+        },
+        {
+          "section_id": "S39",
+          "chunk_id": "large/knowledge#S39",
+          "line_number": 83,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "9a6deb3413b58aac4394ace860d4ffb512e5aa58c879da7d69339d80c950e0f5"
+        },
+        {
+          "section_id": "S40",
+          "chunk_id": "large/knowledge#S40",
+          "line_number": 84,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "b7f86f06a8aa4f5f9922bf4095d42c3985c9fb69a86de88a62950a0780ae0be4"
+        },
+        {
+          "section_id": "S41",
+          "chunk_id": "large/knowledge#S41",
+          "line_number": 85,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "b21da29a275be0e256dcf5da92204e3fc1dd2b3ab928f6f7da5a7b6a2fa67a65"
+        },
+        {
+          "section_id": "S42",
+          "chunk_id": "large/knowledge#S42",
+          "line_number": 86,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "22dfc2f82d3ab32d28f6d9cd07bb66c0c524c594442e6577739f5c5942fb6792"
+        },
+        {
+          "section_id": "S43",
+          "chunk_id": "large/knowledge#S43",
+          "line_number": 87,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "7bdcfded4fc994a06ae35b0ed1a77fc21205753575433c28cd246afd7897f37f"
+        },
+        {
+          "section_id": "S44",
+          "chunk_id": "large/knowledge#S44",
+          "line_number": 88,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "0bf29c3e9fac4cf1c078acd1fa7ad2bbc9ec836684935153005d37e17b9ff914"
+        },
+        {
+          "section_id": "S45",
+          "chunk_id": "large/knowledge#S45",
+          "line_number": 89,
+          "source_ids": [
+            "SYNTHETIC"
+          ],
+          "text_sha256": "c7bbf7b70ac404969a7744304f35620e82636ea00f71bdeae93ccfdf95c5db9c"
+        }
+      ]
+    }
+  },
+  "question_count": 20,
+  "source_metadata": {
+    "R1": {
+      "url": "https://www.solarsquare.in/",
+      "historical_access_date": "2026-10-29",
+      "permission_status": "unknown/not_granted",
+      "license": "unknown",
+      "reuse_basis": "narrow factual paraphrase from existing repository; no source prose copied",
+      "human_review": "pending",
+      "inherited_claim_ids": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    "R2": {
+      "url": "https://www.solarsquare.in/cancellation-policy/",
+      "historical_access_date": "2026-10-29",
+      "permission_status": "unknown/not_granted",
+      "license": "unknown",
+      "reuse_basis": "narrow factual paraphrase from existing repository; no source prose copied",
+      "human_review": "pending",
+      "inherited_claim_ids": [
+        "F5"
+      ]
+    },
+    "SYNTHETIC": {
+      "permission_status": "original_project_draft",
+      "license": "original project draft; no external rights implied",
+      "human_review": "pending",
+      "scope": "Fictional SunGrid sandbox policy sections S1-S45; no external source or legal authority is implied."
+    }
+  },
+  "input_sha256": {
+    "short/knowledge.md": "64782cfcfedb66d818ae5cbf2bdc9cf22990075cf099de416d13cb063df3557d",
+    "large/knowledge.md": "de4eece73c4a0105c5f77930eabb2d65a8dd1dcf1a12c6757f837e0fe40b88c8",
+    "questions.json": "5f93bb3dfdd65cd69c55bc2cf9b5d34273a57d9c241d33fbb1b63d7034bbc127",
+    "sources.json": "2e553cb2ec82a7e1b713f11b39caf452b7a8b1ca906708e98df3a6f4a75f2b6e"
+  },
+  "implementation_sha256": {
+    "scripts/preprocess_policy_packs.py": "3c4abfc2c23dc13d82d25c3864b1bcce55bebf89b26d809a74476e0643aa7404",
+    "src/voice_agent/data/preprocess.py": "f4ab06a66d22c3b53f107dbc8cba32dfc079e2f068ab2771c6bb90f3a181592c",
+    "src/voice_agent/inference/retrieval.py": "aaf9e6e345f3afc3e3c39634680e45e9a9cd9ea4ad2b2d2927062a9718f8e87c",
+    "src/voice_agent/data/loader.py": "2018014bc4c230113a06f6851278aab9050200972eda89e703b5de7344001d0a",
+    "src/voice_agent/utils/common.py": "2a796a4593883c0fe23fc265cf3e6db350ae28c2afb60d4e1020ac322b4c3209"
+  },
+  "output_sha256": {
+    "large_chunks.json": "c2072ac4990adbe6ff8b63b134b35415d8b7f6a5e84ec35611291645dc3e4e09",
+    "retrieval.json": "d30b7d0861caee50b14a0b16dfec02c95b279751c8c4456c5e4b00c9f62825b2",
+    "short_chunks.json": "7dbdbdf9aaaaad8155fca811c13a21979400ac2e599d0dcc1ce4f4513a7fa3ea"
+  },
+  "token_count_method": "estimate_tokens: max(1, round(characters/4)); not a model tokenizer or billed usage",
+  "chunking": "One complete F/S table row per chunk/section; no overlap or paragraph splitting",
+  "human_review": "pending; see policy_packs/REVIEW_REQUEST.md",
+  "paid_requests": 0
+}

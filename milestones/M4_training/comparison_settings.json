@@ -1,0 +1,434 @@
+{
+  "version": "m4-comparison-v1",
+  "scorer_version": "m4-metrics-v1",
+  "status": "preregistered_blocked",
+  "execution_allowed": false,
+  "approved_batch_id": null,
+  "scope": "exposed development comparisons only; no heldout or voice execution",
+  "runtime": {
+    "python": "3.15.2",
+    "implementation": "CPython",
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "input_sha256": {
+    "milestones/M1_problem_literature/report.md": "598b889bd7a7d1f7ac10aa1850133dfe8d7f26314ab21dfc1e047bf689eacb31",
+    "milestones/M4_training/comparison_plan.md": "9651ee496e6e6cf3702d4d2aed40c2bcd97c32b69668e565e98d5d61fa0ccc1d",
+    "milestones/M4_training/development/CASE_REVIEW.md": "c5b514543474383f548ad5122dcd538c3c688afca1c0e3ea56d0c068ad897373",
+    "milestones/M4_training/development/INDEPENDENT_AUTHOR_BRIEF.md": "b438e6c14abb7219981c982e0e1b7146740f278b36dbcad3021e9e4e1872417c",
+    "milestones/M4_training/development/README.md": "87bda24336609d5881b88fa9051c622df51117266d62c3955b7e6247fc2726a6",
+    "milestones/M4_training/development/authoring_schema.json": "355f125a62916ff02924f042d7369c66ee242b0ab5b3eb5087fce677ba6ed1ce",
+    "milestones/M4_training/development/core.json": "89a55a4baffc263fe73468fa0b5e83c2d19155eee3da3ee2787ea3345e283860",
+    "milestones/M4_training/development/crm_seed.json": "2541fd6ae9bd82aced9d7317fb748ebe449ed5e54f931a560b70af665f64a537",
+    "milestones/M4_training/development/documents/large.md": "9d6ed54bbab5068a3c40bff1fc3dd55117c09b293342f907b8bacae8c2270a9c",
+    "milestones/M4_training/development/documents/short.md": "64782cfcfedb66d818ae5cbf2bdc9cf22990075cf099de416d13cb063df3557d",
+    "milestones/M4_training/development/manifest.json": "3e29b881a1920379c10477d9e5994bd58bb9cce556908cdcb6aa3baf95bb24bb",
+    "milestones/M4_training/development/sources.json": "b8865e46c36b388ba22d26fb7868d44ce213e36817e599688822ec718c09988b",
+    "milestones/M4_training/development/supplemental.json": "470d5ab5e2846eba484c66437593a8282ba31410236bdb370b209e4c372d4f9f",
+    "milestones/M4_training/measurement_protocol.md": "63b85ea49f426728bddcd8becbeaa681dab7cdc84f553d2584f28299f78a242d",
+    "milestones/M4_training/policy_packs/questions.json": "ec4ad23485f5114e99f077f48fd9b89d971bc3b474ece12c5187a0f0e13dd21c",
+    "milestones/M4_training/policy_packs/sources.json": "b8865e46c36b388ba22d26fb7868d44ce213e36817e599688822ec718c09988b",
+    "scripts/check_comparison_freeze.py": "c51802540c2999a6a7bce3fb8e8a3984eb005595584f6ffa3b297db1dfc3161c",
+    "scripts/check_development.py": "37d9c775fe579b64fd14d7c55f2881be46c649fbfbad2b677e3bf4ab0168ff0a",
+    "scripts/create_m2_split_manifest.py": "f0445a29618ac970d3704130294504ab6a73b0bc10f4ec5fa7843d1b3ae82a70",
+    "scripts/expand_m2_outbound.py": "0941c6adcf8cd55c83aa742bb5dc1ac30840989a0793a4bc9b00d41f54e3f05c",
+    "scripts/expand_m2_scenarios.py": "21248618d554bece6f263dbf7740c1b1b2a03952de8f922ec96d7017930499c3",
+    "scripts/freeze_development.py": "7a29a45643126e8f18c18958ade0329b1775f34cd3aced66b5ec38bf7917f655",
+    "scripts/generate_m2_contacts.py": "0814ee60484fee3e4bebe19eb2eabf1b1528693ea0e50410753373b48efc9871",
+    "scripts/preprocess_m3.py": "985e8f3e9bf0eb867bbdb8a99b9284112b94104320fe57447bda825a5ace442b",
+    "scripts/preprocess_policy_packs.py": "ac127b8935885f616b6b83167995875a70ddfca366b52302ffc87205eee4ba43",
+    "scripts/run_m3_pipeline.py": "4d859cf5983b64fca05577ff031e1c20a1cde183cf90325f1423749bc28fa73b",
+    "scripts/run_outbound_gate.py": "1090cc6cfa20a150c876951819091703f40dd54200f727f5dcd667ea2e270ebf",
+    "scripts/run_text_smoke.py": "adec9c03604dcdb4c3a41fadeffb24d25ffd04546dca073df74f9d8bba791bd4",
+    "scripts/validate_m2_outbound.py": "8c5a1eecd9ab0b3d4c47d6fb6f38ee0cfc947ca5dcf94c02b22f563e3412411c",
+    "src/voice_agent/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/data/development.py": "083fec18453d3cc5e06845b7fb08f70440c4b4aae4986c6fe253402bfe9795be",
+    "src/voice_agent/data/loader.py": "dcd52b20ff11375997f1a6d4b505c88f2bbe39d6b715aec603939820a7037173",
+    "src/voice_agent/data/preprocess.py": "85262ef02ba4bdc5ca45855c21379db857f1d14f35f728084a359b2398718ce5",
+    "src/voice_agent/evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/evaluation/evaluator.py": "19597103a9924820befd9e6631dad4059db5f2c00f024640fa525a3124e72864",
+    "src/voice_agent/evaluation/measurement.py": "0594ad762fb8aedfc091acb802576b2500400fbf2a51aa56472d2cf544c550ac",
+    "src/voice_agent/evaluation/simulator.py": "17d274baf98befa0e3479adc68696f3c08037833a5f79e56382cce92c4fb88f8",
+    "src/voice_agent/inference/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/inference/agent.py": "d0be5168e9ce1165cf7ba7cd684af378e50c529ef9ba02abee4a581ad794158e",
+    "src/voice_agent/inference/crm.py": "f91107c5cf7d10e5e355df3e1e669f735b7143cef0a1b63c252d5ab27a7710f5",
+    "src/voice_agent/inference/outbound_gate.py": "49caeb2d693a12a2346a308f017d663d3af5759929b1d944344a190bc01dad95",
+    "src/voice_agent/inference/retrieval.py": "aaf9e6e345f3afc3e3c39634680e45e9a9cd9ea4ad2b2d2927062a9718f8e87c",
+    "src/voice_agent/models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/models/budget.py": "e466a68ab829c49ec6dae85a4d49c5d32bb7f686cddf7b523628729c208dfe74",
+    "src/voice_agent/models/llm.py": "37656aca4ca54b1136e6552294a5277113a3cb3836dd40c69893c8ce5814b67a",
+    "src/voice_agent/pipelines/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/pipelines/episode.py": "3907c6674ba203e237982fb97e91e89a332c80bd8bbc120ae29493088d1c2768",
+    "src/voice_agent/training/__init__.py": "67b8e2e09115782ba190e64bdfb7fcf6b8a08961e787406b35cff08e10f4cae6",
+    "src/voice_agent/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/utils/common.py": "2a796a4593883c0fe23fc265cf3e6db350ae28c2afb60d4e1020ac322b4c3209"
+  },
+  "dataset_version": "m4-development-v1",
+  "core_cells": [
+    {
+      "id": "M0-B0-short",
+      "model": "gpt-4o-mini-2024-07-18",
+      "architecture": "B0",
+      "pack": "short",
+      "scenario_ids": [
+        "IN01",
+        "IN02",
+        "IN03",
+        "IN04",
+        "IN05",
+        "IN06",
+        "IN07",
+        "IN08",
+        "IN09",
+        "IN10"
+      ],
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "planned_attempts": 30,
+      "execution_allowed": false
+    },
+    {
+      "id": "M0-B0-large",
+      "model": "gpt-4o-mini-2024-07-18",
+      "architecture": "B0",
+      "pack": "large",
+      "scenario_ids": [
+        "IN01",
+        "IN02",
+        "IN03",
+        "IN04",
+        "IN05",
+        "IN06",
+        "IN07",
+        "IN08",
+        "IN09",
+        "IN10"
+      ],
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "planned_attempts": 30,
+      "execution_allowed": false
+    },
+    {
+      "id": "M0-M1-short",
+      "model": "gpt-4o-mini-2024-07-18",
+      "architecture": "M1",
+      "pack": "short",
+      "scenario_ids": [
+        "IN01",
+        "IN02",
+        "IN03",
+        "IN04",
+        "IN05",
+        "IN06",
+        "IN07",
+        "IN08",
+        "IN09",
+        "IN10"
+      ],
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "planned_attempts": 30,
+      "execution_allowed": false
+    },
+    {
+      "id": "M0-M1-large",
+      "model": "gpt-4o-mini-2024-07-18",
+      "architecture": "M1",
+      "pack": "large",
+      "scenario_ids": [
+        "IN01",
+        "IN02",
+        "IN03",
+        "IN04",
+        "IN05",
+        "IN06",
+        "IN07",
+        "IN08",
+        "IN09",
+        "IN10"
+      ],
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "planned_attempts": 30,
+      "execution_allowed": false
+    },
+    {
+      "id": "M1-B0-short",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "architecture": "B0",
+      "pack": "short",
+      "scenario_ids": [
+        "IN01",
+        "IN02",
+        "IN03",
+        "IN04",
+        "IN05",
+        "IN06",
+        "IN07",
+        "IN08",
+        "IN09",
+        "IN10"
+      ],
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "planned_attempts": 30,
+      "execution_allowed": false
+    },
+    {
+      "id": "M1-B0-large",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "architecture": "B0",
+      "pack": "large",
+      "scenario_ids": [
+        "IN01",
+        "IN02",
+        "IN03",
+        "IN04",
+        "IN05",
+        "IN06",
+        "IN07",
+        "IN08",
+        "IN09",
+        "IN10"
+      ],
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "planned_attempts": 30,
+      "execution_allowed": false
+    },
+    {
+      "id": "M1-M1-short",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "architecture": "M1",
+      "pack": "short",
+      "scenario_ids": [
+        "IN01",
+        "IN02",
+        "IN03",
+        "IN04",
+        "IN05",
+        "IN06",
+        "IN07",
+        "IN08",
+        "IN09",
+        "IN10"
+      ],
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "planned_attempts": 30,
+      "execution_allowed": false
+    },
+    {
+      "id": "M1-M1-large",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "architecture": "M1",
+      "pack": "large",
+      "scenario_ids": [
+        "IN01",
+        "IN02",
+        "IN03",
+        "IN04",
+        "IN05",
+        "IN06",
+        "IN07",
+        "IN08",
+        "IN09",
+        "IN10"
+      ],
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "planned_attempts": 30,
+      "execution_allowed": false
+    }
+  ],
+  "core_planned_attempts": 240,
+  "targeted_validation": {
+    "scenario_ids": [
+      "DEV11",
+      "DEV12",
+      "DEV13",
+      "DEV14",
+      "DEV15",
+      "DEV16"
+    ],
+    "models": [
+      "gpt-4o-mini-2024-07-18",
+      "gpt-4.1-mini-2025-04-14"
+    ],
+    "architectures": [
+      "B0",
+      "M1"
+    ],
+    "repetitions": [
+      1
+    ],
+    "pack": "case-assigned, never cross-pack",
+    "planned_attempts": 24,
+    "pool_into_core_scores": false,
+    "execution_allowed": false
+  },
+  "execution_order": "repetition 1,2,3; core IDs in manifest order; pack short then large; model M0 then M1; architectures B0,M1 on odd core positions and M1,B0 on even; targeted validation afterwards",
+  "roles": {
+    "provider": "openai",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "service_tier": "default",
+    "n": 1,
+    "temperature": 0.0,
+    "agent_model": "cell model, also every specialist",
+    "agent_output_tokens": 800,
+    "simulator_model": "gpt-4o-mini-2024-07-18",
+    "simulator_output_tokens": 200,
+    "judge_model": "gpt-4o-mini-2024-07-18",
+    "judge_output_tokens": 1200,
+    "seed": null,
+    "seed_policy": "API seed not requested; temperature zero does not promise deterministic output",
+    "fallbacks": false,
+    "env_overrides": "must be rejected by future runner if not identical to this plan"
+  },
+  "limits": {
+    "caller_generations_per_episode": 12,
+    "agent_model_calls_per_caller_turn_pooled": 8,
+    "tool_rounds_per_caller_turn": 8,
+    "executed_tool_calls_per_caller_turn_pooled": 8,
+    "http_retries": 0,
+    "judge_repairs": 0,
+    "scenario_replacements": 0,
+    "request_timeout_seconds": 30,
+    "max_request_bytes": 64000,
+    "concurrency": 1
+  },
+  "caller": {
+    "class": "LLMCaller",
+    "prompt": "hash-pinned simulator.py::caller_prompt",
+    "inputs": "only task_views.simulator; no evaluator or raw harness payload",
+    "confirmation": "goal-permitted next reply starts Yes, I confirm; refusals start No",
+    "stop": "###STOP###, empty completion also treated as STOP by pinned implementation",
+    "history": "full mirrored dialogue; no truncation, summarization or hidden gold",
+    "greeting": "Hello, you've reached SunGrid Rooftop Solar. How can I help you today?"
+  },
+  "retrieval": {
+    "implementation": "BM25Index",
+    "k1": 1.5,
+    "b": 0.75,
+    "agent_top_k": 3,
+    "agent_index": "fact chunks only; all policy chunks supplied in system prompt",
+    "offline_recall_k": [
+      1,
+      3,
+      5,
+      10
+    ],
+    "offline_index": "all fact and policy chunks, reported separately from agent-path retrieval",
+    "tie_break": "stable document section order; no reranker, embeddings or randomization",
+    "annotations": "pack-specific policy_packs/questions.json; human review pending"
+  },
+  "crm": {
+    "reset": "fresh complete frozen seed per attempt; only manifest-approved case snapshot_at override",
+    "clock": "frozen per-case snapshot_at, Asia/Kolkata; never live wall clock for business rules",
+    "writes": "identical sandbox schemas, registry and validation layer in both architectures",
+    "identity": "same trusted identity binding; no model-provided bypass"
+  },
+  "architectures": {
+    "B0": "pinned SingleAgent; direct tools, no specialists",
+    "M1": {
+      "implementation": "not implemented; prospective code/prompt freeze required before any execution",
+      "topology": "sequential conversation coordinator plus knowledge, qualification and CRM/handoff-planner specialists; no parallel workers or worker-to-worker calls",
+      "dispatch": "knowledge for factual questions; qualification for lead qualification; CRM planner before any CRM write including opt-out; applicable order knowledge, qualification, planner",
+      "access": "specialists see only observed caller facts, relevant public policy and authorized tool observations for their role; never simulator persona/goal, rubric, fixtures or expected states",
+      "authority": "specialists propose only; coordinator alone executes existing tools through unchanged validation",
+      "budgets": "all coordinator and specialist model calls share the 8-call per-caller budget; all actual tools share 8-step budget; delegations are logged and never free/unlimited",
+      "financial_role": "AGENT for every specialist, with separate agent_role tags for attribution"
+    }
+  },
+  "analysis": {
+    "primary_unit": "scenario",
+    "repetitions": 3,
+    "all_three": "pass^3, not pass@3",
+    "policy_probe_core_ids": [
+      "IN01",
+      "IN02",
+      "IN03",
+      "IN04",
+      "IN05",
+      "IN06",
+      "IN07",
+      "IN08",
+      "IN09",
+      "IN10"
+    ],
+    "policy_probe_basis": "all core rubrics probe policy/safety; semantic review pending; no outcome-dependent selection",
+    "primary_architecture_test": "future heldout only; paired repetition 1 exact McNemar O1 strict and O3, Holm family alpha 0.05",
+    "primary_architecture_pair": [
+      "M0-B0-short",
+      "M0-M1-short"
+    ],
+    "other_cells": "development model/document/architecture sensitivity analyses, not extra adoption tests",
+    "bootstrap_resamples": 10000,
+    "bootstrap_seed": 20261119,
+    "quantiles": "nearest_rank",
+    "bootstrap_unit": "scenario cluster; retain both architectures, repetitions, turns and costs together",
+    "targeted_inference": false,
+    "development_adoption_claims": false
+  },
+  "voice": {
+    "in_v1_matrix": false,
+    "execution_allowed": false,
+    "reason": "no audio runtime/instrumentation; no STT/TTS/caller audio settings certified",
+    "future_constraint": "same local LiveKit plus direct OpenAI Realtime stack in both architectures; requires separate prospective exact model/SDK/voice/VAD/audio/caller/runtime freeze and approval; no cascaded substitute"
+  },
+  "heldout": {
+    "actual_text_cases": 0,
+    "actual_audio_cases": 0,
+    "evaluation_allowed": false,
+    "reason": "user deferred; no independent custodian or protected answers"
+  },
+  "spending": {
+    "ledger": "experiments/cost_ledger.json",
+    "new_authorization": false,
+    "smoke_batch": "step5_smoke_001 consumed, cannot reuse",
+    "text_allocation_usd": "9.00 planning only, not approval",
+    "agent_cost_roles": "AGENT including all specialists; STT/TTS/realtime if later authorized",
+    "evaluation_overhead_roles": [
+      "SIMULATOR",
+      "JUDGE"
+    ],
+    "cost_basis": "application estimate: actual metered usage times same frozen published prices; unknown usage bound separate; not verified invoice",
+    "prices": "Step 5 dated source audit is historical planning, not current billing guarantee; fresh access/pricing and caps required per paid batch",
+    "insufficient_budget": "stop, retain partial attempts and unknowns; no refills, model substitutions or unrecorded reruns"
+  },
+  "blockers": [
+    "explicit paid batch approval absent",
+    "semantic source/scenario and relevance review pending",
+    "judge calibration and pending historical adjudications unresolved",
+    "comparison runner and normalized annotation/telemetry export not implemented",
+    "M1 architecture not implemented or code/prompt frozen",
+    "second model not enabled in cost catalog; both snapshots deprecated and access must be checked with approval",
+    "voice and independent heldout explicitly excluded"
+  ]
+}

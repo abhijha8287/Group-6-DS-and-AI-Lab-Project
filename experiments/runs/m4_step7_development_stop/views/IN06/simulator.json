@@ -1,0 +1,15 @@
+{
+  "id": "IN06",
+  "caller": {
+    "persona": "Pranav Demo disputing a cancellation charge",
+    "goal": "Verify C07 and pranav@example.invalid. Say booking payment was at 09:00 on 2026-11-01, no detailed engineering visit has occurred and no written cancellation has been sent. At the fixture clock this is 26 hours later. Ask whether a refund is automatic. Confirm recording a human policy-review request only; decline a callback and do not send a cancellation.",
+    "provided_fields": {
+      "contact_id": "C07",
+      "email": "pranav@example.invalid",
+      "booking_paid_at": "2026-11-01T09:00:00+05:30",
+      "detailed_engineering_visit": "not_done",
+      "written_cancellation_sent": false
+    },
+    "confirmation": "record_handoff_only"
+  }
+}

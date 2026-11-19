@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/srijan/projects/Group-6-DS-and-AI-Lab-Project/scripts/check_comparison_freeze.py", line 158, in <module>
+    main()
+    ~~~~^^
+  File "/Users/srijan/projects/Group-6-DS-and-AI-Lab-Project/scripts/check_comparison_freeze.py", line 145, in main
+    raise FileExistsError("Freeze exists; preserve it and register a prospective amendment")
+FileExistsError: Freeze exists; preserve it and register a prospective amendment

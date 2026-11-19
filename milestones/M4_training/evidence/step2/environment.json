@@ -1,0 +1,77 @@
+{
+  "started_at_utc": "2026-11-19T10:29:51.657233+00:00",
+  "commit": "4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9",
+  "branch": "srijan-m4",
+  "initial_status": " M experiments/EXPERIMENT_LOG.md\n M milestones/M4_training/README.md\n?? experiments/runs/m4_step1_control_skip_confirmation/\n?? experiments/runs/m4_step1_control_skip_verification/\n?? experiments/runs/m4_step1_oracle/\n?? milestones/M4_training/STEP_BY_STEP_PROMPTS.md\n?? milestones/M4_training/evidence/\n?? milestones/M4_training/progress.md\n",
+  "python": "3.15.2 (main, Oct 25 2026, 16:57:51) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "python3_path": "/opt/homebrew/bin/python3",
+  "executable": "/opt/homebrew/opt/python@3.15/bin/python3.15",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "virtual_env_active": false,
+  "setup": "README.md: Python 3.9+ standard library; requirements.txt marks pytest optional. No install needed or performed. .env not overwritten.",
+  "distributions": [
+    {
+      "name": "annotated-types",
+      "version": "0.8.0"
+    },
+    {
+      "name": "certifi",
+      "version": "2026.10.23"
+    },
+    {
+      "name": "cryptography",
+      "version": "50.0.2"
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.4"
+    },
+    {
+      "name": "pip",
+      "version": "26.2.2"
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.2"
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.50.2"
+    },
+    {
+      "name": "pygit2",
+      "version": "1.20.1"
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.4"
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0"
+    }
+  ],
+  "source_hashes": {
+    "src/voice_agent/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/training/__init__.py": "67b8e2e09115782ba190e64bdfb7fcf6b8a08961e787406b35cff08e10f4cae6",
+    "src/voice_agent/pipelines/episode.py": "f5c26514932383e4443c03de27806ba2a2f5adc064367303c935d84e13bf7b13",
+    "src/voice_agent/pipelines/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/utils/common.py": "60b1ee76691b39759cf87908e36e47b98f5be861b4ac909ae913410b015a5df4",
+    "src/voice_agent/models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/models/llm.py": "e8a2fce310b2bcca24b27c5a422c8ee42a35087c062f10be077dbfe91f0b2baa",
+    "src/voice_agent/inference/outbound_gate.py": "49caeb2d693a12a2346a308f017d663d3af5759929b1d944344a190bc01dad95",
+    "src/voice_agent/inference/crm.py": "f91107c5cf7d10e5e355df3e1e669f735b7143cef0a1b63c252d5ab27a7710f5",
+    "src/voice_agent/inference/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/inference/retrieval.py": "72da40308c21bded64dae0e3c2f1dfa95c1e7a31e0fc0aa5ae45a93c46ed3dec",
+    "src/voice_agent/inference/agent.py": "5ac11a1679e39c899b10396c3980bdec0a8fd6b3539c8c8e77b258943a95bbd2",
+    "src/voice_agent/evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/evaluation/simulator.py": "17d274baf98befa0e3479adc68696f3c08037833a5f79e56382cce92c4fb88f8",
+    "src/voice_agent/evaluation/evaluator.py": "d9742ad8143e80abddd305d69b42420384dc53e21fcdebd7c74c1672d5dd13e8",
+    "src/voice_agent/data/preprocess.py": "74d1558ae78104ea1122349fbb29029308f1007d49747d377a217e422a1628c9",
+    "src/voice_agent/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/data/loader.py": "2018014bc4c230113a06f6851278aab9050200972eda89e703b5de7344001d0a",
+    "tests/test_m3_pipeline.py": "bdf387b14536a27b2238fc6494d6f974e551c9cfa5d45e0158b12fa2c544d30f"
+  },
+  "requirements_sha256": "cec8128740c327dad192dcc67547ce697f3ee7b4262f76ac02495376c8c7b676"
+}

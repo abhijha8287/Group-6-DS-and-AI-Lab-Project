@@ -1,0 +1,8 @@
+{
+  "snapshot_at_utc": "2026-11-19T17:02:36.996625+00:00",
+  "scope": "Step 7 visible messages including user holdout-deferral choice; excludes this helper result/final reply",
+  "visible_rows": 165,
+  "private_reasoning_and_signatures": "omitted",
+  "known_environment_secrets": "redacted",
+  "pi_harness_usage": "separate from project-key ledger"
+}

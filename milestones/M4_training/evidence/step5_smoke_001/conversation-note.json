@@ -1,0 +1,8 @@
+{
+  "snapshot_at_utc": "2026-11-19T14:01:42.588259+00:00",
+  "starts_at_user_request": "ok lets run the tests",
+  "visible_rows": 62,
+  "reasoning_and_signature_fields": "omitted",
+  "known_environment_secrets": "redacted",
+  "scope": "Current paid-smoke turn, including structured approval; excludes this helper result and final reply. Pi harness usage is separate from project-key usage."
+}

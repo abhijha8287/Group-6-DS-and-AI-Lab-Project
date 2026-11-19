@@ -1,0 +1,25 @@
+{
+  "id": "IN05",
+  "environment": {
+    "identity_fixture": {
+      "contact_id": "C01",
+      "email": "anika@example.invalid",
+      "verification_succeeds": true
+    }
+  },
+  "tool_results": {
+    "verify_identity": {
+      "success": true,
+      "verified_contact_id": "C01"
+    },
+    "check_availability": {
+      "available": true,
+      "at": "2026-11-03T17:30:00+05:30"
+    },
+    "schedule_callback": {
+      "success": true,
+      "id": "CB01",
+      "status": "requested"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/srijan/projects/Group-6-DS-and-AI-Lab-Project/scripts/check_comparison_freeze.py", line 158, in <module>
+    main()
+    ~~~~^^
+  File "/Users/srijan/projects/Group-6-DS-and-AI-Lab-Project/scripts/check_comparison_freeze.py", line 154, in main
+    print(json.dumps(check(json.loads(path.read_text())),indent=2))
+                     ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/srijan/projects/Group-6-DS-and-AI-Lab-Project/scripts/check_comparison_freeze.py", line 119, in check
+    if settings["input_sha256"] != inputs(root, settings["input_sha256"]):
+                                   ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/srijan/projects/Group-6-DS-and-AI-Lab-Project/scripts/check_comparison_freeze.py", line 31, in inputs
+    raise ValueError("Source/input membership drift; new files were not read")
+ValueError: Source/input membership drift; new files were not read

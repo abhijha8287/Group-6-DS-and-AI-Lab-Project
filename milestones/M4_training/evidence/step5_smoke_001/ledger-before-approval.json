@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "currency": "USD",
+  "starting_credit_usd": "20.000000",
+  "credit_source": "User-reported OpenAI credit; provider balance and expiry not independently verified",
+  "ceiling_source": "Step 5 user-proposed ceilings; these are not approval to run paid requests",
+  "price_access_date": "2026-11-19",
+  "models": {
+    "gpt-4o-mini-2024-07-18": {
+      "input_usd_per_million": "0.15",
+      "output_usd_per_million": "0.60",
+      "max_input_tokens": 128000,
+      "documented_max_output_tokens": 16384,
+      "service_tier": "default",
+      "status": "deprecated; live availability unverified",
+      "source_url": "https://developers.openai.com/api/docs/models/gpt-4o-mini",
+      "pricing_url": "https://developers.openai.com/api/docs/pricing",
+      "access_date": "2026-11-19"
+    }
+  },
+  "allocations": {
+    "smoke_calibration": "1.000000",
+    "text_development": "9.000000",
+    "audio_experiments": "4.000000",
+    "held_out_evaluation": "4.000000",
+    "reserve": "2.000000"
+  },
+  "batches": [
+    {
+      "id": "step5_smoke_001",
+      "allocation": "smoke_calibration",
+      "approved": false,
+      "approval_reference": null,
+      "max_cost_usd": "0.100000",
+      "planned_conservative_max_usd": "0.079680",
+      "model": "gpt-4o-mini-2024-07-18",
+      "purpose": "Four-request synthetic text diagnostic: caller, agent function request, agent tool-result reply, structured judge. No real calls or CRM writes.",
+      "limits": {
+        "max_requests": 4,
+        "max_output_tokens": 1200,
+        "max_request_bytes": 64000,
+        "max_retries": 0,
+        "max_caller_turns": 1,
+        "max_tool_steps": 1,
+        "max_audio_seconds": 0
+      },
+      "requests": []
+    }
+  ],
+  "totals": {
+    "recorded_usage_usd": "0.000000",
+    "unreconciled_max_usd": "0.000000",
+    "remaining_credit_estimate_usd": "20.000000"
+  }
+}

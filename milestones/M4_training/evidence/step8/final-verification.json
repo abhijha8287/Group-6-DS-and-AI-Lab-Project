@@ -1,0 +1,48 @@
+{
+  "version": "m4-comparison-v1",
+  "scorer_version": "m4-metrics-v1",
+  "unit_tests": 113,
+  "skipped": 0,
+  "unit_exit_code": 0,
+  "tested_source_hashes_match": true,
+  "freeze_check_exit_code": 0,
+  "freeze_overwrite_refusal_exit_code": 1,
+  "separate_plan_regeneration_byte_identical": true,
+  "configuration_sha256": "b4dbd90e4cd2bb3aea88541e1ef8a63c0e8512bc8514f50fc5d354a4e006dfa9",
+  "pinned_source_and_input_files": 51,
+  "core_cells": 8,
+  "core_unique_scenarios": 10,
+  "core_repetitions": 3,
+  "core_planned_attempts": 240,
+  "targeted_unique_scenarios": 6,
+  "targeted_planned_attempts": 24,
+  "comparisons_executed": 0,
+  "execution_allowed": false,
+  "original_M1_targets_retained": true,
+  "protected_preexisting_files_unchanged": 640,
+  "authorized_append_only_updates": {
+    "experiments/EXPERIMENT_LOG.md": {
+      "original_prefix_sha256": "16a70944faac5e91b32f256138a4f4a3aa4cfcb0b0ff0a0c2681e12b4a0b52e8",
+      "original_prefix_bytes": 10129,
+      "append_only": true
+    },
+    "milestones/M4_training/progress.md": {
+      "original_prefix_sha256": "91c79625aa6b6a421bb96caf4d0c8426043e47a67d085cc88f278778caf579c8",
+      "original_prefix_bytes": 48133,
+      "append_only": true
+    }
+  },
+  "canonical_ledger_unchanged": true,
+  "project_provider_requests_this_step": 0,
+  "audio_seconds": 0,
+  "actual_heldout_text_cases": 0,
+  "actual_heldout_audio_cases": 0,
+  "heldout_status": "deferred by user; no authoring/inspection or evaluation",
+  "human_semantic_review": "pending",
+  "judge_calibration": "pending",
+  "runtime_treatment_and_exporter": "not implemented; prospective amendment required",
+  "actual_voice_trigger_and_dial_metrics": "undefined; missing instrumentation/evidence",
+  "cost_basis": "usage-priced application estimate, not verified billing",
+  "git_diff_check_exit_code": 0,
+  "new_file_whitespace_check": "pass"
+}

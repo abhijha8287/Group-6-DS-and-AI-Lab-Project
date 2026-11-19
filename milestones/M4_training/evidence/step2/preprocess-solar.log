@@ -1,0 +1,21 @@
+COMMIT: 4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9
+STARTED UTC: 2026-11-19T10:29:51.839098+00:00
+$ python3 scripts/preprocess_m3.py --business solar
+{
+  "business": "solar",
+  "chunks": 15,
+  "sourced_facts": 5,
+  "sandbox_rules": 10,
+  "chunk_tokens_approx": {
+    "min": 34,
+    "max": 116,
+    "total": 1095
+  },
+  "system_prompt_tokens_approx": 1122,
+  "tool_schema_tokens_approx": 1122,
+  "tasks_with_views": 10,
+  "note": "Approximate (characters / 4). Real counts come from provider usage in runs."
+}
+Wrote /Users/srijan/projects/Group-6-DS-and-AI-Lab-Project/data/processed/solar
+
+EXIT CODE: 0

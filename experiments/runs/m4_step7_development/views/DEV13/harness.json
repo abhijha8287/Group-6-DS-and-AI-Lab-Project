@@ -1,0 +1,25 @@
+{
+  "id": "DEV13",
+  "environment": {
+    "identity_fixture": {
+      "contact_id": "C02",
+      "email": "kiran.a@example.invalid",
+      "verification_succeeds": true
+    }
+  },
+  "tool_results": {
+    "verify_identity": {
+      "success": true,
+      "verified_contact_id": "C02"
+    },
+    "check_availability": {
+      "available": true,
+      "at": "2026-11-03T17:30:00+05:30"
+    },
+    "schedule_callback": {
+      "success": true,
+      "id": "CB01",
+      "status": "requested"
+    }
+  }
+}

@@ -1,0 +1,118 @@
+$ git log '--format=%h %ad %s' --date=iso-strict -- tests/test_m3_pipeline.py
+f3e2b53 2026-11-05T18:10:36+05:30 feat: validate M3 knowledge source references
+078ddc9 2026-11-05T17:52:46+05:30 test: add M3 preprocessing validation tests
+dd55d2f 2026-11-05T14:55:56+05:30 M3: text-mode pipeline, verification runs, report, slides and Abhishek's acknowledgement
+
+$ git show 078ddc9 -- tests/test_m3_pipeline.py
+commit 078ddc9fd527375b62a0f1b759027186101a1cbe
+Author: Sarwar Karim <aksarwar8@gmail.com>
+Date:   Thu Nov 5 17:52:46 2026 +0530
+
+    test: add M3 preprocessing validation tests
+
+diff --git a/tests/test_m3_pipeline.py b/tests/test_m3_pipeline.py
+index 64e24f9..3a63f85 100644
+--- a/tests/test_m3_pipeline.py
++++ b/tests/test_m3_pipeline.py
+@@ -10,7 +10,7 @@ from pathlib import Path
+ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+ 
+ from voice_agent.data.loader import load_business, select_tasks  # noqa: E402
+-from voice_agent.data.preprocess import AGENT_FORBIDDEN, chunk_knowledge, task_views  # noqa: E402
++from voice_agent.data.preprocess import AGENT_FORBIDDEN, chunk_knowledge, task_views, estimate_tokens # noqa: E402
+ from voice_agent.evaluation.evaluator import expected_state  # noqa: E402
+ from voice_agent.inference.crm import CRMSandbox, is_confirmation  # noqa: E402
+ from voice_agent.inference.outbound_gate import evaluate  # noqa: E402
+@@ -153,5 +153,59 @@ class TestProviderAdapters(unittest.TestCase):
+         self.assertEqual((parsed.content, parsed.tool_calls[0]["name"]), ("ok", "find_lead"))
+ 
+ 
++
++class TestPreprocessing(unittest.TestCase):
++
++    def test_token_estimation_is_positive(self):
++        self.assertGreater(estimate_tokens("Hello world"), 0)
++
++    def test_empty_text_token_estimation(self):
++        self.assertEqual(estimate_tokens(""), 1)
++
++    def test_token_estimation_is_deterministic(self):
++        text = "This is a sample knowledge chunk."
++        self.assertEqual(
++            estimate_tokens(text),
++            estimate_tokens(text)
++        )
++
++    def test_business_isolation_in_chunks(self):
++        dental = load_business("dental")
++        furniture = load_business("furniture")
++
++        dental_chunks = chunk_knowledge(dental)
++        furniture_chunks = chunk_knowledge(furniture)
++
++        for chunk in dental_chunks:
++            self.assertEqual(
++                chunk["business_id"],
++                "brightsmile_pilot"
++            )
++
++        for chunk in furniture_chunks:
++            self.assertEqual(
++                chunk["business_id"],
++                "urbannest_pilot"
++            )
++
++    def test_agent_view_contains_only_task_id(self):
++        for task in SOLAR.scenarios:
++            views = task_views(task)
++
++            self.assertEqual(
++                set(views["agent"].keys()),
++                {"id"}
++            )
++
++    def test_agent_view_rejects_answer_key_leakage(self):
++        views = task_views(SOLAR.scenarios[0])
++
++        views["agent"]["gold"] = {"some": "answer"}
++
++        with self.assertRaises(AssertionError):
++            from voice_agent.data.preprocess import check_views
++            check_views(views)
++
++
+ if __name__ == "__main__":
+     unittest.main()
+
+$ git show f3e2b53 -- tests/test_m3_pipeline.py
+commit f3e2b53b69a092970387b7ca810f5e5bebb31bae
+Author: Sarwar Karim <aksarwar8@gmail.com>
+Date:   Thu Nov 5 18:10:36 2026 +0530
+
+    feat: validate M3 knowledge source references
+
+diff --git a/tests/test_m3_pipeline.py b/tests/test_m3_pipeline.py
+index 3a63f85..dce4c96 100644
+--- a/tests/test_m3_pipeline.py
++++ b/tests/test_m3_pipeline.py
+@@ -17,6 +17,7 @@ from voice_agent.inference.outbound_gate import evaluate  # noqa: E402
+ from voice_agent.inference.retrieval import BM25Index  # noqa: E402
+ from voice_agent.models.llm import AnthropicClient, OpenAICompatibleClient  # noqa: E402
+ from voice_agent.pipelines.episode import run_subset  # noqa: E402
++from voice_agent.data.preprocess import validate_knowledge_sources
+ 
+ SOLAR = load_business("solar")
+ 
+@@ -205,6 +206,12 @@ class TestPreprocessing(unittest.TestCase):
+         with self.assertRaises(AssertionError):
+             from voice_agent.data.preprocess import check_views
+             check_views(views)
++    
++    def test_all_knowledge_sources_exist(self):
++        for business in ("solar", "dental", "furniture"):
++            pack = load_business(business)
++            validate_knowledge_sources(pack)
++
+ 
+ 
+ if __name__ == "__main__":

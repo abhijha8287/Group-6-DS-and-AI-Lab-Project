@@ -1,0 +1,13 @@
+{
+  "source": "Structured user response in this conversation",
+  "question": "The packs are ready. Can you forward the prepared review request to a teammate, or will you review it yourself?",
+  "answer": "I'll review it myself",
+  "reviewer": "user",
+  "request": "milestones/M4_training/policy_packs/REVIEW_REQUEST.md",
+  "review_status": "pending_findings",
+  "factual_claims_approved": false,
+  "rights_cleared": false,
+  "policy_assumptions_approved": false,
+  "answer_annotations_approved": false,
+  "external_teammate_contacted": false
+}

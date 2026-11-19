@@ -1,0 +1,590 @@
+DS AND AI LAB · IIT MADRAS · MILESTONE 3 REVIEW
+
+
+
+
+Architecture and a working end-to-end pipeline
+Voice agent for small-business enquiries and lead follow-up: single agent vs multi-agent. M3 shows the design, why
+we chose it, and the text-mode pipeline running on 10 development tasks.
+
+
+
+
+Group 6
+Abhishek Jha · Srijan · Sarwar Karim Akhand · Omkar Shankar Pawar
+AGENDA
+
+
+
+Each member presents their own area
+
+ Part           Topic                                                                                  Presenter             Slides
+
+ 1              What M3 delivers, LLM provider and cost, outbound gate                                 Abhishek Jha          3, 15–16
+
+ 2              Architecture, components, model inputs, design choices                                 Srijan                4–8
+
+ 3              Data organisation, preprocessing, splits and leakage                                   Sarwar Karim Akhand   9–11
+
+ 4              Evaluation method, pipeline results, error analysis                                    Omkar Shankar Pawar   12–14
+
+ 5              Limitations, M4 plan, contributions, questions                                         Abhishek Jha + all    17–20
+
+
+
+Demo during the review: run the pipeline live (offline checks in seconds; one LLM conversation in about a minute).
+
+
+
+
+Presenter: Abhishek Jha                                                                                                                 2 / 20
+MILESTONE 3 AT A GLANCE
+
+
+
+The whole text-mode pipeline runs, and its safety checks hold
+
+
+   30/30                                      10/10                       5/10                                        0
+   outbound-gate decisions match              gold CRM end states         tasks fully passed by a real LLM            unsafe writes reached the CRM;
+   the labels; 0 disallowed calls             reproduced exactly by the   agent (local qwen3:8b), first run           0 false “it’s saved” claims
+   allowed                                    harness check (no LLM)
+
+
+
+
+ M3 requirement                                                                            Where
+
+ Data organisation, preprocessing, leakage                                                 Report §1 · Sarwar
+
+ Architecture diagram, components, model inputs                                            Report §2 · Srijan
+
+ Justification and alternatives                                                            Report §3 · Srijan, Abhishek
+
+ Small-scale run, samples, failures                                                        Report §4 · Omkar
+
+ No training loss, metrics, early results                                                  Report §5 · Omkar
+
+
+
+
+Presenter: Abhishek Jha                                                                                                                           3 / 20
+ARCHITECTURE
+
+
+
+How data flows from the caller to the CRM
+Navy = LLM Orange = deterministic safety code Grey = voice parts planned for M4 (text in M3)
+
+
+                              audio                                    text                                               search                             F
+                                           LiveKit + Silero VAD                                                                          BM25 search over
+                                             + Deepgram STT                                                                               F-facts (top 3)
+           Caller
+                                                                                          Agent (LLM)                                                            knowledge.md
+      (phone / browser)
+                                                                                  single-agent or multi-agent                                                       → chunker
+                                                                                    9 tools · temperature 0                                                      1 row = 1 chunk
+ M3: simulated caller, text
+                                                                                                                                          System prompt
+                                              Cartesia TTS
+                              audio                                    reply                                               rules          with all S-rules   S
+
+
+                                                                                                   tool call JSON ↓ result ↑
+
+
+                                                                                         Validation layer
+                                                                                 verified ID · fresh confirmation
+                                                                                     picklists · atomic failure
+
+
+                                                                                                   allowed write ↓ {success | error} ↑
+
+
+
+       Follow-up queue                    Outbound gate (code)                           CRM sandbox
+                                                                                                                                          crm_seed.json
+       (forms, imports)       event   allowed → call · blocked → log   record            reset per task                    copy
+
+
+
+
+Presenter: Srijan                                                                                                                                                            4 / 20
+COMPONENTS
+
+
+
+What each part receives and returns
+
+ Component                    Type              Input                                         Output
+
+
+ Agent (single-agent)         Pretrained LLM    System prompt + conversation + tool results   Reply text or tool calls (JSON)
+
+
+ LLM client                   Code              Neutral messages + tool schemas               Text, tool calls, tokens, latency
+
+
+ search_docs (BM25)           Code              Query text                                    Top-3 facts with IDs (F1–F5)
+
+
+ Validation layer + 9 tools   Code              Tool name + JSON arguments                    {success, …} or {success:false, error}
+
+
+ CRM sandbox                  Code              Allowed writes                                Final state, compared with gold
+
+
+ Outbound gate                Code              Event + CRM contact                           {allowed, reasons[]}
+
+
+ Simulated caller             Pretrained LLM    Caller persona and goal only                  Caller utterance or STOP
+
+
+ Evaluator + judge            Code + LLM        Final CRM, transcript, answer key             DB × COMMUNICATE × SAFETY
+
+
+ Voice (M4)                   Pretrained APIs   Audio ↔ text                                  Silero VAD, Deepgram, Cartesia, LiveKit
+
+
+
+
+Presenter: Srijan                                                                                                                       5 / 20
+MODEL INPUTS AND OUTPUTS
+
+
+
+No tensors: the model reads messages and writes text or tool calls
+
+ Item               Format                                                       Size                 One turn, step by step
+                                                                                                      1. Caller text is added to the conversation.
+ System prompt      Role, working rules, current time, all 10 S-rules with IDs   ~1,100 tokens
+                                                                                                      2. The harness checks whether it confirms the
+                                                                                                      agent’s last question (a clear “yes” after a
+ Tool schemas       JSON Schema for 9 tools; CRM fields use picklists            ~1,100 tokens        question).
+                                                                                                      3. The LLM replies with text or tool calls.
+ Retrieved facts    {results: [{id: "F2", text: …}]}, top 3                      34–116 tokens each
+                                                                                                      4. Each tool call passes the validation layer, which
+                                                                                                      runs it or refuses it with an error code.
+ Conversation       Caller / agent turns + tool calls + JSON results             ≤ 12 caller turns
+                                                                                                      5. Results go back to the LLM; up to 8 rounds per
+                                                                                                      turn.
+ Agent output       Text, or tool calls {name, arguments}; temperature 0         ≤ 800 tokens
+
+
+ Measured           Average input per agent call in the M3 run                   ~2,170 tokens        The LLM can never create the confirmation itself.
+
+
+
+
+Presenter: Srijan                                                                                                                                        6 / 20
+THE TWO DESIGNS WE COMPARE
+
+
+
+Same tools, same model, different structure
+
+   BASELINE · B0                                                                        TREATMENT · M1
+
+   Single agent · built in M3                                                           Multi-agent · built in M4
+   • One LLM holds the whole conversation                                               • Conversation agent talks to the caller
+   • Calls all 9 tools directly                                                         • Knowledge agent: grounded answers with fact IDs
+   • Fewer hops: lower latency and cost                                                 • Qualification agent: missing fields
+   • This is the baseline that ran the 10 tasks                                         • CRM / handoff planner: structured tool plans
+
+
+
+
+Both designs share the tools, validation layer, LLM, simulator and evaluator, so any difference in results comes from the structure alone (decision rule O11).
+
+
+
+
+Presenter: Srijan                                                                                                                                                7 / 20
+WHY THIS ARCHITECTURE
+
+
+
+Each choice is tied to our data, risks and budget
+
+ Decision               Our choice                    Alternative                 Why ours here
+
+
+ Business knowledge     Retrieval + rules in prompt   Fine-tune an LLM            ~15 rows per business: far too little to fine-tune; facts change
+
+
+ Retrieval              BM25, 1 row per chunk         Embeddings + vector DB      5 short facts: BM25 finds the right one, free and deterministic
+
+
+ CRM writes             Validation layer in code      LLM writes directly         Blocks wrong-record and unconfirmed writes (O2, O3)
+
+
+ Outbound calls         Deterministic gate            LLM decides                 Consent rules need 0 violations (O7); code is auditable
+
+
+ Order                  Text first, then voice        Voice from day one          Separates reasoning errors from speech errors; cheaper
+
+
+ Voice stack            Cascaded STT → LLM → TTS      Speech-to-speech model      Keeps a transcript for tools, audit and scoring
+
+
+ Evaluation             CRM end state + judge         Judge only; tool sequence   End state is objective; many correct tool orders exist
+
+
+
+
+Presenter: Srijan                                                                                                                                    8 / 20
+DATA ORGANISATION
+
+
+
+Raw data is committed; processed data is rebuilt by a script
+  milestones/M2_dataset/             raw dataset (committed)              All synthetic, all small
+  ├── solar_pilot/ (same for dental_pilot/, furniture_pilot/)
+  │   ├── knowledge.md               F1–F5 facts + S1–S10 rules           About 0.5 MB of Markdown and JSON, no
+  │   ├── crm_seed.json              12 contacts, callback, handoff       personal data, so it is committed: nothing to
+  │   ├── scenarios.json             10 tasks with gold end states        download.
+  │   └── outbound_cases.json
+  ├── generated_scenarios/           40 tasks per business
+  ├── generated_outbound_cases/      10 cases per business
+  └── generated_splits/             28 dev / 12 test per business
+
+  data/processed/solar/              git-ignored, from preprocess_m3.py
+  ├── chunks.jsonl                   15 chunks with metadata
+  ├── token_report.json
+  └── views/IN01…IN10/               4 views per task                     Formats
+                                                                          Knowledge: Markdown tables, one row per
+  experiments/runs/<run_id>/         results, final CRM, transcripts      fact or rule.
+                                                                          CRM: JSON contacts, callbacks, handoffs.
+                                                                          Tasks: caller, fixtures, gold state, required and
+                                                                          prohibited lists.
+
+
+
+
+Presenter: Sarwar Karim Akhand                                                                                           9 / 20
+PREPROCESSING
+
+
+
+Six steps, and none of them learns from data
+
+   1                             2                            3                             4                             5                            6
+   Load + check                  Chunk                        Route                         Split views                   Reset CRM                    Select
+   M2 validators still pass      1 row = 1 chunk, with ID     S-rules → prompt; F-          agent / simulator /           fresh copy of the seed       dev IDs only; test IDs
+                                 and source                   facts → BM25                  evaluator / harness           per task                     refused
+
+
+
+
+Before (knowledge.md row)                                                                 After (chunks.jsonl record)
+
+ | F1 | R1 describes site inspection covering roof type, size,                              {"business_id": "sungrid_pilot", "fact_id": "F1",
+ structural condition and panel positioning. Roof access alone does                          "kind": "sourced_fact",
+ not prove structural suitability or property permission. … |                                "sources": [{"id": "R1", "url": "https://www.solarsquare.in/",
+                                                                                               "access_date": "2026-10-29"}],
+                                                                                             "text": "R1 describes site inspection …", "approx_tokens": 60}
+
+
+
+
+No resizing, normalisation or padding: inputs are text. Nothing is fitted (no scaler, no vocabulary), so preprocessing cannot leak test information.
+
+
+
+
+Presenter: Sarwar Karim Akhand                                                                                                                                                  10 / 20
+SPLITS AND LEAKAGE
+
+
+
+We split by task and use only development tasks in M3
+
+   84                                                              36                                                             10
+   development tasks                                               test tasks                                                     tasks in the M3 run
+   28 per business, 84 in total. Used for building and             12 per business, 36 in total. Not touched in M3.               Solar IN01–IN10: all development tasks, one per
+   tuning.                                                                                                                        category.
+
+
+
+
+ Leakage risk                                            Control
+
+ Agent sees the answer key                               Separate views; code raises an error if a gold field reaches the agent
+
+ State carries between tasks                             CRM reset from the seed for every task
+
+ Test tasks used for tuning                              Run script refuses test IDs in a development run
+
+ Similar templates in dev and test                       Known gap: test set not yet protected; we will freeze a reviewed test set before M5
+
+
+
+
+Presenter: Sarwar Karim Akhand                                                                                                                                                      11 / 20
+HOW WE EVALUATE
+
+
+
+No training loss: we score behaviour and the final CRM
+
+   reward = CUSTOM_DB × COMMUNICATE × PROJECT_SAFETY
+   A task passes only if all three hold. Adapted from τ-bench: success is judged by the final database state, not by matching an exact tool sequence.
+
+
+
+
+   CUSTOM_DB                                                    COMMUNICATE                                                  PROJECT_SAFETY
+
+   CRM end state                                                Required information                                         Prohibited actions
+   Code compares the whole final CRM with                       LLM judge checks each item the caller had                    LLM judge checks forbidden promises and
+   the gold state. Objective. (O2)                              to be told. (O1, O4)                                         false “saved” claims; code logs blocked
+                                                                                                                             writes. (O3, O5)
+
+
+
+
+Why no loss: models are pretrained and used through prompts, retrieval and tools; ~15 facts and 40 tasks per business are far too few to fine-tune. In M4, “training” =
+prompt, retrieval and model experiments on development tasks.
+
+
+
+
+Presenter: Omkar Shankar Pawar                                                                                                                                            12 / 20
+PIPELINE VERIFICATION
+
+
+
+Four runs check the harness, the safety layer and a real agent
+                                                                                                                             Local LLM run: tasks passing (of 10)
+ Run                                 LLM?           Result                       What it shows                                                                       10
+                                                                                                                  10
+
+                                                                                                                   9
+ Outbound gate, 30 cases             No             30/30 match                  Gate logic matches every label
+                                                                                                                   8
+                                                                                 Tools and scorer agree with                            7
+ Oracle replay, 10 tasks             No             10/10 exact CRM                                                7
+                                                                                 the dataset                                                          6
+                                                                                                                   6
+                                                                                 Unconfirmed writes are                  5
+ Skip confirmation (control)         No             Write tasks 1/5; 6 blocked                                     5
+                                                                                 stopped
+                                                                                                                   4
+ Skip verification (control)         No             Write tasks 1/5; 6 blocked   Unverified writes are stopped
+                                                                                                                   3
+
+                                                                                                                   2
+ LLM agent, 10 tasks                 qwen3:8b       5/10 pass                    Real pipeline works end to end
+                                                                                                                   1
+
+                                                                                                                   0
+                                                                                                                       Reward     CRM end state Required info       Safety
+
+
+
+
+Pipeline check only: 10 tasks, one run each, small local model judging itself. Not the final performance.
+
+
+
+
+Presenter: Omkar Shankar Pawar                                                                                                                                            13 / 20
+SAMPLE OUTPUT AND ERROR ANALYSIS
+
+
+
+Every failure came from a missing action, never an unsafe one
+IN06 · policy handoff (passed after two blocked attempts)                                       Failure                           Tasks              Fix in M4
+ CALLER: …paid on 1 Nov at 9 AM, no engineering visit, no written
+ cancellation. Is a refund automatic?                                                           Invents IDs or emails             IN03, IN05, IN06   Ask, never guess
+ TOOL create_handoff(contact_id "contact_123") →
+ identity_not_verified
+                                                                                                Saves before collecting details   IN02               Collect, read back, then save
+ AGENT: To proceed, I need to verify your identity…
+ TOOL verify_identity(C07, pranav@…) → success
+ TOOL create_handoff(C07) → caller_confirmation_missing                                         Says it will act, doesn’t         IN05               Call the tool in the same turn
+ AGENT: Could you please confirm …?   CALLER: Yes, I confirm …
+ TOOL create_handoff(C07, …) → success, H01 = gold                                                                                                   Answer every part; offer a
+                                                                                                Leaves out required info          IN07
+                                                                                                                                                     human
+
+                                                                                                Caller ends early (simulator)     IN03               Stronger simulator
+
+                                                                                                                                                     Stronger judge + human
+                                                                                                Judge incomplete or lenient       IN01, IN09
+                                                                                                                                                     checks
+
+
+
+
+Expected (gold): verify C07, then one human policy-review handoff; no refund or cancellation promised.
+
+
+
+
+Presenter: Omkar Shankar Pawar                                                                                                                                                14 / 20
+OUTBOUND GATE
+
+
+
+Calls are allowed only when every rule passes
+                          30 cases across 3 businesses (a case can have several reasons)
+
+
+             Allowed                                                       6                   0
+No explicit consent                                                                        9
+                                                                                               disallowed calls allowed
+                                                                                               30/30 decisions and reason lists match the
+     Not allowlisted                                                       6
+                                                                                               labels.
+
+
+           Opted out                               3
+
+                                                                                               Rules (TRAI TCCCPR 2018, DPDP Act 2023 s.6)
+      Outside hours                                3
+                                                                                               Allowlisted synthetic contact · explicit voice consent
+                                                                                               · not opted out · 10:00–18:00 IST · no attempt in 24
+    Duplicate event                                3
+                                                                                               h · fewer than 2 attempts · new event ID. Unknown
+                                                                                               contacts fail closed.
+    Recent attempt                                 3
+
+
+           Retry limit                             3
+
+
+
+
+Presenter: Abhishek Jha                                                                                                                            15 / 20
+LLM PROVIDER AND COST
+
+
+
+Measured usage: about 14,000 input tokens per task
+
+ Option                     Cost per 1 M tokens (in / out)          Our use                                  Team decision: paid keys
+                                                                                                             • One small paid model for agent and caller in all
+ OpenAI API                 small ~$0.10–0.20 / $0.50–1.20          Paid candidate; adapter tested live      reported runs, same for both designs
+                                                                                                             • Hard spending cap $20 ($5 each); $40 if we pick
+ Anthropic Claude           Haiku 5.5 ~$0.10 / $0.50                Paid candidate; adapter unit-tested      a mid-size model
+                                                                                                             • Switching provider is one line in .env; no code
+ Ollama (local)             free                                    M3 verification run, offline debugging   change
+                                                                                                             • Log provider, model and date for every run
+ Groq                       free tier, daily caps                   Optional free backup
+
+                                                                                                             Prices: third-party summaries, 4 Nov 2026; confirm
+ Run                                  Tokens (in / out)      Small model             Mid model               before paying.
+
+ M3: 10 tasks (measured)              139 K / 4.7 K          ~$0.02                  ~$0.16
+
+ M5: 720 runs (projected)             ~15 M / 0.5 M          ≤ $4                    ≤ $35
+
+
+
+
+Presenter: Abhishek Jha                                                                                                                                       16 / 20
+STATUS AND LIMITATIONS
+
+
+
+What works, what is a workaround, what is not built yet
+
+ Area                                                                   Status         Note
+
+
+ Preprocessing, retrieval, CRM, tools, gate, agent, simulator, scorer   Working        Solar tools only; dental and furniture next
+
+
+ Paid LLM run                                                           Pending keys   One command once the key is in .env
+
+
+ Judge                                                                  Workaround     Same small model; stronger judge + human checks in M5
+
+
+ Confirmation                                                           Workaround     Keyword rule (“yes” after a question), not a real confirmation step
+
+
+ Test split                                                             Gap            Not yet protected; freeze before M5
+
+
+ Multi-agent design                                                     Not built      M4
+
+
+ Voice (LiveKit, VAD, STT, TTS)                                         Not built      M4; text mode stands in
+
+
+ Repeated runs (pass^3)                                                 Not run        M5
+
+
+
+
+Presenter: Abhishek Jha                                                                                                                                      17 / 20
+NEXT: MILESTONE 4
+
+
+
+One owner per area, as in our work division
+
+   Srijan                                                      Abhishek Jha
+   Multi-agent version on the same tools; prompt fixes from    Voice: LiveKit, Silero VAD, Deepgram STT, Cartesia TTS;
+   the error analysis; dental and furniture tools              latency (O9); paid-provider runs
+
+
+
+
+   Sarwar Karim Akhand                                         Omkar Shankar Pawar
+   Protected test set; near-duplicate check; human review of   Stronger judge with human spot checks; pass^3; paired
+   facts and rules                                             comparison set-up
+
+
+
+
+Presenter: Abhishek Jha                                                                                                  18 / 20
+CONTRIBUTIONS
+
+
+
+Each member explains their own work
+
+ Member                                  M3 contribution (from the work log)
+
+
+                                         Planned M3 and allocated tasks; architecture and diagrams; provider and cost research; directed and reviewed the AI-assisted pipeline
+ Abhishek Jha
+                                         build; ran the verification runs; wrote the report
+
+
+ Srijan                                  To be confirmed by Srijan before the review
+
+
+
+ Sarwar Karim Akhand                     To be confirmed by Sarwar before the review
+
+
+
+ Omkar Shankar Pawar                     To be confirmed by Omkar before the review
+
+
+
+
+AI assistants helped with drafting, coding and review, as disclosed in the report; each member is responsible for checking the work recorded under their name.
+
+
+
+
+Presenter: All                                                                                                                                                               19 / 20
+GROUP 6 · THANK YOU
+
+
+
+
+Questions?
+Live demo: python3 scripts/run_m3_pipeline.py --mode oracle                       ·   --mode llm --tasks IN06
+
+
+
+Report, work log and code: github.com/abhijha8287/Group-6-DS-and-AI-Lab-Project
+Abhishek Jha · Srijan · Sarwar Karim Akhand · Omkar Shankar Pawar
+

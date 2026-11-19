@@ -1,0 +1,13 @@
+{
+  "id": "IN05",
+  "caller": {
+    "persona": "Anika Demo seeking a survey discussion",
+    "goal": "Verify C01 and anika@example.invalid. Ask for a 30-minute callback at 17:30 Asia/Kolkata on 2026-11-03 to discuss a future roof survey. Confirm the exact time after availability is checked. Do not book an actual site visit or modify consent.",
+    "provided_fields": {
+      "contact_id": "C01",
+      "email": "anika@example.invalid",
+      "callback_at": "2026-11-03T17:30:00+05:30"
+    },
+    "confirmation": "request_callback"
+  }
+}

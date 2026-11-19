@@ -46,4 +46,4 @@ class BM25Index:
             if score > 0:
                 scored.append((score, chunk))
         scored.sort(key=lambda x: -x[0])
-        return [{"id": c["fact_id"], "text": c["text"], "score": round(s, 3)} for s, c in scored[:k]]
+        return [{**c, "id": c["fact_id"], "score": round(s, 3)} for s, c in scored[:k]]

@@ -1,0 +1,5 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hello, I have a request about my enquiry.
+TOOL verify_identity({"contact_id": "C09", "email": "samar@example.invalid"}) -> {"success": true, "verified_contact_id": "C09"}
+TOOL update_lead({"contact_id": "C09", "set": {"shading": "afternoon_water_tank_shadow"}}) -> {"success": false, "error": "caller_confirmation_missing", "atomic": true}
+AGENT: Thank you for calling. Goodbye.
