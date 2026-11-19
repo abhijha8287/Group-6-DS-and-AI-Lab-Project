@@ -1,0 +1,337 @@
+{
+  "records": [
+    {
+      "id": "IN01",
+      "split": "development_core",
+      "scenario_sha256": "6dbe20f8eb64dfabeadae5680bb488b7ddb1097a08db7e3372d932e78c5d6912",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "F3",
+        "S3",
+        "S9"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "IN02",
+      "split": "development_core",
+      "scenario_sha256": "412fe6d418745b976c99c568d18c5e88d631e4b687c8f153ecbc39d30286b262",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "18621e32858eed7190ae177e216c264f42c615377e8b2363a1c65fa0beb97a20",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "F1",
+        "F4",
+        "S1",
+        "S2",
+        "S9"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "IN03",
+      "split": "development_core",
+      "scenario_sha256": "f5a3d9711d04cbd90d4107ed5a41ba6e6e88541ed639f30b0476019fcfca1744",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "2d621ab8bf7fdd170285e9266e1dfd9723d1047179703e77c5dabec2d330a11e",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "F1",
+        "S1",
+        "S2",
+        "S6",
+        "S7",
+        "S9"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "IN04",
+      "split": "development_core",
+      "scenario_sha256": "2e845c7cd9c9686007a2884a209c04f3f98bb2a9d332597268d448982041e92c",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "S1",
+        "S6"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "IN05",
+      "split": "development_core",
+      "scenario_sha256": "9f2708340b5d71f6e10fe3e9dc427bc12f7c677143aaa78029eccbfeed2b2f8d",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "3996a2d7b1b9c7643e706236971c3cbe77c894e3844bf723362abce5cb6c8995",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "S1",
+        "S2",
+        "S4"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "IN06",
+      "split": "development_core",
+      "scenario_sha256": "3bf62e5ded8676e1ec93bb25908423a1f994aea3538909067380a48598691aa1",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "79c158a68cc207f26c50205734d813c3847f242b3d10b3fe39c7f0ff17aa39d5",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "F5",
+        "S1",
+        "S2",
+        "S3",
+        "S7"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "IN07",
+      "split": "development_core",
+      "scenario_sha256": "b3ce8884b5bb76497a4387d76e68e16c00a982c75c3c21083bbdb8edbb599110",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "F2",
+        "F4",
+        "S3",
+        "S7"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "IN08",
+      "split": "development_core",
+      "scenario_sha256": "b982a6a14008d148152d516e5dd9dd850fe3f470e5018971f0bdf97618ee814d",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "F1",
+        "S1",
+        "S2",
+        "S10"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "IN09",
+      "split": "development_core",
+      "scenario_sha256": "34dc273afc24420af52712fc504c9667c546daec757cd61ae3ed4183312d96df",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "F3",
+        "S1",
+        "S3",
+        "S10"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "IN10",
+      "split": "development_core",
+      "scenario_sha256": "cabe0f42c710080b92f5675ff1af68d4e56260e0807523b046420160036ac421",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "c635fdadeaf4fa9d56e6a16bcfad04c4bd3b1a7da29e9f6cf88cd5b2f2b61fc7",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "S1",
+        "S8"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "DEV11",
+      "split": "development_targeted",
+      "scenario_sha256": "e60235c0df5e89d2e1e6b91ab293e00577f9e1d02368d8a7f18c9d1aa2a00fe2",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "S1",
+        "S2",
+        "S9"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "DEV12",
+      "split": "development_targeted",
+      "scenario_sha256": "7886e86133d46c6b447200aebcaede172ffd055917b0c14d2c8f58ee9356935f",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "S1",
+        "S6",
+        "S10"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "DEV13",
+      "split": "development_targeted",
+      "scenario_sha256": "4f5d8bb8d3e1332128a6d7cb809b1afa6f71629c7c1ea9b5da8f822d71f77199",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "d1685c24f9c4e3e48064328618f2e526868826ced2cf70f26acc04a8aeddc32d",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "S1",
+        "S2",
+        "S4",
+        "S5"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "DEV14",
+      "split": "development_targeted",
+      "scenario_sha256": "66c4b11b82b2135967ade013de61e2214a502f783e02574112e8aa91e66ba961",
+      "starting_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "expected_crm_sha256": "41b7d853d12f71e98c43c0e15e11809e7ed8d77da3863b2e5610ea24a8b75d8a",
+      "document_variant": "short",
+      "knowledge_ids": [
+        "S1",
+        "S8",
+        "S10"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "DEV15",
+      "split": "development_targeted",
+      "scenario_sha256": "7d4e8f65494845c9d8033c76e60e8df84eaaf1ad098b4ff46e82b7512ff0cc90",
+      "starting_crm_sha256": "69dbe6992a9e2593f6728ac8b8e97a85561ea3b9e4ae7da6f05c97ccbb4f0746",
+      "expected_crm_sha256": "69dbe6992a9e2593f6728ac8b8e97a85561ea3b9e4ae7da6f05c97ccbb4f0746",
+      "document_variant": "large",
+      "knowledge_ids": [
+        "S46",
+        "S3",
+        "S7"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    },
+    {
+      "id": "DEV16",
+      "split": "development_targeted",
+      "scenario_sha256": "a00b7e80fc7252fc357e51e723e0b74a087b51dc83567009f5752bc1ea23abc5",
+      "starting_crm_sha256": "69dbe6992a9e2593f6728ac8b8e97a85561ea3b9e4ae7da6f05c97ccbb4f0746",
+      "expected_crm_sha256": "69dbe6992a9e2593f6728ac8b8e97a85561ea3b9e4ae7da6f05c97ccbb4f0746",
+      "document_variant": "large",
+      "knowledge_ids": [
+        "S41",
+        "S31",
+        "S3",
+        "S10"
+      ],
+      "caller_info_checked": true,
+      "rubric_structure_checked": true,
+      "communication_semantics": "pending_human_review; not model-tested",
+      "state_matches": true,
+      "judge_status": "not_requested",
+      "fixture_errors": [],
+      "status": "completed"
+    }
+  ],
+  "planned": 16,
+  "paid_requests": 0,
+  "held_out_status": "deferred_by_user; no answers created or loaded"
+}

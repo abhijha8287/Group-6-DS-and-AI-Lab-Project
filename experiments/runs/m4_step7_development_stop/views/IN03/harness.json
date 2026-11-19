@@ -1,0 +1,24 @@
+{
+  "id": "IN03",
+  "environment": {
+    "identity_fixture": {
+      "contact_id": "C03",
+      "email": "kiran.b@example.invalid",
+      "verification_succeeds": true
+    }
+  },
+  "tool_results": {
+    "verify_identity": {
+      "success": true,
+      "verified_contact_id": "C03"
+    },
+    "update_lead": {
+      "success": true,
+      "contact_id": "C03"
+    },
+    "create_handoff": {
+      "success": true,
+      "id": "H01"
+    }
+  }
+}

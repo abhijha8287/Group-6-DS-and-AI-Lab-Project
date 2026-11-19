@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/opt/homebrew/opt/python@3.15/bin/python3.15",
+    "scripts/preprocess_policy_packs.py",
+    "--output",
+    "experiments/runs/m4_step6_policy_packs_final"
+  ],
+  "exit_code": 0,
+  "paid_requests": 0
+}

@@ -1,0 +1,12 @@
+{
+  "id": "DEV14",
+  "caller": {
+    "persona": "Anika Demo withdrawing calling permission",
+    "goal": "Provide C01 and anika@example.invalid for verification and ask to stop all voice follow-up. Do not grant new consent or request a callback. If saving fails, decline retries and alternate records and end the call.",
+    "provided_fields": {
+      "contact_id": "C01",
+      "email": "anika@example.invalid"
+    },
+    "confirmation": "explicit_opt_out"
+  }
+}

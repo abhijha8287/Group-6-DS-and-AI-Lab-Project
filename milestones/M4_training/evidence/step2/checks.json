@@ -1,0 +1,103 @@
+[
+  {
+    "name": "unit-tests",
+    "command": "python3 -m unittest discover -s tests -v",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "commit": "4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9",
+    "started_at_utc": "2026-11-19T10:29:51.753975+00:00",
+    "finished_at_utc": "2026-11-19T10:29:51.838760+00:00",
+    "exit_code": 0,
+    "log": "unit-tests.log",
+    "executed_tests": 24,
+    "skipped_tests": 0
+  },
+  {
+    "name": "preprocess-solar",
+    "command": "python3 scripts/preprocess_m3.py --business solar",
+    "argv": [
+      "python3",
+      "scripts/preprocess_m3.py",
+      "--business",
+      "solar"
+    ],
+    "commit": "4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9",
+    "started_at_utc": "2026-11-19T10:29:51.839098+00:00",
+    "finished_at_utc": "2026-11-19T10:29:51.872429+00:00",
+    "exit_code": 0,
+    "log": "preprocess-solar.log"
+  },
+  {
+    "name": "outbound-gate",
+    "command": "python3 scripts/run_outbound_gate.py --out experiments/runs/m4_step2_outbound_gate",
+    "argv": [
+      "python3",
+      "scripts/run_outbound_gate.py",
+      "--out",
+      "experiments/runs/m4_step2_outbound_gate"
+    ],
+    "commit": "4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9",
+    "started_at_utc": "2026-11-19T10:29:51.872633+00:00",
+    "finished_at_utc": "2026-11-19T10:29:51.909649+00:00",
+    "exit_code": 0,
+    "log": "outbound-gate.log"
+  },
+  {
+    "name": "oracle",
+    "command": "python3 scripts/run_m3_pipeline.py --mode oracle --run-id m4_step2_oracle",
+    "argv": [
+      "python3",
+      "scripts/run_m3_pipeline.py",
+      "--mode",
+      "oracle",
+      "--run-id",
+      "m4_step2_oracle"
+    ],
+    "commit": "4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9",
+    "started_at_utc": "2026-11-19T10:29:51.909975+00:00",
+    "finished_at_utc": "2026-11-19T10:29:51.966904+00:00",
+    "exit_code": 0,
+    "log": "oracle.log"
+  },
+  {
+    "name": "control-confirmation",
+    "command": "python3 scripts/run_m3_pipeline.py --mode control_skip_confirmation --run-id m4_step2_control_skip_confirmation",
+    "argv": [
+      "python3",
+      "scripts/run_m3_pipeline.py",
+      "--mode",
+      "control_skip_confirmation",
+      "--run-id",
+      "m4_step2_control_skip_confirmation"
+    ],
+    "commit": "4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9",
+    "started_at_utc": "2026-11-19T10:29:51.967125+00:00",
+    "finished_at_utc": "2026-11-19T10:29:52.019428+00:00",
+    "exit_code": 0,
+    "log": "control-confirmation.log"
+  },
+  {
+    "name": "control-verification",
+    "command": "python3 scripts/run_m3_pipeline.py --mode control_skip_verification --run-id m4_step2_control_skip_verification",
+    "argv": [
+      "python3",
+      "scripts/run_m3_pipeline.py",
+      "--mode",
+      "control_skip_verification",
+      "--run-id",
+      "m4_step2_control_skip_verification"
+    ],
+    "commit": "4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9",
+    "started_at_utc": "2026-11-19T10:29:52.019677+00:00",
+    "finished_at_utc": "2026-11-19T10:29:52.070652+00:00",
+    "exit_code": 0,
+    "log": "control-verification.log"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "R1": {
+    "url": "https://www.solarsquare.in/",
+    "historical_access_date": "2026-10-29",
+    "permission_status": "unknown/not_granted",
+    "license": "unknown",
+    "reuse_basis": "narrow factual paraphrase from existing repository; no source prose copied",
+    "human_review": "pending",
+    "inherited_claim_ids": ["F1", "F2", "F3", "F4"]
+  },
+  "R2": {
+    "url": "https://www.solarsquare.in/cancellation-policy/",
+    "historical_access_date": "2026-10-29",
+    "permission_status": "unknown/not_granted",
+    "license": "unknown",
+    "reuse_basis": "narrow factual paraphrase from existing repository; no source prose copied",
+    "human_review": "pending",
+    "inherited_claim_ids": ["F5"]
+  },
+  "SYNTHETIC": {
+    "permission_status": "original_project_draft",
+    "license": "original project draft; no external rights implied",
+    "human_review": "pending",
+    "scope": "Fictional SunGrid sandbox policy sections S1-S48; no external source or legal authority is implied."
+  }
+}

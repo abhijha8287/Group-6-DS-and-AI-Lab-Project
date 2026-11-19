@@ -1,0 +1,16 @@
+{
+  "integrity": "pass",
+  "execution_allowed": false,
+  "core_cells": 8,
+  "core_planned_attempts": 240,
+  "targeted_validation_attempts": 24,
+  "blockers": [
+    "explicit paid batch approval absent",
+    "semantic source/scenario and relevance review pending",
+    "judge calibration and pending historical adjudications unresolved",
+    "comparison runner and normalized annotation/telemetry export not implemented",
+    "M1 architecture not implemented or code/prompt frozen",
+    "second model not enabled in cost catalog; both snapshots deprecated and access must be checked with approval",
+    "voice and independent heldout explicitly excluded"
+  ]
+}

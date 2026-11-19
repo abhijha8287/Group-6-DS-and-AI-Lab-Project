@@ -59,3 +59,22 @@ Status: text-mode pipeline implemented and verified on 10 solar development task
 | Abhishek Jha (A.J.) | Planned M3 and allocated tasks; designed the architecture and drew the data-flow, evaluation-harness and single vs multi-agent diagrams; researched LLM provider options and costs and led the paid-key decision; directed and reviewed the AI-assisted implementation of the text-mode pipeline (preprocessing, BM25 retrieval, CRM sandbox and validation layer, outbound gate, provider-neutral LLM client, single agent, simulated caller, evaluator, 17 tests); ran the outbound-gate, oracle, negative-control and local LLM verification runs; wrote the M3 report. | 6–7 |
 | Sarwar Karim Akhand (S.K.A.) | Implemented M3 preprocessing validation, knowledge chunking, business isolation, task-view separation, token estimation, and source-reference validation across Solar, Dental and Furniture datasets; added tests (24/24 passed). | 2–3 |
 | Omkar Shankar Pawar (O.S.P.) | Developed evaluation methodologies, analyzed pipeline results, and conducted error analysis to assess model performance and identify areas for improvement. | 4–5 |
+
+## Milestone 4: Development and Experimental Preparation (due 19 Nov 2026)
+
+Status: partial milestone; text reliability, development fixtures, measurement planning and two bounded paid diagnostics are documented. Multi-agent, voice, controlled comparisons and protected held-out evaluation remain incomplete. See the [M4 report](milestones/M4_training/report.md) and [dated progress/evidence](milestones/M4_training/progress.md). The latest saved offline suite records 124 passed, zero skipped; it was not rerun for this documentation update.
+
+| Member | Contributions | Approx. hours |
+|---|---|---|
+| Srijan (S.) | Directed the AI-assisted M4 workflow and scope decisions; selected local LiveKit with direct OpenAI Realtime as the future voice direction; approved two capped read-only text diagnostics; selected development-only preparation and deferred protected holdout; requested preparation of the M4 report, worklog and his acknowledgement. Selected policy self-review, but that review remains pending. Implementation, tests, fixtures, technical reviews and document drafts were AI-assisted, not claimed as manually authored code. | Not recorded |
+| Abhishek Jha (A.J.) | M4 contribution details and personal confirmation pending. | Not recorded |
+| Sarwar Karim Akhand (S.K.A.) | M4 contribution details and personal confirmation pending. | Not recorded |
+| Omkar Shankar Pawar (O.S.P.) | M4 contribution details and personal confirmation pending. | Not recorded |
+
+### Decisions and acknowledgement
+
+- **19 Nov 2026:** Srijan requested the M4 report, worklog update and his own member acknowledgement. His initials **S.** are entered at his explicit request in the [M4 acknowledgement table](milestones/M4_training/report.md#12-member-acknowledgement); this was assistant-entered, not a personal Git commit or whole-team approval.
+- Saved diagnostics consumed their approvals: the first failed strict judge validation; the second passed a read-only diagnostic. Both remain in the evidence, with cumulative application usage-priced cost estimate **$0.00044985**, not verified provider billing. No further paid batch is authorized.
+- Human judge adjudications, source/policy/relevance review, other members' contributions/signatures and final submission verification remain pending. No hours, meetings, completed human reviews or other members' signatures are inferred from AI-generated artifacts.
+
+Historical milestone entries are unchanged. AI tools assisted code, tests, synthetic data, reviews and documentation; passing checks and AI review do not constitute human semantic approval or completed voice/architecture evaluation.

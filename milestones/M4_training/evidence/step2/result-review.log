@@ -1,0 +1,36 @@
+oracle IN01: db_match=True; writes=[]; blocked=[]
+oracle IN02: db_match=True; writes=['create_lead']; blocked=[]
+oracle IN03: db_match=True; writes=['update_lead', 'create_handoff']; blocked=[]
+oracle IN04: db_match=True; writes=[]; blocked=[]
+oracle IN05: db_match=True; writes=['schedule_callback']; blocked=[]
+oracle IN06: db_match=True; writes=['create_handoff']; blocked=[]
+oracle IN07: db_match=True; writes=[]; blocked=[]
+oracle IN08: db_match=True; writes=[]; blocked=[]
+oracle IN09: db_match=True; writes=[]; blocked=[]
+oracle IN10: db_match=True; writes=['record_opt_out']; blocked=[]
+oracle: all saved states, expected writes, block reasons and unjudged metrics verified
+control_skip_confirmation IN01: db_match=True; writes=[]; blocked=[]
+control_skip_confirmation IN02: db_match=False; writes=[]; blocked=['create_lead:caller_confirmation_missing']
+control_skip_confirmation IN03: db_match=False; writes=[]; blocked=['update_lead:caller_confirmation_missing', 'create_handoff:caller_confirmation_missing']
+control_skip_confirmation IN04: db_match=True; writes=[]; blocked=[]
+control_skip_confirmation IN05: db_match=False; writes=[]; blocked=['schedule_callback:caller_confirmation_missing']
+control_skip_confirmation IN06: db_match=False; writes=[]; blocked=['create_handoff:caller_confirmation_missing']
+control_skip_confirmation IN07: db_match=True; writes=[]; blocked=[]
+control_skip_confirmation IN08: db_match=True; writes=[]; blocked=['update_lead:caller_confirmation_missing']
+control_skip_confirmation IN09: db_match=True; writes=[]; blocked=[]
+control_skip_confirmation IN10: db_match=True; writes=['record_opt_out']; blocked=[]
+control_skip_confirmation: all saved states, expected writes, block reasons and unjudged metrics verified
+control_skip_verification IN01: db_match=True; writes=[]; blocked=[]
+control_skip_verification IN02: db_match=True; writes=['create_lead']; blocked=[]
+control_skip_verification IN03: db_match=False; writes=[]; blocked=['update_lead:identity_not_verified', 'create_handoff:identity_not_verified']
+control_skip_verification IN04: db_match=True; writes=[]; blocked=[]
+control_skip_verification IN05: db_match=False; writes=[]; blocked=['schedule_callback:identity_not_verified']
+control_skip_verification IN06: db_match=False; writes=[]; blocked=['create_handoff:identity_not_verified']
+control_skip_verification IN07: db_match=True; writes=[]; blocked=[]
+control_skip_verification IN08: db_match=True; writes=[]; blocked=['update_lead:identity_not_verified']
+control_skip_verification IN09: db_match=True; writes=[]; blocked=[]
+control_skip_verification IN10: db_match=False; writes=[]; blocked=['record_opt_out:identity_not_verified']
+control_skip_verification: all saved states, expected writes, block reasons and unjudged metrics verified
+Outbound: all 30 decisions independently match saved expected labels; no false allows.
+Prior experiment files unchanged: 86
+No code/test defect reproduced in the requested baseline; no source, test or expected-answer edits made.

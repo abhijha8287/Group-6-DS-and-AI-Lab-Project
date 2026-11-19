@@ -1,0 +1,35 @@
+{
+  "at_utc": "2026-11-19T11:49:27.517820+00:00",
+  "exports": [
+    {
+      "source": "/var/folders/wg/c0d7s4r53kxfcdy74t3pyynm0000gn/T/pi-subagents-501/Users-srijan-projects-Group-6-DS-and-AI-Lab-Project/01a1f34c-14c2-7280-8ade-bc6d4923e676/tasks/73184b04-9ca5-4c1.output",
+      "target": "milestones/M4_training/evidence/step5/research-agent-conversation.jsonl",
+      "rows": 53,
+      "bytes": 149175,
+      "policy": "Visible conversation/tool records; private reasoning/signatures omitted; known environment secrets redacted"
+    },
+    {
+      "source": "/var/folders/wg/c0d7s4r53kxfcdy74t3pyynm0000gn/T/pi-subagents-501/Users-srijan-projects-Group-6-DS-and-AI-Lab-Project/01a1f34c-14c2-7280-8ade-bc6d4923e676/tasks/ace49502-f80b-4dc.output",
+      "target": "milestones/M4_training/evidence/step5/budget-agent-conversation.jsonl",
+      "rows": 27,
+      "bytes": 69258,
+      "policy": "Visible conversation/tool records; private reasoning/signatures omitted; known environment secrets redacted"
+    },
+    {
+      "source": "/var/folders/wg/c0d7s4r53kxfcdy74t3pyynm0000gn/T/pi-subagents-501/Users-srijan-projects-Group-6-DS-and-AI-Lab-Project/01a1f34c-14c2-7280-8ade-bc6d4923e676/tasks/5837ed6d-a35c-47d.output",
+      "target": "milestones/M4_training/evidence/step5/review-agent-conversation.jsonl",
+      "rows": 25,
+      "bytes": 189536,
+      "policy": "Visible conversation/tool records; private reasoning/signatures omitted; known environment secrets redacted"
+    },
+    {
+      "source": "/Users/srijan/.pi/agent/sessions/--Users-srijan-projects-Group-6-DS-and-AI-Lab-Project--/2026-11-19T10-13-31-971Z_01a1f34c-14c2-7280-8ade-bc6d4923e676.jsonl",
+      "target": "milestones/M4_training/evidence/step5/agent-session.jsonl",
+      "rows": 642,
+      "bytes": 1923257,
+      "policy": "Visible conversation/tool records; private reasoning/signatures omitted; known environment secrets redacted"
+    }
+  ],
+  "secret_replacements": 0,
+  "scope": "Pi harness usage metadata, where present, is not project API-key usage; snapshot excludes this helper result and later final reply"
+}

@@ -1,0 +1,5 @@
+{
+  "crm_diff": [],
+  "scorer_note": "Common strict validator unchanged; explicit nonempty non-violation instruction added. Not calibrated/human-adjudicated.",
+  "comparison_scope": "diagnostic only; outside frozen comparison matrix; that source freeze now detects drift"
+}

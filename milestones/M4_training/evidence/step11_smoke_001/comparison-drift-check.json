@@ -1,0 +1,6 @@
+{
+  "command": "python3 scripts/check_comparison_freeze.py",
+  "exit_code": 1,
+  "expected_exit_code": 1,
+  "reason": "Authorized diagnostic adds source files/optional common helper arguments; comparison v1 preserved, not silently rewritten; prospective amendment needed before any comparison."
+}

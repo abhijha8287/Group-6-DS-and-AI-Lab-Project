@@ -1,0 +1,20 @@
+{
+  "id": "IN06",
+  "environment": {
+    "identity_fixture": {
+      "contact_id": "C07",
+      "email": "pranav@example.invalid",
+      "verification_succeeds": true
+    }
+  },
+  "tool_results": {
+    "verify_identity": {
+      "success": true,
+      "verified_contact_id": "C07"
+    },
+    "create_handoff": {
+      "success": true,
+      "id": "H01"
+    }
+  }
+}

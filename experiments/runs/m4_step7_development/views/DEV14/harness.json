@@ -1,0 +1,21 @@
+{
+  "id": "DEV14",
+  "environment": {
+    "identity_fixture": {
+      "contact_id": "C01",
+      "email": "anika@example.invalid",
+      "verification_succeeds": true
+    }
+  },
+  "tool_results": {
+    "verify_identity": {
+      "success": true,
+      "verified_contact_id": "C01"
+    },
+    "record_opt_out": {
+      "success": false,
+      "error": "fixture_atomic_write_failed",
+      "atomic": true
+    }
+  }
+}

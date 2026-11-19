@@ -18,6 +18,7 @@ from __future__ import annotations
 import re
 
 from voice_agent.data.loader import BusinessPack
+from voice_agent.utils.common import deep_copy
 
 ROW = re.compile(r"^\|\s*([FSR]\d+)\s*\|\s*(.+?)\s*\|\s*$")
 URL = re.compile(r"https?://\S+?(?=\s*\|)")
@@ -87,16 +88,26 @@ def validate_knowledge_sources(pack: BusinessPack) -> None:
             )
 
 
-def chunk_knowledge(pack: BusinessPack) -> list[dict]:
+def chunk_knowledge(pack: BusinessPack, *, document_id: str | None = None) -> list[dict]:
     sources = _sources(pack.knowledge_md)
+    document_id = document_id if document_id is not None else f"{pack.key}/knowledge"
+    if not isinstance(document_id, str) or not document_id.strip() or "#" in document_id:
+        raise ValueError("document_id must be nonempty and cannot contain #")
     chunks = []
+    seen = set()
     for line in pack.knowledge_md.splitlines():
         match = ROW.match(line.strip())
         if not match or match.group(1).startswith("R"):
             continue
         fact_id, text = match.group(1), match.group(2).strip()
+        if fact_id in seen:
+            raise ValueError(f"Duplicate knowledge section: {fact_id}")
+        seen.add(fact_id)
         cited = sorted(set(re.findall(r"\bR\d+\b", text)))
         chunks.append({
+            "document_id": document_id,
+            "section_id": fact_id,
+            "chunk_id": f"{document_id}#{fact_id}",
             "business_id": pack.seed["business_id"],
             "fact_id": fact_id,
             "kind": "sourced_fact" if fact_id.startswith("F") else "sandbox_rule",
@@ -108,7 +119,7 @@ def chunk_knowledge(pack: BusinessPack) -> list[dict]:
 
 
 def task_views(task: dict) -> dict:
-    """Split one scenario into the three views required by the dataset contract."""
+    """Copy one scenario into agent, simulator, evaluator and trusted-harness views."""
     # The agent gets nothing task-specific beyond an ID: its knowledge and tools are
     # the same for every task, and everything else arrives through the conversation.
     agent = {"id": task["id"]}
@@ -121,11 +132,42 @@ def task_views(task: dict) -> dict:
         "evaluation_criteria": task["evaluation_criteria"],
     }
     harness = {"id": task["id"], "environment": task["environment"], "tool_results": task["tool_results"]}
-    return {"agent": agent, "simulator": simulator, "evaluator": evaluator, "harness": harness}
+    return {role: deep_copy(view) for role, view in
+            {"agent": agent, "simulator": simulator, "evaluator": evaluator, "harness": harness}.items()}
 
 
 def check_views(views: dict) -> None:
     """Fail loudly if any answer-key field could reach the agent."""
-    leaked = AGENT_FORBIDDEN & set(views["agent"])
-    if leaked:
-        raise AssertionError(f"Agent view leaks {sorted(leaked)}")
+    fields = {
+        "agent": {"id"}, "simulator": {"id", "caller"},
+        "evaluator": {"id", "gold", "required_information", "prohibited_actions", "evaluation_criteria"},
+        "harness": {"id", "environment", "tool_results"},
+    }
+    if (not isinstance(views, dict) or set(views) != set(fields)
+            or any(not isinstance(v, dict) for v in views.values())):
+        raise AssertionError("Exactly four role dictionaries are required")
+    task_id = views["agent"].get("id")
+    if not isinstance(task_id, str) or not task_id.strip():
+        raise AssertionError("Agent task ID must be nonempty text, never a nested payload")
+    for role, allowed in fields.items():
+        if set(views[role]) != allowed or views[role]["id"] != task_id:
+            raise AssertionError(f"Invalid {role} view fields or mismatched task ID")
+    caller = views["simulator"]["caller"]
+    if not isinstance(caller, dict) or set(caller) != {"persona", "goal", "provided_fields", "confirmation"}:
+        raise AssertionError("Simulator must receive only the caller contract")
+    if (not isinstance(caller["provided_fields"], dict)
+            or any(not isinstance(caller[k], str) for k in ("persona", "goal", "confirmation"))):
+        raise AssertionError("Invalid caller field types")
+    private = AGENT_FORBIDDEN | {"identity_fixture", "verification_succeeds", "expected_final_state", "expected_answer"}
+
+    def check_public(value):
+        if isinstance(value, dict):
+            if private & set(value):
+                raise AssertionError("Privileged fields in simulator view")
+            for child in value.values():
+                check_public(child)
+        elif isinstance(value, list):
+            for child in value:
+                check_public(child)
+
+    check_public(caller)

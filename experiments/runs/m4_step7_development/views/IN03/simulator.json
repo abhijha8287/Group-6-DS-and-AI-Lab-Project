@@ -1,0 +1,13 @@
+{
+  "id": "IN03",
+  "caller": {
+    "persona": "Kiran Demo, C03, a tenant with a metal-sheet roof",
+    "goal": "Verify C03 and kiran.b@example.invalid. Explain that the landlord has not yet provided written permission; roof access does not mean permission. Confirm changing only roof_permission to landlord_approval_pending and separately confirm a human engineering/permission handoff. Do not request a callback or reconfirm other seed fields.",
+    "provided_fields": {
+      "contact_id": "C03",
+      "email": "kiran.b@example.invalid",
+      "roof_permission": "landlord_approval_pending"
+    },
+    "confirmation": "update_roof_permission_and_record_handoff"
+  }
+}

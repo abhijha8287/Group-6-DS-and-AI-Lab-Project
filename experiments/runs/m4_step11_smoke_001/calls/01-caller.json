@@ -1,0 +1,30 @@
+{
+  "stage": "caller",
+  "events": [
+    {
+      "event": "request",
+      "request_id": "step11_smoke_001-1",
+      "role": "SIMULATOR",
+      "attempt": 0,
+      "payload": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "messages": [
+          {
+            "role": "user",
+            "content": "For a synthetic SunGrid Rooftop Solar test, write one brief caller question asking whether subsidy approval is guaranteed. Return only the caller's utterance. No personal data or real contact."
+          }
+        ],
+        "temperature": 0.0,
+        "max_completion_tokens": 200,
+        "service_tier": "default",
+        "n": 1
+      }
+    },
+    {
+      "event": "response",
+      "request_id": "step11_smoke_001-1",
+      "http_status": 200,
+      "raw_response": "{\n  \"id\": \"chatcmpl-Em0bLDrWyJBTak6uqr0scLqQlYwLs\",\n  \"object\": \"chat.completion\",\n  \"created\": 1795110763,\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"Is the approval for the solar subsidy guaranteed?\",\n        \"refusal\": null,\n        \"annotations\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 45,\n    \"completion_tokens\": 9,\n    \"total_tokens\": 54,\n    \"prompt_tokens_details\": {\n      \"cached_tokens\": 0,\n      \"audio_tokens\": 0\n    },\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0,\n      \"audio_tokens\": 0,\n      \"accepted_prediction_tokens\": 0,\n      \"rejected_prediction_tokens\": 0\n    }\n  },\n  \"service_tier\": \"default\",\n  \"system_fingerprint\": \"fp_b4300b0f11\"\n}\n"
+    }
+  ]
+}

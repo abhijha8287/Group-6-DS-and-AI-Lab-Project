@@ -1,0 +1,16 @@
+Repository baseline (recorded after read-only inspection; initial status had only the two user-owned files listed below)
+UTC 2026-11-19T10:15:00Z
+$ git branch --show-current
+srijan-m4
+$ git status --short
+ M milestones/M4_training/README.md
+?? milestones/M4_training/STEP_BY_STEP_PROMPTS.md
+?? milestones/M4_training/evidence/
+$ git rev-parse HEAD origin/main
+4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9
+4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9
+$ git rev-list --left-right --count HEAD...origin/main
+0	0
+$ git log --oneline HEAD..origin/main
+$ git diff --stat HEAD...origin/main
+Earlier fetch completed successfully: git fetch origin main; no merge/reset/checkout performed.

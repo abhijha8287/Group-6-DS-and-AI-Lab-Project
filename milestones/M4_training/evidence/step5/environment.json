@@ -1,0 +1,40 @@
+{
+  "at_utc": "2026-11-19T11:07:58.159698+00:00",
+  "python": "3.15.2 (main, Oct 25 2026, 16:57:51) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "commit": "4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9",
+  "executables": {
+    "ollama": null,
+    "livekit-server": null,
+    "lk": null,
+    "docker": "/usr/local/bin/docker"
+  },
+  "configuration_presence_only": {
+    "OPENAI_API_KEY": true,
+    "LLM_PROVIDER": false,
+    "LLM_MODEL": false,
+    "LIVEKIT_URL": false,
+    "LIVEKIT_API_KEY": false,
+    "LIVEKIT_API_SECRET": false,
+    "DEEPGRAM_API_KEY": false,
+    "CARTESIA_API_KEY": false
+  },
+  "distributions": {
+    "livekit": null,
+    "livekit-agents": null,
+    "livekit-plugins-openai": null,
+    "openai": null,
+    "tiktoken": null,
+    "pytest": null
+  },
+  "ollama_tags": {
+    "reachable": false,
+    "error_type": "URLError",
+    "error": "<urlopen error [Errno 61] Connection refused>"
+  },
+  "livekit_local_health": {
+    "reachable": false,
+    "error_type": "URLError",
+    "error": "<urlopen error [Errno 61] Connection refused>"
+  }
+}

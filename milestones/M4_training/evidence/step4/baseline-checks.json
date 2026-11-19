@@ -1,0 +1,18 @@
+[
+  {
+    "command": "python3 scripts/run_m3_pipeline.py --mode oracle --run-id m4_step4_oracle",
+    "exit_code": 0
+  },
+  {
+    "command": "python3 scripts/run_m3_pipeline.py --mode control_skip_confirmation --run-id m4_step4_control_skip_confirmation",
+    "exit_code": 0
+  },
+  {
+    "command": "python3 scripts/run_m3_pipeline.py --mode control_skip_verification --run-id m4_step4_control_skip_verification",
+    "exit_code": 0
+  },
+  {
+    "command": "python3 scripts/run_outbound_gate.py --out experiments/runs/m4_step4_outbound_gate",
+    "exit_code": 0
+  }
+]

@@ -61,7 +61,11 @@ def load_business(key: str, expanded: bool = False) -> BusinessPack:
 
 
 def select_tasks(pack: BusinessPack, ids: list[str] | None = None, split: str = "dev") -> list[dict]:
-    """Return tasks from one split only. Test IDs are refused unless split='test'."""
+    """Select a legacy review partition, not an independently protected holdout.
+
+    The M2 manifest marks both partitions review_only. The historical 'test'
+    name is retained for compatibility; it is not evidence of unseen data.
+    """
     allowed = set(pack.dev_ids if split == "dev" else pack.test_ids)
     chosen = ids or [t["id"] for t in pack.scenarios if t["id"] in allowed]
     leaked = [i for i in chosen if i not in allowed]

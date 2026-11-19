@@ -1,0 +1,55 @@
+$ python3 -m unittest discover -s tests -v
+test_failed_replace_does_not_truncate_prior_checkpoint (test_evaluation_reliability.TestAtomicWrites.test_failed_replace_does_not_truncate_prior_checkpoint) ... ok
+test_component_exception_is_not_a_scored_agent_failure (test_evaluation_reliability.TestEpisodeRetention.test_component_exception_is_not_a_scored_agent_failure) ... ok
+test_failed_checkpoint_keeps_prior_and_current_tasks (test_evaluation_reliability.TestEpisodeRetention.test_failed_checkpoint_keeps_prior_and_current_tasks) ... ok
+test_invalid_judgments_keep_both_tasks_and_refuse_run_overwrite (test_evaluation_reliability.TestEpisodeRetention.test_invalid_judgments_keep_both_tasks_and_refuse_run_overwrite) ... ok
+test_partial_run_has_no_whole_run_success_metrics (test_evaluation_reliability.TestEpisodeRetention.test_partial_run_has_no_whole_run_success_metrics) ... ok
+test_partial_tool_trace_survives_agent_transport_failure (test_evaluation_reliability.TestEpisodeRetention.test_partial_tool_trace_survives_agent_transport_failure) ... ok
+test_preprocessing_failure_keeps_attempt_manifest (test_evaluation_reliability.TestEpisodeRetention.test_preprocessing_failure_keeps_attempt_manifest) ... ok
+test_projection_failure_keeps_canonical_checkpoint_with_state (test_evaluation_reliability.TestEpisodeRetention.test_projection_failure_keeps_canonical_checkpoint_with_state) ... ok
+test_repeat_stop_and_judge_failure_have_separate_causes (test_evaluation_reliability.TestEpisodeRetention.test_repeat_stop_and_judge_failure_have_separate_causes) ... ok
+test_scoring_error_preserves_current_trace_and_state (test_evaluation_reliability.TestEpisodeRetention.test_scoring_error_preserves_current_trace_and_state) ... ok
+test_summary_reports_invalid_coverage_without_silent_exclusion (test_evaluation_reliability.TestEpisodeRetention.test_summary_reports_invalid_coverage_without_silent_exclusion) ... ok
+test_trace_error_and_transport_failure_both_classified (test_evaluation_reliability.TestEpisodeRetention.test_trace_error_and_transport_failure_both_classified) ... ok
+test_unknown_write_task_coverage_cannot_report_perfect_rate (test_evaluation_reliability.TestEpisodeRetention.test_unknown_write_task_coverage_cannot_report_perfect_rate) ... ok
+test_deterministic_state_and_tools_survive_invalid_judgment (test_evaluation_reliability.TestJudgeValidation.test_deterministic_state_and_tools_survive_invalid_judgment) ... ok
+test_empty_rubrics_accept_only_empty_groups (test_evaluation_reliability.TestJudgeValidation.test_empty_rubrics_accept_only_empty_groups) ... ok
+test_infrastructure_error_is_not_invalid_verdict_or_agent_failure (test_evaluation_reliability.TestJudgeValidation.test_infrastructure_error_is_not_invalid_verdict_or_agent_failure) ... ok
+test_invalid_verdicts_are_evaluation_errors_not_agent_failures (test_evaluation_reliability.TestJudgeValidation.test_invalid_verdicts_are_evaluation_errors_not_agent_failures) ... ok
+test_malformed_json_root_and_duplicate_json_keys (test_evaluation_reliability.TestJudgeValidation.test_malformed_json_root_and_duplicate_json_keys) ... ok
+test_no_judge_is_explicitly_unjudged (test_evaluation_reliability.TestJudgeValidation.test_no_judge_is_explicitly_unjudged) ... ok
+test_prompt_requires_spoken_information_not_silence_or_retrieval (test_evaluation_reliability.TestJudgeValidation.test_prompt_requires_spoken_information_not_silence_or_retrieval) ... ok
+test_saved_in01_is_invalid_but_in09_still_needs_semantic_review (test_evaluation_reliability.TestJudgeValidation.test_saved_in01_is_invalid_but_in09_still_needs_semantic_review) ... ok
+test_valid_boolean_scores_and_out_of_order_ids (test_evaluation_reliability.TestJudgeValidation.test_valid_boolean_scores_and_out_of_order_ids) ... ok
+test_agent_view_has_no_answer_key (test_m3_pipeline.TestData.test_agent_view_has_no_answer_key) ... ok
+test_chunks_one_per_row (test_m3_pipeline.TestData.test_chunks_one_per_row) ... ok
+test_retrieval_finds_blackout_fact (test_m3_pipeline.TestData.test_retrieval_finds_blackout_fact) ... ok
+test_test_split_refused_for_dev_runs (test_m3_pipeline.TestData.test_test_split_refused_for_dev_runs) ... ok
+test_caller_turn_limit_excludes_greeting_replies_and_tools (test_m3_pipeline.TestEndToEndWithoutLLM.test_caller_turn_limit_excludes_greeting_replies_and_tools) ... ok
+test_expected_state_keeps_history (test_m3_pipeline.TestEndToEndWithoutLLM.test_expected_state_keeps_history) ... ok
+test_oracle_reproduces_every_gold_state (test_m3_pipeline.TestEndToEndWithoutLLM.test_oracle_reproduces_every_gold_state) ... ok
+test_skipping_confirmation_is_blocked (test_m3_pipeline.TestEndToEndWithoutLLM.test_skipping_confirmation_is_blocked) ... ok
+test_all_30_cases_match_labels (test_m3_pipeline.TestOutboundGate.test_all_30_cases_match_labels) ... ok
+test_hours_checked_in_india_time (test_m3_pipeline.TestOutboundGate.test_hours_checked_in_india_time) ... ok
+test_unknown_contact_fails_closed (test_m3_pipeline.TestOutboundGate.test_unknown_contact_fails_closed) ... ok
+test_agent_view_contains_only_task_id (test_m3_pipeline.TestPreprocessing.test_agent_view_contains_only_task_id) ... ok
+test_agent_view_rejects_answer_key_leakage (test_m3_pipeline.TestPreprocessing.test_agent_view_rejects_answer_key_leakage) ... ok
+test_all_knowledge_sources_exist (test_m3_pipeline.TestPreprocessing.test_all_knowledge_sources_exist) ... ok
+test_business_isolation_in_chunks (test_m3_pipeline.TestPreprocessing.test_business_isolation_in_chunks) ... ok
+test_empty_text_token_estimation (test_m3_pipeline.TestPreprocessing.test_empty_text_token_estimation) ... ok
+test_token_estimation_is_deterministic (test_m3_pipeline.TestPreprocessing.test_token_estimation_is_deterministic) ... ok
+test_token_estimation_is_positive (test_m3_pipeline.TestPreprocessing.test_token_estimation_is_positive) ... ok
+test_anthropic_round_trip (test_m3_pipeline.TestProviderAdapters.test_anthropic_round_trip) ... ok
+test_openai_round_trip (test_m3_pipeline.TestProviderAdapters.test_openai_round_trip) ... ok
+test_confirmation_rule (test_m3_pipeline.TestValidationLayer.test_confirmation_rule) ... ok
+test_failed_write_is_atomic (test_m3_pipeline.TestValidationLayer.test_failed_write_is_atomic) ... ok
+test_name_alone_cannot_verify (test_m3_pipeline.TestValidationLayer.test_name_alone_cannot_verify) ... ok
+test_write_needs_confirmation_and_right_target (test_m3_pipeline.TestValidationLayer.test_write_needs_confirmation_and_right_target) ... ok
+test_write_needs_verification (test_m3_pipeline.TestValidationLayer.test_write_needs_verification) ... ok
+
+----------------------------------------------------------------------
+Ran 47 tests in 0.039s
+
+OK
+
+EXIT CODE: 0

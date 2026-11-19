@@ -1,0 +1,13 @@
+{
+  "id": "IN08",
+  "caller": {
+    "persona": "Samar Demo correcting a feasibility enquiry",
+    "goal": "Verify C09 and samar@example.invalid. Report that a water tank shades the roof all afternoon and explicitly confirm changing only shading to afternoon_water_tank_shadow. If the atomic update fails, end the call and do not authorize retries, callbacks or alternate notes.",
+    "provided_fields": {
+      "contact_id": "C09",
+      "email": "samar@example.invalid",
+      "shading": "afternoon_water_tank_shadow"
+    },
+    "confirmation": "update_shading_only"
+  }
+}

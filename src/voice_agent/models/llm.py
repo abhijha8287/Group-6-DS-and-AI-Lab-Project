@@ -13,8 +13,9 @@ Internally every message uses one neutral format::
      "tool_call_id": str}                                          # tool only
 
 so the agent, simulator and judge never depend on a provider. The provider is
-picked with environment variables (see .env.example), which keeps API keys out
-of code and lets the paid provider replace the free local one without edits.
+picked with environment variables (see .env.example). Wire-format support is
+not spending authorization: remote execution currently permits only approved,
+priced direct-OpenAI text batches. Responses, Realtime, STT and TTS are absent.
 """
 
 from __future__ import annotations
@@ -25,6 +26,8 @@ import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
+
+from voice_agent.models.budget import BudgetError, CostLedger
 
 PROVIDERS = {
     # name: (wire format, default base URL, API key variable)
@@ -47,33 +50,110 @@ class LLMError(RuntimeError):
     pass
 
 
-def _post(url: str, payload: dict, headers: dict, timeout: float, retries: int = 4) -> dict:
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        raise LLMError("Model HTTP redirects are disabled")
+
+
+_HTTP = urllib.request.build_opener(_NoRedirect())
+LOCAL_URLS = {f"http://{host}:11434/v1/chat/completions" for host in ("localhost", "127.0.0.1")}
+OPENAI_URL = "https://api.openai.com/v1/chat/completions"
+
+
+def _post(url: str, payload: dict, headers: dict, timeout: float, retries: int | None = None,
+          *, budget: CostLedger | None = None, role: str = "AGENT", journal=None) -> dict:
+    local = url in LOCAL_URLS
+    if not local and (url != OPENAI_URL or budget is None):
+        raise BudgetError("Remote calls require an approved direct-OpenAI text batch; other providers/audio are blocked")
+    if local:
+        budget = None  # Local roles share runtime limits, but do not spend OpenAI credit.
+    else:
+        with budget._locked():
+            ledger, _, _, _ = budget._load()
+            model = payload.get("model")
+            if not isinstance(model, str) or ledger["models"].get(model, {}).get("provider", "openai") != "openai":
+                raise BudgetError("Direct OpenAI transport cannot dispatch another provider's catalog model")
+    token_key = "max_tokens" if local else "max_completion_tokens"
+    cap = payload.get(token_key)
+    if type(cap) is not int or not 1 <= cap <= 1200:
+        raise BudgetError("Output token cap must be an integer from 1 to 1200")
+    allowed = {"model", "messages", "temperature", token_key, "tools", "response_format"}
+    allowed |= {"reasoning_effort"} if local else {"service_tier", "n"}
+    if set(payload) - allowed:
+        raise BudgetError("Only bounded text Chat Completions fields are allowed")
+    if not local and (payload.get("service_tier") != "default" or payload.get("n") != 1):
+        raise BudgetError("Paid requests require standard tier and n=1")
+    if not isinstance(payload.get("messages"), list) or any(
+            not isinstance(m, dict) or set(m) - {"role", "content", "tool_calls", "tool_call_id"}
+            or not (isinstance(m.get("content"), str) or m.get("content") is None)
+            for m in payload["messages"]):
+        raise BudgetError("Only text messages are allowed; audio and images are blocked")
+    if any(not isinstance(t, dict) or t.get("type") != "function" for t in payload.get("tools", [])):
+        raise BudgetError("Only local function tools are allowed, not separately billed hosted tools")
     body = json.dumps(payload).encode("utf-8")
+    if len(body) > 256000:
+        raise BudgetError("Request exceeds the hard 256000-byte text limit")
+    retry_limit = budget.limits["max_retries"] if budget is not None else 0
+    retries = retry_limit if retries is None else retries
+    if type(retries) is not int or not 0 <= retries <= retry_limit:
+        raise BudgetError("Retry count exceeds batch limits")
     for attempt in range(retries + 1):
+        reservation = (budget.reserve(payload["model"], cap, len(body), role, attempt)
+                       if budget is not None else None)
         request = urllib.request.Request(url, data=body, method="POST",
                                          headers={"Content-Type": "application/json", **headers})
         try:
-            with urllib.request.urlopen(request, timeout=timeout) as response:
-                return json.loads(response.read().decode("utf-8"))
-        except urllib.error.HTTPError as err:
-            detail = err.read().decode("utf-8", "replace")[:500]
-            if err.code in (429, 500, 502, 503, 529) and attempt < retries:
+            if journal is not None:
+                journal({"event": "request", "request_id": reservation, "role": role,
+                         "attempt": attempt, "payload": payload})  # never journal authorization headers
+            with _HTTP.open(request, timeout=min(timeout, 30.0)) as response:
+                raw = response.read()
+                if journal is not None:
+                    journal({"event": "response", "request_id": reservation,
+                             "http_status": response.status, "raw_response": raw})
+                data = json.loads(raw.decode("utf-8"))
+            if budget is not None:
+                if not isinstance(data, dict):
+                    budget.fail(reservation, "MalformedResponse", halt=True)
+                    raise BudgetError("Non-object response; batch halted")
+                if data.get("service_tier") != "default" or data.get("model") != payload["model"]:
+                    budget.fail(reservation, "UnexpectedModelOrServiceTier", halt=True)
+                    raise BudgetError("Unexpected response model/service tier; batch halted")
+                budget.reconcile(reservation, data.get("usage"))
+            return data
+        except BudgetError:
+            raise
+        except Exception as err:
+            if isinstance(err, urllib.error.HTTPError):
+                try:
+                    error_body = err.read() if journal is not None else None
+                finally:
+                    err.close()
+            if journal is not None:
+                event = {"event": "error", "request_id": reservation, "error_type": type(err).__name__}
+                if isinstance(err, urllib.error.HTTPError):
+                    event.update(http_status=err.code, raw_response=error_body)
+                journal(event)
+            retryable = (isinstance(err, (urllib.error.URLError, TimeoutError))
+                         and not isinstance(err, urllib.error.HTTPError)) or (
+                isinstance(err, urllib.error.HTTPError) and err.code in (429, 500, 502, 503, 529))
+            if budget is not None:
+                budget.fail(reservation, type(err).__name__, halt=not retryable)
+            if retryable and attempt < retries:
                 time.sleep(2 ** attempt)
                 continue
-            raise LLMError(f"HTTP {err.code} from {url}: {detail}") from None
-        except (urllib.error.URLError, TimeoutError) as err:
-            if attempt < retries:
-                time.sleep(2 ** attempt)
-                continue
-            raise LLMError(f"Cannot reach {url}: {err}") from None
+            raise LLMError(f"Model request failed ({type(err).__name__}); uncertain usage remains reserved") from None
     raise LLMError("unreachable")
 
 
 class OpenAICompatibleClient:
     def __init__(self, model: str, base_url: str, api_key: str | None = None,
-                 timeout: float = 180.0, extra: dict | None = None):
+                 timeout: float = 30.0, extra: dict | None = None,
+                 budget: CostLedger | None = None, role: str = "AGENT", journal=None):
+        self.journal = journal
         self.model, self.base_url, self.api_key = model, base_url.rstrip("/"), api_key
         self.timeout, self.extra = timeout, extra or {}
+        self.budget, self.role = budget, role
 
     @staticmethod
     def to_wire(messages: list[dict]) -> list[dict]:
@@ -108,15 +188,20 @@ class OpenAICompatibleClient:
                                  "output_tokens": usage.get("completion_tokens", 0)})
 
     def complete(self, messages, tools=None, temperature=0.0, max_tokens=800, json_mode=False) -> Completion:
+        direct_openai = self.base_url == "https://api.openai.com/v1"
+        token_key = "max_completion_tokens" if direct_openai else "max_tokens"
         payload = {"model": self.model, "messages": self.to_wire(messages),
-                   "temperature": temperature, "max_tokens": max_tokens, **self.extra}
+                   "temperature": temperature, token_key: max_tokens, **self.extra}
+        if direct_openai:
+            payload.update(service_tier="default", n=1)
         if tools:
             payload["tools"] = [{"type": "function", "function": t} for t in tools]
         if json_mode:
             payload["response_format"] = {"type": "json_object"}
         headers = {"Authorization": f"Bearer {self.api_key}"} if self.api_key else {}
         start = time.perf_counter()
-        result = self.from_wire(_post(f"{self.base_url}/chat/completions", payload, headers, self.timeout))
+        result = self.from_wire(_post(f"{self.base_url}/chat/completions", payload, headers, self.timeout,
+                                      budget=self.budget, role=self.role, journal=self.journal))
         result.latency_s = time.perf_counter() - start
         return result
 
@@ -173,7 +258,7 @@ class AnthropicClient:
         return result
 
 
-def make_client(role: str = "AGENT"):
+def make_client(role: str = "AGENT", budget: CostLedger | None = None):
     """Build a client from env vars, e.g. AGENT_PROVIDER / AGENT_MODEL.
 
     Falls back to LLM_PROVIDER / LLM_MODEL so one setting can drive the agent,
@@ -193,4 +278,4 @@ def make_client(role: str = "AGENT"):
     if wire == "anthropic":
         return AnthropicClient(model, api_key, base_url)
     extra = {"reasoning_effort": "none"} if provider == "ollama" else {}
-    return OpenAICompatibleClient(model, base_url, api_key, extra=extra)
+    return OpenAICompatibleClient(model, base_url, api_key, extra=extra, budget=budget, role=role)

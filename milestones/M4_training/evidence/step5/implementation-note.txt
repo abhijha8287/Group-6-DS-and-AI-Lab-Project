@@ -1,0 +1,1 @@
+Diff is cumulative against HEAD 4a61ded, including earlier Step 3/4 runtime changes. It excludes the user-owned M4 README and STEP_BY_STEP_PROMPTS.md. New Step 5 module/tests are appended with git diff --no-index; exit 1 there means the files differ, not a failed check. Final tested Python-source hashes are in checks-final-stop.json.

@@ -1,0 +1,15 @@
+{
+  "sources": [
+    {
+      "fact_id": "SMOKE-FACT-1",
+      "text": "SunGrid cannot guarantee subsidy approval. A human must review eligibility."
+    }
+  ],
+  "available_fixture": [
+    {
+      "fact_id": "SMOKE-FACT-1",
+      "text": "SunGrid cannot guarantee subsidy approval. A human must review eligibility."
+    }
+  ],
+  "retrieval": "deterministic synthetic source fixture, not BM25 or external retrieval"
+}

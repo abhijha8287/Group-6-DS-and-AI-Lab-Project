@@ -1,0 +1,52 @@
+{
+  "batch_id": "step5_smoke_001",
+  "overall": "judge_validation_error",
+  "cause_classification": "judge",
+  "language_reward": null,
+  "http_requests": 4,
+  "http_responses_200": 4,
+  "retries": 0,
+  "role_usage": {
+    "SIMULATOR": {
+      "input_tokens": 45,
+      "output_tokens": 9,
+      "requests": 1
+    },
+    "AGENT": {
+      "input_tokens": 284,
+      "output_tokens": 31,
+      "requests": 2
+    },
+    "JUDGE": {
+      "input_tokens": 505,
+      "output_tokens": 109,
+      "requests": 1
+    }
+  },
+  "total_input_tokens": 834,
+  "total_output_tokens": 149,
+  "completed_checks": {
+    "caller_text": true,
+    "one_read_only_tool": true,
+    "agent_answer_text": true
+  },
+  "judge_schema_valid": false,
+  "judge_error": "prohibited item 1: evidence must be nonempty text",
+  "judge_finish_reason": "stop",
+  "judge_output_tokens": 109,
+  "judge_output_cap": 1200,
+  "original_judge_preserved": true,
+  "human_adjudicated": false,
+  "crm_writes": 0,
+  "audio_seconds": 0,
+  "authorization_ceiling_usd": "0.10",
+  "recorded_token_priced_cost_usd": "0.00021450",
+  "unreconciled_max_usd": "0",
+  "remaining_credit_estimate_usd": "19.99978550",
+  "remaining_smoke_allocation_estimate_usd": "0.99978550",
+  "remaining_authorized_requests": 0,
+  "pricing_note": "Listed uncached token rates, not independently verified invoice/balance",
+  "protected_preexisting_files_verified": 211,
+  "paid_run_files_verified": 6,
+  "next_action": "Stop. No retry, relaxed validation, substituted model, or further paid batch without new user approval."
+}

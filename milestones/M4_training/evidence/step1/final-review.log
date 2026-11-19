@@ -1,0 +1,15 @@
+$ git diff --check
+EXIT CODE: 0
+$ git diff --stat
+ experiments/EXPERIMENT_LOG.md    | 4 ++++
+ milestones/M4_training/README.md | 6 +++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+$ git status --short
+ M experiments/EXPERIMENT_LOG.md
+ M milestones/M4_training/README.md
+?? experiments/runs/m4_step1_control_skip_confirmation/
+?? experiments/runs/m4_step1_control_skip_verification/
+?? experiments/runs/m4_step1_oracle/
+?? milestones/M4_training/STEP_BY_STEP_PROMPTS.md
+?? milestones/M4_training/evidence/
+?? milestones/M4_training/progress.md

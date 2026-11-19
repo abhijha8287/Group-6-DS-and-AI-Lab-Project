@@ -1,0 +1,66 @@
+{
+  "note": "Offline schema check of original stored verdicts, NOT a new judge run or regrade. Original scores unchanged.",
+  "results": [
+    {
+      "task_id": "IN01",
+      "original_reward": 0,
+      "structural_status": "evaluation_error",
+      "semantic_label_human_confirmed": false,
+      "error": "missing required items: [2]"
+    },
+    {
+      "task_id": "IN02",
+      "original_reward": 0,
+      "structural_status": "valid",
+      "semantic_label_human_confirmed": false
+    },
+    {
+      "task_id": "IN03",
+      "original_reward": 0,
+      "structural_status": "valid",
+      "semantic_label_human_confirmed": false
+    },
+    {
+      "task_id": "IN04",
+      "original_reward": 1,
+      "structural_status": "valid",
+      "semantic_label_human_confirmed": false
+    },
+    {
+      "task_id": "IN05",
+      "original_reward": 0,
+      "structural_status": "valid",
+      "semantic_label_human_confirmed": false
+    },
+    {
+      "task_id": "IN06",
+      "original_reward": 1,
+      "structural_status": "valid",
+      "semantic_label_human_confirmed": false
+    },
+    {
+      "task_id": "IN07",
+      "original_reward": 0,
+      "structural_status": "valid",
+      "semantic_label_human_confirmed": false
+    },
+    {
+      "task_id": "IN08",
+      "original_reward": 1,
+      "structural_status": "valid",
+      "semantic_label_human_confirmed": false
+    },
+    {
+      "task_id": "IN09",
+      "original_reward": 1,
+      "structural_status": "valid",
+      "semantic_label_human_confirmed": false
+    },
+    {
+      "task_id": "IN10",
+      "original_reward": 1,
+      "structural_status": "valid",
+      "semantic_label_human_confirmed": false
+    }
+  ]
+}

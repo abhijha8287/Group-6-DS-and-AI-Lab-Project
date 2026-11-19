@@ -1,0 +1,19 @@
+$ /opt/homebrew/opt/python@3.15/bin/python3.15 -c 'import sys,runpy; sys.addaudithook(lambda event,args: (_ for _ in ()).throw(RuntimeError('"'"'Step 1: network blocked'"'"')) if event in ('"'"'socket.connect'"'"','"'"'socket.getaddrinfo'"'"','"'"'socket.sendto'"'"') else None); sys.argv=['"'"'scripts/preprocess_m3.py'"'"', '"'"'--business'"'"', '"'"'solar'"'"']; runpy.run_path('"'"'scripts/preprocess_m3.py'"'"',run_name="__main__")'
+{
+  "business": "solar",
+  "chunks": 15,
+  "sourced_facts": 5,
+  "sandbox_rules": 10,
+  "chunk_tokens_approx": {
+    "min": 34,
+    "max": 116,
+    "total": 1095
+  },
+  "system_prompt_tokens_approx": 1122,
+  "tool_schema_tokens_approx": 1122,
+  "tasks_with_views": 10,
+  "note": "Approximate (characters / 4). Real counts come from provider usage in runs."
+}
+Wrote /Users/srijan/projects/Group-6-DS-and-AI-Lab-Project/data/processed/solar
+
+EXIT CODE: 0

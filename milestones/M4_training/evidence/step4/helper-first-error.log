@@ -1,0 +1,3 @@
+Audit helper attempt failed to parse before execution:
+SyntaxError: expected 'else' after 'if' expression
+No experiment or validation ran from this helper attempt. Corrected and rerun below; conversation snapshot retains original command.

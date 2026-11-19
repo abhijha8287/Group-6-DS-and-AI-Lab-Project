@@ -1,0 +1,12 @@
+{
+  "batch_id": "step5_smoke_001",
+  "model": "gpt-4o-mini-2024-07-18",
+  "status": "error",
+  "checks": {
+    "caller_text": true,
+    "one_read_only_tool": true,
+    "agent_answer_text": true
+  }
+}
+Stopped: JudgeValidationError: prohibited item 1: evidence must be nonempty text
+Saved to experiments/runs/m4_step5_smoke_001

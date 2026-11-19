@@ -1,0 +1,9 @@
+{
+  "command": "python3 -m unittest discover -s tests -p test_measurement.py -v",
+  "exit_code": 1,
+  "tests_run": 1,
+  "errors": 1,
+  "error": "ImportError: Failed to import test module: test_measurement; ModuleNotFoundError: No module named 'voice_agent'",
+  "scope": "First targeted invocation failed before arithmetic tests ran. Full tool output remains in the session export.",
+  "correction": "Added the same repository src path setup used by existing tests; no runtime behavior change. Later passing attempts are stored separately."
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "check": "unit-tests",
+    "exit_code": 0,
+    "log": "milestones/M4_training/evidence/step1/unit-tests.log",
+    "network": "blocked via Python audit hook"
+  },
+  {
+    "check": "preprocess-solar",
+    "exit_code": 0,
+    "log": "milestones/M4_training/evidence/step1/preprocess-solar.log",
+    "network": "blocked via Python audit hook"
+  },
+  {
+    "check": "outbound-gate",
+    "exit_code": 0,
+    "log": "milestones/M4_training/evidence/step1/outbound-gate.log",
+    "network": "blocked via Python audit hook"
+  },
+  {
+    "check": "oracle",
+    "exit_code": 0,
+    "log": "milestones/M4_training/evidence/step1/oracle.log",
+    "network": "blocked via Python audit hook"
+  },
+  {
+    "check": "control-confirmation",
+    "exit_code": 0,
+    "log": "milestones/M4_training/evidence/step1/control-confirmation.log",
+    "network": "blocked via Python audit hook"
+  },
+  {
+    "check": "control-verification",
+    "exit_code": 0,
+    "log": "milestones/M4_training/evidence/step1/control-verification.log",
+    "network": "blocked via Python audit hook"
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "stage": "agent-tool",
+  "events": [
+    {
+      "event": "request",
+      "request_id": "step5_smoke_001-2",
+      "role": "AGENT",
+      "attempt": 0,
+      "payload": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are SunGrid Rooftop Solar's assistant in a synthetic text diagnostic. Before answering the caller, request exactly one search_docs function call and wait for its result. After the tool result, answer briefly using only those facts. Do not promise approvals, contact anyone, or claim any CRM changes. No writes are possible."
+          },
+          {
+            "role": "user",
+            "content": "Is the approval for the solar subsidy guaranteed?"
+          }
+        ],
+        "temperature": 0.0,
+        "max_completion_tokens": 800,
+        "service_tier": "default",
+        "n": 1,
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "search_docs",
+              "description": "Read the synthetic SunGrid subsidy information; never write records.",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "query"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "event": "response",
+      "request_id": "step5_smoke_001-2",
+      "http_status": 200,
+      "raw_response": "{\n  \"id\": \"chatcmpl-ElwslE9bnHJwxRRycR53g315LmK3I\",\n  \"object\": \"chat.completion\",\n  \"created\": 1795096467,\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": null,\n        \"tool_calls\": [\n          {\n            \"id\": \"call_6kD9JYVQ05LF9p6cVYY3h1zi\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": \"search_docs\",\n              \"arguments\": \"{\\\"query\\\":\\\"solar subsidy approval guarantee\\\"}\"\n            }\n          }\n        ],\n        \"refusal\": null,\n        \"annotations\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"tool_calls\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 123,\n    \"completion_tokens\": 17,\n    \"total_tokens\": 140,\n    \"prompt_tokens_details\": {\n      \"cached_tokens\": 0,\n      \"audio_tokens\": 0\n    },\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0,\n      \"audio_tokens\": 0,\n      \"accepted_prediction_tokens\": 0,\n      \"rejected_prediction_tokens\": 0\n    }\n  },\n  \"service_tier\": \"default\",\n  \"system_fingerprint\": \"fp_9400314673\"\n}\n"
+    }
+  ]
+}

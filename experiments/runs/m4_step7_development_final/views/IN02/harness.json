@@ -1,0 +1,16 @@
+{
+  "id": "IN02",
+  "environment": {
+    "identity_fixture": null
+  },
+  "tool_results": {
+    "find_lead": {
+      "email": "diya@example.invalid",
+      "matches": []
+    },
+    "create_lead": {
+      "success": true,
+      "id": "C13"
+    }
+  }
+}

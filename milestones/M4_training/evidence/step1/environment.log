@@ -1,0 +1,44 @@
+Python: 3.15.2
+Executable: /opt/homebrew/opt/python@3.15/bin/python3.15
+Platform: Darwin arm64
+Project .venv exists: False
+Project venv exists: False
+Project .env exists: False
+Configuration/credentials: presence only; no values or remote authentication checked
+LLM_PROVIDER: inherited=False, effective_nonempty=False
+LLM_MODEL: inherited=False, effective_nonempty=False
+AGENT_PROVIDER: inherited=False, effective_nonempty=False
+AGENT_MODEL: inherited=False, effective_nonempty=False
+SIMULATOR_PROVIDER: inherited=False, effective_nonempty=False
+SIMULATOR_MODEL: inherited=False, effective_nonempty=False
+JUDGE_PROVIDER: inherited=False, effective_nonempty=False
+JUDGE_MODEL: inherited=False, effective_nonempty=False
+OPENAI_API_KEY: inherited=False, effective_nonempty=False
+ANTHROPIC_API_KEY: inherited=False, effective_nonempty=False
+GROQ_API_KEY: inherited=False, effective_nonempty=False
+LIVEKIT_URL: inherited=False, effective_nonempty=False
+LIVEKIT_API_KEY: inherited=False, effective_nonempty=False
+LIVEKIT_API_SECRET: inherited=False, effective_nonempty=False
+DEEPGRAM_API_KEY: inherited=False, effective_nonempty=False
+CARTESIA_API_KEY: inherited=False, effective_nonempty=False
+TWILIO_ACCOUNT_SID: inherited=False, effective_nonempty=False
+TWILIO_AUTH_TOKEN: inherited=False, effective_nonempty=False
+TWILIO_PHONE_NUMBER: inherited=False, effective_nonempty=False
+DATABASE_URL: inherited=False, effective_nonempty=False
+OUTBOUND_TEST_ALLOWLIST_PATH: inherited=False, effective_nonempty=False
+pip: 26.2.2
+pytest: not installed in this interpreter
+livekit: not installed in this interpreter
+livekit-agents: not installed in this interpreter
+livekit-plugins-silero: not installed in this interpreter
+livekit-plugins-deepgram: not installed in this interpreter
+livekit-plugins-cartesia: not installed in this interpreter
+openai: not installed in this interpreter
+anthropic: not installed in this interpreter
+fastapi: not installed in this interpreter
+uvicorn: not installed in this interpreter
+sqlalchemy: not installed in this interpreter
+psycopg: not installed in this interpreter
+pydantic: 2.14.2
+Referenced allowlist template path exists: False
+Network/API requests made by this check: 0

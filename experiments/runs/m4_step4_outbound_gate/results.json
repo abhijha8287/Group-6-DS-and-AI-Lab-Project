@@ -1,0 +1,579 @@
+{
+  "summary": {
+    "cases": 30,
+    "matches": 30,
+    "allowed": 6,
+    "blocked": 24,
+    "disallowed_calls_allowed": 0,
+    "reason_counts": {
+      "allowed": 6,
+      "no_explicit_consent": 9,
+      "opted_out": 3,
+      "outside_calling_hours": 3,
+      "duplicate_event": 3,
+      "recent_attempt": 3,
+      "retry_limit": 3,
+      "not_allowlisted": 6
+    }
+  },
+  "cases": [
+    {
+      "business": "solar",
+      "case": "OUT01",
+      "contact": "C01",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": true,
+        "reasons": []
+      },
+      "expected": {
+        "allowed": true,
+        "reasons": []
+      },
+      "match": true
+    },
+    {
+      "business": "solar",
+      "case": "OUT02",
+      "contact": "C02",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "solar",
+      "case": "OUT03",
+      "contact": "C04",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "opted_out"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "opted_out"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "solar",
+      "case": "OUT04",
+      "contact": "C01",
+      "at": "2026-11-02T18:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "outside_calling_hours"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "outside_calling_hours"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "solar",
+      "case": "OUT05",
+      "contact": "C01",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "duplicate_event"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "duplicate_event"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "solar",
+      "case": "OUT06",
+      "contact": "C05",
+      "at": "2026-11-02T11:30:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "recent_attempt"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "recent_attempt"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "solar",
+      "case": "OUT07",
+      "contact": "C06",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "retry_limit"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "retry_limit"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "solar",
+      "case": "OUT08",
+      "contact": "C07",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "solar",
+      "case": "OUT09",
+      "contact": "C05",
+      "at": "2026-11-03T10:00:00+05:30",
+      "decision": {
+        "allowed": true,
+        "reasons": []
+      },
+      "expected": {
+        "allowed": true,
+        "reasons": []
+      },
+      "match": true
+    },
+    {
+      "business": "solar",
+      "case": "OUT10",
+      "contact": "C12",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "dental",
+      "case": "OUT01",
+      "contact": "C01",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": true,
+        "reasons": []
+      },
+      "expected": {
+        "allowed": true,
+        "reasons": []
+      },
+      "match": true
+    },
+    {
+      "business": "dental",
+      "case": "OUT02",
+      "contact": "C02",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "dental",
+      "case": "OUT03",
+      "contact": "C04",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "opted_out"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "opted_out"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "dental",
+      "case": "OUT04",
+      "contact": "C01",
+      "at": "2026-11-02T18:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "outside_calling_hours"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "outside_calling_hours"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "dental",
+      "case": "OUT05",
+      "contact": "C01",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "duplicate_event"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "duplicate_event"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "dental",
+      "case": "OUT06",
+      "contact": "C05",
+      "at": "2026-11-02T11:30:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "recent_attempt"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "recent_attempt"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "dental",
+      "case": "OUT07",
+      "contact": "C06",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "retry_limit"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "retry_limit"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "dental",
+      "case": "OUT08",
+      "contact": "C07",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "dental",
+      "case": "OUT09",
+      "contact": "C05",
+      "at": "2026-11-03T10:00:00+05:30",
+      "decision": {
+        "allowed": true,
+        "reasons": []
+      },
+      "expected": {
+        "allowed": true,
+        "reasons": []
+      },
+      "match": true
+    },
+    {
+      "business": "dental",
+      "case": "OUT10",
+      "contact": "C12",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "furniture",
+      "case": "OUT01",
+      "contact": "C01",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": true,
+        "reasons": []
+      },
+      "expected": {
+        "allowed": true,
+        "reasons": []
+      },
+      "match": true
+    },
+    {
+      "business": "furniture",
+      "case": "OUT02",
+      "contact": "C02",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "furniture",
+      "case": "OUT03",
+      "contact": "C04",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "opted_out"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "opted_out"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "furniture",
+      "case": "OUT04",
+      "contact": "C01",
+      "at": "2026-11-02T18:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "outside_calling_hours"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "outside_calling_hours"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "furniture",
+      "case": "OUT05",
+      "contact": "C01",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "duplicate_event"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "duplicate_event"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "furniture",
+      "case": "OUT06",
+      "contact": "C05",
+      "at": "2026-11-02T11:30:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "recent_attempt"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "recent_attempt"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "furniture",
+      "case": "OUT07",
+      "contact": "C06",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "retry_limit"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "retry_limit"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "furniture",
+      "case": "OUT08",
+      "contact": "C07",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "match": true
+    },
+    {
+      "business": "furniture",
+      "case": "OUT09",
+      "contact": "C05",
+      "at": "2026-11-03T10:00:00+05:30",
+      "decision": {
+        "allowed": true,
+        "reasons": []
+      },
+      "expected": {
+        "allowed": true,
+        "reasons": []
+      },
+      "match": true
+    },
+    {
+      "business": "furniture",
+      "case": "OUT10",
+      "contact": "C12",
+      "at": "2026-11-02T11:00:00+05:30",
+      "decision": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "expected": {
+        "allowed": false,
+        "reasons": [
+          "no_explicit_consent",
+          "not_allowlisted"
+        ]
+      },
+      "match": true
+    }
+  ]
+}

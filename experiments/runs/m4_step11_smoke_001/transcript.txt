@@ -1,0 +1,4 @@
+CALLER: Is the approval for the solar subsidy guaranteed?
+AGENT: 
+TOOL search_docs({"query": "solar subsidy approval guarantee"}) -> {"success": true, "matches": [{"fact_id": "SMOKE-FACT-1", "text": "SunGrid cannot guarantee subsidy approval. A human must review eligibility."}], "fixture": true, "crm_writes": 0}
+AGENT: SunGrid cannot guarantee subsidy approval, as a human must review eligibility.

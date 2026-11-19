@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/opt/homebrew/opt/python@3.15/bin/python3.15",
+    "scripts/check_development.py",
+    "--output",
+    "experiments/runs/m4_step7_development"
+  ],
+  "exit_code": 0,
+  "paid_requests": 0,
+  "held_out_answers_loaded": false
+}

@@ -1,0 +1,10 @@
+{
+  "fixture_checks_passed": true,
+  "cases": 16,
+  "core": 10,
+  "targeted": 6,
+  "paid_requests": 0,
+  "human_review": "pending",
+  "language_scored": false,
+  "held_out_evaluation_allowed": false
+}

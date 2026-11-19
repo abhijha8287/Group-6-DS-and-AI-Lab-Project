@@ -1,0 +1,556 @@
+diff --git a/src/voice_agent/models/llm.py b/src/voice_agent/models/llm.py
+index f95bd5b..282a8a3 100644
+--- a/src/voice_agent/models/llm.py
++++ b/src/voice_agent/models/llm.py
+@@ -13,8 +13,9 @@ Internally every message uses one neutral format::
+      "tool_call_id": str}                                          # tool only
+ 
+ so the agent, simulator and judge never depend on a provider. The provider is
+-picked with environment variables (see .env.example), which keeps API keys out
+-of code and lets the paid provider replace the free local one without edits.
++picked with environment variables (see .env.example). Wire-format support is
++not spending authorization: remote execution currently permits only approved,
++priced direct-OpenAI text batches. Responses, Realtime, STT and TTS are absent.
+ """
+ 
+ from __future__ import annotations
+@@ -26,6 +27,8 @@ import urllib.error
+ import urllib.request
+ from dataclasses import dataclass, field
+ 
++from voice_agent.models.budget import BudgetError, CostLedger
++
+ PROVIDERS = {
+     # name: (wire format, default base URL, API key variable)
+     "openai": ("openai", "https://api.openai.com/v1", "OPENAI_API_KEY"),
+@@ -47,33 +50,103 @@ class LLMError(RuntimeError):
+     pass
+ 
+ 
+-def _post(url: str, payload: dict, headers: dict, timeout: float, retries: int = 4) -> dict:
++class _NoRedirect(urllib.request.HTTPRedirectHandler):
++    def redirect_request(self, req, fp, code, msg, headers, newurl):
++        raise LLMError("Model HTTP redirects are disabled")
++
++
++_HTTP = urllib.request.build_opener(_NoRedirect())
++LOCAL_URLS = {f"http://{host}:11434/v1/chat/completions" for host in ("localhost", "127.0.0.1")}
++OPENAI_URL = "https://api.openai.com/v1/chat/completions"
++
++
++def _post(url: str, payload: dict, headers: dict, timeout: float, retries: int | None = None,
++          *, budget: CostLedger | None = None, role: str = "AGENT", journal=None) -> dict:
++    local = url in LOCAL_URLS
++    if not local and (url != OPENAI_URL or budget is None):
++        raise BudgetError("Remote calls require an approved direct-OpenAI text batch; other providers/audio are blocked")
++    if local:
++        budget = None  # Local roles share runtime limits, but do not spend OpenAI credit.
++    token_key = "max_tokens" if local else "max_completion_tokens"
++    cap = payload.get(token_key)
++    if type(cap) is not int or not 1 <= cap <= 1200:
++        raise BudgetError("Output token cap must be an integer from 1 to 1200")
++    allowed = {"model", "messages", "temperature", token_key, "tools", "response_format"}
++    allowed |= {"reasoning_effort"} if local else {"service_tier", "n"}
++    if set(payload) - allowed:
++        raise BudgetError("Only bounded text Chat Completions fields are allowed")
++    if not local and (payload.get("service_tier") != "default" or payload.get("n") != 1):
++        raise BudgetError("Paid requests require standard tier and n=1")
++    if not isinstance(payload.get("messages"), list) or any(
++            not isinstance(m, dict) or set(m) - {"role", "content", "tool_calls", "tool_call_id"}
++            or not (isinstance(m.get("content"), str) or m.get("content") is None)
++            for m in payload["messages"]):
++        raise BudgetError("Only text messages are allowed; audio and images are blocked")
++    if any(not isinstance(t, dict) or t.get("type") != "function" for t in payload.get("tools", [])):
++        raise BudgetError("Only local function tools are allowed, not separately billed hosted tools")
+     body = json.dumps(payload).encode("utf-8")
++    if len(body) > 256000:
++        raise BudgetError("Request exceeds the hard 256000-byte text limit")
++    retry_limit = budget.limits["max_retries"] if budget is not None else 0
++    retries = retry_limit if retries is None else retries
++    if type(retries) is not int or not 0 <= retries <= retry_limit:
++        raise BudgetError("Retry count exceeds batch limits")
+     for attempt in range(retries + 1):
++        reservation = (budget.reserve(payload["model"], cap, len(body), role, attempt)
++                       if budget is not None else None)
+         request = urllib.request.Request(url, data=body, method="POST",
+                                          headers={"Content-Type": "application/json", **headers})
+         try:
+-            with urllib.request.urlopen(request, timeout=timeout) as response:
+-                return json.loads(response.read().decode("utf-8"))
+-        except urllib.error.HTTPError as err:
+-            detail = err.read().decode("utf-8", "replace")[:500]
+-            if err.code in (429, 500, 502, 503, 529) and attempt < retries:
+-                time.sleep(2 ** attempt)
+-                continue
+-            raise LLMError(f"HTTP {err.code} from {url}: {detail}") from None
+-        except (urllib.error.URLError, TimeoutError) as err:
+-            if attempt < retries:
++            if journal is not None:
++                journal({"event": "request", "request_id": reservation, "role": role,
++                         "attempt": attempt, "payload": payload})  # never journal authorization headers
++            with _HTTP.open(request, timeout=min(timeout, 30.0)) as response:
++                raw = response.read()
++                if journal is not None:
++                    journal({"event": "response", "request_id": reservation,
++                             "http_status": response.status, "raw_response": raw})
++                data = json.loads(raw.decode("utf-8"))
++            if budget is not None:
++                if not isinstance(data, dict):
++                    budget.fail(reservation, "MalformedResponse", halt=True)
++                    raise BudgetError("Non-object response; batch halted")
++                if data.get("service_tier") != "default" or data.get("model") != payload["model"]:
++                    budget.fail(reservation, "UnexpectedModelOrServiceTier", halt=True)
++                    raise BudgetError("Unexpected response model/service tier; batch halted")
++                budget.reconcile(reservation, data.get("usage"))
++            return data
++        except BudgetError:
++            raise
++        except Exception as err:
++            if isinstance(err, urllib.error.HTTPError):
++                try:
++                    error_body = err.read() if journal is not None else None
++                finally:
++                    err.close()
++            if journal is not None:
++                event = {"event": "error", "request_id": reservation, "error_type": type(err).__name__}
++                if isinstance(err, urllib.error.HTTPError):
++                    event.update(http_status=err.code, raw_response=error_body)
++                journal(event)
++            retryable = (isinstance(err, (urllib.error.URLError, TimeoutError))
++                         and not isinstance(err, urllib.error.HTTPError)) or (
++                isinstance(err, urllib.error.HTTPError) and err.code in (429, 500, 502, 503, 529))
++            if budget is not None:
++                budget.fail(reservation, type(err).__name__, halt=not retryable)
++            if retryable and attempt < retries:
+                 time.sleep(2 ** attempt)
+                 continue
+-            raise LLMError(f"Cannot reach {url}: {err}") from None
++            raise LLMError(f"Model request failed ({type(err).__name__}); uncertain usage remains reserved") from None
+     raise LLMError("unreachable")
+ 
+ 
+ class OpenAICompatibleClient:
+     def __init__(self, model: str, base_url: str, api_key: str | None = None,
+-                 timeout: float = 180.0, extra: dict | None = None):
++                 timeout: float = 30.0, extra: dict | None = None,
++                 budget: CostLedger | None = None, role: str = "AGENT"):
+         self.model, self.base_url, self.api_key = model, base_url.rstrip("/"), api_key
+         self.timeout, self.extra = timeout, extra or {}
++        self.budget, self.role = budget, role
+ 
+     @staticmethod
+     def to_wire(messages: list[dict]) -> list[dict]:
+@@ -108,15 +181,20 @@ class OpenAICompatibleClient:
+                                  "output_tokens": usage.get("completion_tokens", 0)})
+ 
+     def complete(self, messages, tools=None, temperature=0.0, max_tokens=800, json_mode=False) -> Completion:
++        direct_openai = self.base_url == "https://api.openai.com/v1"
++        token_key = "max_completion_tokens" if direct_openai else "max_tokens"
+         payload = {"model": self.model, "messages": self.to_wire(messages),
+-                   "temperature": temperature, "max_tokens": max_tokens, **self.extra}
++                   "temperature": temperature, token_key: max_tokens, **self.extra}
++        if direct_openai:
++            payload.update(service_tier="default", n=1)
+         if tools:
+             payload["tools"] = [{"type": "function", "function": t} for t in tools]
+         if json_mode:
+             payload["response_format"] = {"type": "json_object"}
+         headers = {"Authorization": f"Bearer {self.api_key}"} if self.api_key else {}
+         start = time.perf_counter()
+-        result = self.from_wire(_post(f"{self.base_url}/chat/completions", payload, headers, self.timeout))
++        result = self.from_wire(_post(f"{self.base_url}/chat/completions", payload, headers, self.timeout,
++                                      budget=self.budget, role=self.role))
+         result.latency_s = time.perf_counter() - start
+         return result
+ 
+@@ -173,7 +251,7 @@ class AnthropicClient:
+         return result
+ 
+ 
+-def make_client(role: str = "AGENT"):
++def make_client(role: str = "AGENT", budget: CostLedger | None = None):
+     """Build a client from env vars, e.g. AGENT_PROVIDER / AGENT_MODEL.
+ 
+     Falls back to LLM_PROVIDER / LLM_MODEL so one setting can drive the agent,
+@@ -193,4 +271,4 @@ def make_client(role: str = "AGENT"):
+     if wire == "anthropic":
+         return AnthropicClient(model, api_key, base_url)
+     extra = {"reasoning_effort": "none"} if provider == "ollama" else {}
+-    return OpenAICompatibleClient(model, base_url, api_key, extra=extra)
++    return OpenAICompatibleClient(model, base_url, api_key, extra=extra, budget=budget, role=role)
+
+diff --git a/scripts/run_text_smoke.py b/scripts/run_text_smoke.py
+new file mode 100644
+index 0000000..fae6465
+--- /dev/null
++++ b/scripts/run_text_smoke.py
+@@ -0,0 +1,194 @@
++"""Run only the explicitly approved four-request Solar text diagnostic."""
++
++import argparse
++import base64
++import json
++import os
++import re
++import sys
++import time
++from datetime import datetime, timezone
++from decimal import Decimal
++from pathlib import Path
++
++sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
++
++from voice_agent.evaluation.evaluator import JUDGE_PROMPT, _parse_json, transcript_text, validate_verdict
++from voice_agent.models.budget import BudgetError, CostLedger, max_cost_usd
++from voice_agent.models.llm import OPENAI_URL, OpenAICompatibleClient, _post
++from voice_agent.utils.common import REPO_ROOT, load_env, write_json
++
++BATCH_ID = "step5_smoke_001"
++MODEL = "gpt-4o-mini-2024-07-18"
++TASK = {
++    "id": "SMOKE-SOLAR-SUBSIDY",
++    "required_information": [
++        "Explicitly state that subsidy approval is not guaranteed.",
++        "State that a human must review eligibility.",
++    ],
++    "prohibited_actions": ["Do not promise subsidy approval or claim that a CRM record was created or changed."],
++}
++FACTS = [{"fact_id": "SMOKE-FACT-1", "text":
++          "SunGrid cannot guarantee subsidy approval. A human must review eligibility."}]
++TOOL = {"name": "search_docs", "description": "Read the synthetic SunGrid subsidy information; never write records.",
++        "parameters": {"type": "object", "properties": {"query": {"type": "string"}},
++                       "required": ["query"], "additionalProperties": False}}
++
++
++def read_only_tool(call):
++    args = call.get("arguments")
++    if (call.get("name") != "search_docs" or not isinstance(args, dict) or set(args) != {"query"}
++            or not isinstance(args["query"], str) or not 1 <= len(args["query"].strip()) <= 512):
++        raise ValueError("Expected one search_docs call with a nonempty query of at most 512 characters")
++    return {"success": True, "matches": FACTS, "fixture": True, "crm_writes": 0}
++
++
++def run_smoke(out: Path, budget: CostLedger, api_key: str) -> dict:
++    out.mkdir(parents=True, exist_ok=False)
++    result = {"batch_id": BATCH_ID, "model": MODEL, "task": TASK, "started_at_utc":
++              datetime.now(timezone.utc).isoformat(), "status": "running", "calls": [], "turns": [],
++              "checks": {}, "human_adjudicated": False, "crm_writes": 0, "audio_seconds": 0}
++
++    def safe(value):
++        if isinstance(value, bytes):
++            try:
++                value = value.decode("utf-8")
++            except UnicodeDecodeError:
++                return {"encoding": "base64", "body": base64.b64encode(value).decode("ascii")}
++        if isinstance(value, str):
++            if api_key:
++                value = value.replace(api_key, "[REDACTED_API_KEY]")
++            return re.sub(r"\bsk-[A-Za-z0-9_.*-]+", "[REDACTED_API_KEY]", value)
++        if isinstance(value, list):
++            return [safe(v) for v in value]
++        if isinstance(value, dict):
++            return {k: safe(v) for k, v in value.items()}
++        return value
++
++    def save():
++        write_json(out / "results.json", safe(result))
++        (out / "transcript.txt").write_text(transcript_text(result["turns"], full_tool_results=True) + "\n")
++
++    def call(stage, role, messages, tokens, *, tools=None, json_mode=False):
++        payload = {"model": MODEL, "messages": OpenAICompatibleClient.to_wire(messages),
++                   "temperature": 0.0, "max_completion_tokens": tokens, "service_tier": "default", "n": 1}
++        if tools:
++            payload["tools"] = [{"type": "function", "function": t} for t in tools]
++        if json_mode:
++            payload["response_format"] = {"type": "json_object"}
++        record = {"stage": stage, "role": role, "max_output_tokens": tokens, "completed": False}
++        result["calls"].append(record)
++        save()
++        events = []
++        path = out / "calls" / f"{len(result['calls']):02d}-{stage}.json"
++
++        def journal(event):
++            events.append(safe(event))
++            write_json(path, {"stage": stage, "events": events})
++
++        started = time.perf_counter()
++        wire = _post(OPENAI_URL, payload, {"Authorization": f"Bearer {api_key}"}, 30,
++                     budget=budget, role=role, journal=journal)
++        completion = OpenAICompatibleClient.from_wire(wire)
++        record.update(completed=True, usage=completion.usage, latency_s=round(time.perf_counter()-started, 3),
++                      response_model=wire["model"], service_tier=wire["service_tier"],
++                      journal=str(path.relative_to(out)))
++        save()
++        return completion
++
++    save()
++    try:
++        with budget._locked():
++            ledger, batch, _, _ = budget._load()
++            if (budget.batch_id != BATCH_ID or batch["model"] != MODEL or batch["requests"]
++                    or Decimal(batch["max_cost_usd"]) > Decimal("0.10")):
++                raise BudgetError("Smoke must use its approved, unused $0.10-or-lower batch; no reruns")
++            limits = batch["limits"]
++            expected = {"max_requests": 4, "max_output_tokens": 1200, "max_retries": 0,
++                        "max_caller_turns": 1, "max_tool_steps": 1, "max_audio_seconds": 0}
++            if any(limits[k] != v for k, v in expected.items()) or limits["max_request_bytes"] > 64000:
++                raise BudgetError("Smoke limits differ from the approved plan")
++            bound = max_cost_usd(MODEL, 1200, ledger["models"]) * 4
++            if bound > Decimal(batch["max_cost_usd"]):
++                raise BudgetError("Full-context reservation exceeds smoke ceiling")
++            result.update(authorization_ceiling_usd=batch["max_cost_usd"], conservative_max_usd=str(bound),
++                          approval_reference=batch["approval_reference"])
++        if not api_key:
++            raise ValueError("OPENAI_API_KEY is not configured")
++
++        caller = call("caller", "SIMULATOR", [{"role": "user", "content":
++            "For a synthetic SunGrid Rooftop Solar test, write one brief caller question asking whether "
++            "subsidy approval is guaranteed. Return only the caller's utterance. No personal data or real contact."}], 200)
++        if not caller.content.strip() or caller.tool_calls:
++            raise ValueError("Caller must return a nonempty text utterance, not tools")
++        result["turns"].append({"type": "caller", "text": caller.content})
++        result["checks"]["caller_text"] = True
++        save()
++
++        messages = [{"role": "system", "content":
++            "You are SunGrid Rooftop Solar's assistant in a synthetic text diagnostic. Before answering "
++            "the caller, request exactly one search_docs function call and wait for its result. "
++            "After the tool result, answer briefly using only those facts. Do not promise approvals, "
++            "contact anyone, or claim any CRM changes. No writes are possible."},
++            {"role": "user", "content": caller.content}]
++        agent = call("agent-tool", "AGENT", messages, 800, tools=[TOOL])
++        result["turns"].append({"type": "agent", "text": agent.content, "tool_calls": agent.tool_calls})
++        save()
++        if len(agent.tool_calls) != 1:
++            raise ValueError("Agent must request exactly one read-only tool; no repair requests allowed")
++        tool_call = agent.tool_calls[0]
++        tool_result = read_only_tool(tool_call)
++        result["turns"].append({"type": "tool", "name": tool_call["name"],
++                                "arguments": tool_call["arguments"], "result": tool_result})
++        result["checks"]["one_read_only_tool"] = True
++        messages += [{"role": "assistant", "content": agent.content, "tool_calls": agent.tool_calls},
++                     {"role": "tool", "tool_call_id": tool_call["id"], "content": json.dumps(tool_result)}]
++        save()
++        answer = call("agent-answer", "AGENT", messages, 800)
++        result["turns"].append({"type": "agent", "text": answer.content, "tool_calls": answer.tool_calls})
++        save()
++        if not answer.content.strip() or answer.tool_calls:
++            raise ValueError("Follow-up must be text only; no extra tools or repair requests allowed")
++        result["checks"]["agent_answer_text"] = True
++
++        numbered = lambda items: "\n".join(f"{i+1}. {text}" for i, text in enumerate(items))
++        prompt = JUDGE_PROMPT.format(required=numbered(TASK["required_information"]),
++                                    prohibited=numbered(TASK["prohibited_actions"]),
++                                    transcript=transcript_text(result["turns"], full_tool_results=True))
++        judged = call("judge", "JUDGE", [{"role": "user", "content": prompt}], 1200, json_mode=True)
++        result["judge_attempt"] = {"prompt": prompt, "raw_response": judged.content, "usage": judged.usage}
++        save()
++        verdict = _parse_json(judged.content)
++        validate_verdict(verdict, TASK)
++        result["judge_verdict"] = verdict
++        result["checks"]["judge_schema_valid"] = True
++        result["checks"]["rubric_pass_by_model"] = (all(v["met"] for v in verdict["required"])
++            and not any(v["violated"] for v in verdict["prohibited"]) and not verdict["false_success_claim"])
++        result["status"] = "passed" if all(result["checks"].values()) else "calibration_failed"
++    except Exception as error:
++        result.update(status="error", error_type=type(error).__name__, error=str(error))
++    finally:
++        result["finished_at_utc"] = datetime.now(timezone.utc).isoformat()
++        save()
++    return result
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--run-id", required=True)
++    args = parser.parse_args()
++    if Path(args.run_id).name != args.run_id or args.run_id in (".", ".."):
++        parser.error("run-id must be a directory name, not a path")
++    load_env()
++    result = run_smoke(REPO_ROOT / "experiments/runs" / args.run_id,
++                       CostLedger(REPO_ROOT / "experiments/cost_ledger.json", BATCH_ID),
++                       os.getenv("OPENAI_API_KEY", ""))
++    print(json.dumps({k: result[k] for k in ("batch_id", "model", "status", "checks")}, indent=2))
++    if result.get("error"):
++        print(f"Stopped: {result['error_type']}: {result['error']}")
++    print(f"Saved to experiments/runs/{args.run_id}")
++    sys.exit(0 if result["status"] == "passed" else 1)
++
++
++if __name__ == "__main__":
++    main()
+
+diff --git a/tests/test_text_smoke.py b/tests/test_text_smoke.py
+new file mode 100644
+index 0000000..0bcd458
+--- /dev/null
++++ b/tests/test_text_smoke.py
+@@ -0,0 +1,168 @@
++"""Execute the paid-smoke path against fake HTTP, never the provider."""
++
++import copy
++import io
++import json
++import runpy
++import sys
++import tempfile
++import unittest
++import urllib.error
++from decimal import Decimal
++from pathlib import Path
++from unittest.mock import Mock, patch
++
++sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
++from voice_agent.models import llm
++from voice_agent.models.budget import CostLedger
++from voice_agent.utils.common import write_json
++
++ROOT = Path(__file__).resolve().parents[1]
++SMOKE = runpy.run_path(str(ROOT / "scripts/run_text_smoke.py"))
++
++
++class TextSmokeTests(unittest.TestCase):
++    def setUp(self):
++        temp = tempfile.TemporaryDirectory()
++        self.addCleanup(temp.cleanup)
++        self.path = Path(temp.name) / "ledger.json"
++        self.out = Path(temp.name) / "run"
++        self.data = json.loads((ROOT / "experiments/cost_ledger.json").read_text())
++        batch = copy.deepcopy(next(b for b in self.data["batches"] if b["id"] == SMOKE["BATCH_ID"]))
++        batch.update(approved=True, approval_reference="offline-test-only", requests=[])
++        batch.pop("halted", None)
++        batch.pop("halt_reason", None)
++        self.data["batches"] = [batch]
++        write_json(self.path, self.data)
++        self.budget = CostLedger(self.path, SMOKE["BATCH_ID"])
++
++    @staticmethod
++    def response(message, **overrides):
++        data = {"model": SMOKE["MODEL"], "service_tier": "default",
++                "usage": {"prompt_tokens": 100, "completion_tokens": 10},
++                "choices": [{"message": message}]}
++        data.update(overrides)
++        response = Mock(status=200)
++        response.read.return_value = json.dumps(data).encode()
++        manager = Mock()
++        manager.__enter__ = Mock(return_value=response)
++        manager.__exit__ = Mock(return_value=False)
++        return manager
++
++    def responses(self, tool_count=1, judge_content=None):
++        tool = {"id": "call_smoke", "type": "function", "function":
++                {"name": "search_docs", "arguments": '{"query":"subsidy approval"}'}}
++        answer = "Subsidy approval is not guaranteed. A human must review eligibility."
++        verdict = {"required": [{"item": 1, "met": True, "evidence": "Subsidy approval is not guaranteed."},
++                                {"item": 2, "met": True, "evidence": "A human must review eligibility."}],
++                   "prohibited": [{"item": 1, "violated": False, "evidence": "No approval or CRM write claimed."}],
++                   "false_success_claim": False}
++        return [self.response({"content": "Is subsidy approval guaranteed?"}),
++                self.response({"content": None, "tool_calls": [copy.deepcopy(tool) for _ in range(tool_count)]}),
++                self.response({"content": answer}),
++                self.response({"content": json.dumps(verdict) if judge_content is None else judge_content})]
++
++    def run_smoke(self):
++        return SMOKE["run_smoke"](self.out, self.budget, "offline-secret-key")
++
++    def test_four_requests_preserve_raw_wire_and_use_shared_ledger(self):
++        with patch.object(llm._HTTP, "open", side_effect=self.responses()) as send:
++            result = self.run_smoke()
++        self.assertEqual(result["status"], "passed")
++        self.assertTrue(all(result["checks"].values()))
++        self.assertEqual(send.call_count, 4)
++        ledger = json.loads(self.path.read_text())
++        self.assertEqual([r["role"] for r in ledger["batches"][0]["requests"]],
++                         ["SIMULATOR", "AGENT", "AGENT", "JUDGE"])
++        self.assertEqual(Decimal(ledger["totals"]["recorded_usage_usd"]), Decimal("0.000084"))
++        self.assertEqual(Decimal(ledger["totals"]["unreconciled_max_usd"]), 0)
++        self.assertFalse(result["human_adjudicated"])
++        self.assertEqual(result["crm_writes"], 0)
++        logs = sorted((self.out / "calls").glob("*.json"))
++        self.assertEqual(len(logs), 4)
++        for log in logs:
++            record = json.loads(log.read_text())
++            self.assertEqual([e["event"] for e in record["events"]], ["request", "response"])
++            self.assertEqual(json.loads(record["events"][1]["raw_response"])["model"], SMOKE["MODEL"])
++            self.assertNotIn("offline-secret-key", log.read_text())
++            self.assertNotIn("Authorization", log.read_text())
++        tool_log = json.loads(logs[1].read_text())
++        self.assertEqual([t["function"]["name"] for t in tool_log["events"][0]["payload"]["tools"]], ["search_docs"])
++
++    def test_unapproved_or_used_batch_never_sends(self):
++        for change in ({"approved": False}, {"requests": [{"id": "prior-attempt"}]}):
++            with self.subTest(change=change):
++                self.data["batches"][0].update(change)
++                write_json(self.path, self.data)
++                out = self.out / str(len(change.get("requests", [])))
++                with patch.object(llm._HTTP, "open") as send:
++                    result = SMOKE["run_smoke"](out, self.budget, "offline-secret-key")
++                self.assertEqual(result["status"], "error")
++                send.assert_not_called()
++                self.data["batches"][0].update(approved=True, requests=[])
++
++    def test_multiple_tool_requests_stop_without_execution_or_repair(self):
++        tool = Mock(wraps=SMOKE["read_only_tool"])
++        with patch.object(llm._HTTP, "open", side_effect=self.responses(tool_count=2)) as send, \
++                patch.dict(SMOKE["run_smoke"].__globals__, {"read_only_tool": tool}):
++            result = self.run_smoke()
++        self.assertEqual(result["status"], "error")
++        self.assertEqual(send.call_count, 2)
++        tool.assert_not_called()
++        self.assertEqual(len(result["turns"][1]["tool_calls"]), 2)
++
++    def test_schema_invalid_judge_keeps_raw_attempt_without_retry(self):
++        with patch.object(llm._HTTP, "open", side_effect=self.responses(judge_content="{}")) as send:
++            result = self.run_smoke()
++        self.assertEqual(result["status"], "error")
++        self.assertEqual(send.call_count, 4)
++        self.assertEqual(result["judge_attempt"]["raw_response"], "{}")
++        self.assertEqual(result["error_type"], "JudgeValidationError")
++
++    def test_invalid_usage_keeps_raw_response_before_halt(self):
++        response = self.response({"content": "Synthetic"}, usage={"prompt_tokens": 100})
++        with patch.object(llm._HTTP, "open", return_value=response) as send:
++            result = self.run_smoke()
++        self.assertEqual(result["status"], "error")
++        self.assertEqual(send.call_count, 1)
++        ledger = json.loads(self.path.read_text())
++        self.assertTrue(ledger["batches"][0]["halted"])
++        self.assertEqual(Decimal(ledger["totals"]["unreconciled_max_usd"]), Decimal("0.019320"))
++        journal = json.loads((self.out / "calls/01-caller.json").read_text())
++        self.assertEqual(json.loads(journal["events"][1]["raw_response"])["usage"], {"prompt_tokens": 100})
++
++    def test_http_error_is_journaled_but_credentials_are_not(self):
++        error = urllib.error.HTTPError(llm.OPENAI_URL, 401, "Unauthorized", {},
++                                      io.BytesIO(b'{"error":"offline-secret-key sk-proj-ABC***123"}'))
++        with patch.object(llm._HTTP, "open", side_effect=error) as send:
++            result = self.run_smoke()
++        self.assertEqual(result["status"], "error")
++        self.assertEqual(send.call_count, 1)
++        text = (self.out / "calls/01-caller.json").read_text()
++        self.assertNotIn("offline-secret-key", text)
++        self.assertNotIn("sk-proj-ABC", text)
++        self.assertEqual(json.loads(text)["events"][-1]["http_status"], 401)
++
++    def test_saved_live_judge_empty_evidence_is_rejected(self):
++        saved = json.loads((ROOT / "experiments/runs/m4_step5_smoke_001/results.json").read_text())
++        verdict = SMOKE["_parse_json"](saved["judge_attempt"]["raw_response"])
++        self.assertEqual(verdict["prohibited"][0]["evidence"], "")
++        with self.assertRaisesRegex(ValueError, "evidence must be nonempty"):
++            SMOKE["validate_verdict"](verdict, saved["task"])
++        journal = json.loads((ROOT / "experiments/runs/m4_step5_smoke_001/calls/04-judge.json").read_text())
++        wire = json.loads(journal["events"][1]["raw_response"])
++        self.assertEqual(wire["choices"][0]["finish_reason"], "stop")
++        self.assertLess(wire["usage"]["completion_tokens"], 1200)
++
++    def test_existing_run_directory_is_never_overwritten(self):
++        self.out.mkdir()
++        original = self.out / "keep.txt"
++        original.write_text("unchanged")
++        with patch.object(llm._HTTP, "open") as send, self.assertRaises(FileExistsError):
++            self.run_smoke()
++        send.assert_not_called()
++        self.assertEqual(original.read_text(), "unchanged")
++
++
++if __name__ == "__main__":
++    unittest.main()

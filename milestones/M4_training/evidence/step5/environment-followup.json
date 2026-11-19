@@ -1,0 +1,38 @@
+{
+  "at_utc": "2026-11-19T11:38:39.468598+00:00",
+  "commands": {
+    "ollama": null,
+    "livekit-server": null,
+    "lk": null,
+    "llama-server": null,
+    "llama-cli": null,
+    "lms": null,
+    "vllm": null
+  },
+  "applications_present": {
+    "Ollama.app": false,
+    "LM Studio.app": false
+  },
+  "model_cache_directories_present": {
+    ".ollama/models/manifests": false,
+    ".lmstudio/models": false
+  },
+  "additional_python_distributions": {
+    "mlx-lm": null,
+    "llama-cpp-python": null,
+    "transformers": null,
+    "vllm": null
+  },
+  "docker": {
+    "command": [
+      "docker",
+      "ps",
+      "--format",
+      "{{.Image}}"
+    ],
+    "exit_code": 0,
+    "running": true,
+    "matching_local_model_or_livekit_images": [],
+    "unrelated_service_details": "Omitted; no containers changed"
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "version": "m4-development-v1",
+  "status": "frozen_development_review_only",
+  "human_review": "pending",
+  "core_metadata": "verbatim historical M2 snapshot, not current execution claims",
+  "core_ids": [
+    "IN01",
+    "IN02",
+    "IN03",
+    "IN04",
+    "IN05",
+    "IN06",
+    "IN07",
+    "IN08",
+    "IN09",
+    "IN10"
+  ],
+  "targeted_ids": [
+    "DEV11",
+    "DEV12",
+    "DEV13",
+    "DEV14",
+    "DEV15",
+    "DEV16"
+  ],
+  "development_ids": [
+    "IN01",
+    "IN02",
+    "IN03",
+    "IN04",
+    "IN05",
+    "IN06",
+    "IN07",
+    "IN08",
+    "IN09",
+    "IN10",
+    "DEV11",
+    "DEV12",
+    "DEV13",
+    "DEV14",
+    "DEV15",
+    "DEV16"
+  ],
+  "scenario_sha256": {
+    "IN01": "6dbe20f8eb64dfabeadae5680bb488b7ddb1097a08db7e3372d932e78c5d6912",
+    "IN02": "412fe6d418745b976c99c568d18c5e88d631e4b687c8f153ecbc39d30286b262",
+    "IN03": "f5a3d9711d04cbd90d4107ed5a41ba6e6e88541ed639f30b0476019fcfca1744",
+    "IN04": "2e845c7cd9c9686007a2884a209c04f3f98bb2a9d332597268d448982041e92c",
+    "IN05": "9f2708340b5d71f6e10fe3e9dc427bc12f7c677143aaa78029eccbfeed2b2f8d",
+    "IN06": "3bf62e5ded8676e1ec93bb25908423a1f994aea3538909067380a48598691aa1",
+    "IN07": "b3ce8884b5bb76497a4387d76e68e16c00a982c75c3c21083bbdb8edbb599110",
+    "IN08": "b982a6a14008d148152d516e5dd9dd850fe3f470e5018971f0bdf97618ee814d",
+    "IN09": "34dc273afc24420af52712fc504c9667c546daec757cd61ae3ed4183312d96df",
+    "IN10": "cabe0f42c710080b92f5675ff1af68d4e56260e0807523b046420160036ac421",
+    "DEV11": "e60235c0df5e89d2e1e6b91ab293e00577f9e1d02368d8a7f18c9d1aa2a00fe2",
+    "DEV12": "7886e86133d46c6b447200aebcaede172ffd055917b0c14d2c8f58ee9356935f",
+    "DEV13": "4f5d8bb8d3e1332128a6d7cb809b1afa6f71629c7c1ea9b5da8f822d71f77199",
+    "DEV14": "66c4b11b82b2135967ade013de61e2214a502f783e02574112e8aa91e66ba961",
+    "DEV15": "7d4e8f65494845c9d8033c76e60e8df84eaaf1ad098b4ff46e82b7512ff0cc90",
+    "DEV16": "a00b7e80fc7252fc357e51e723e0b74a087b51dc83567009f5752bc1ea23abc5"
+  },
+  "file_sha256": {
+    "core.json": "89a55a4baffc263fe73468fa0b5e83c2d19155eee3da3ee2787ea3345e283860",
+    "crm_seed.json": "2541fd6ae9bd82aced9d7317fb748ebe449ed5e54f931a560b70af665f64a537",
+    "supplemental.json": "470d5ab5e2846eba484c66437593a8282ba31410236bdb370b209e4c372d4f9f",
+    "sources.json": "b8865e46c36b388ba22d26fb7868d44ce213e36817e599688822ec718c09988b",
+    "documents/short.md": "64782cfcfedb66d818ae5cbf2bdc9cf22990075cf099de416d13cb063df3557d",
+    "documents/large.md": "9d6ed54bbab5068a3c40bff1fc3dd55117c09b293342f907b8bacae8c2270a9c"
+  },
+  "origins": {
+    "core.json": {
+      "path": "milestones/M2_dataset/solar_pilot/scenarios.json",
+      "sha256": "89a55a4baffc263fe73468fa0b5e83c2d19155eee3da3ee2787ea3345e283860"
+    },
+    "crm_seed.json": {
+      "path": "milestones/M2_dataset/solar_pilot/crm_seed.json",
+      "sha256": "2541fd6ae9bd82aced9d7317fb748ebe449ed5e54f931a560b70af665f64a537"
+    },
+    "sources.json": {
+      "path": "milestones/M4_training/policy_packs/sources.json",
+      "sha256": "b8865e46c36b388ba22d26fb7868d44ce213e36817e599688822ec718c09988b"
+    },
+    "documents/short.md": {
+      "path": "milestones/M4_training/policy_packs/short/knowledge.md",
+      "sha256": "64782cfcfedb66d818ae5cbf2bdc9cf22990075cf099de416d13cb063df3557d"
+    },
+    "documents/large.md": {
+      "path": "milestones/M4_training/policy_packs/large/knowledge.md",
+      "sha256": "9d6ed54bbab5068a3c40bff1fc3dd55117c09b293342f907b8bacae8c2270a9c"
+    }
+  },
+  "legacy_split": {
+    "path": "milestones/M2_dataset/generated_splits/m2_split_manifest.json",
+    "sha256": "8197e43241d1c2dc1c0624a573406c79407b1b7833009ad6f38b65396ad62e87",
+    "status": "review_only",
+    "scoring_allowed": false,
+    "former_development_review_ids": [
+      "IN01",
+      "IN02",
+      "IN03",
+      "IN04",
+      "IN05",
+      "IN06",
+      "IN07",
+      "IN08",
+      "IN09",
+      "IN10",
+      "IN11",
+      "IN12",
+      "IN13",
+      "IN14",
+      "IN15",
+      "IN16",
+      "IN17",
+      "IN18",
+      "IN19",
+      "IN20",
+      "IN21",
+      "IN22",
+      "IN23",
+      "IN24",
+      "IN25",
+      "IN26",
+      "IN27",
+      "IN28"
+    ],
+    "former_test_review_ids": [
+      "IN29",
+      "IN30",
+      "IN31",
+      "IN32",
+      "IN33",
+      "IN34",
+      "IN35",
+      "IN36",
+      "IN37",
+      "IN38",
+      "IN39",
+      "IN40"
+    ],
+    "classification": "All 40 expansions are development/review, not independently untouched test data. This does not assert every answer was opened."
+  },
+  "clock_rule": "Reset full frozen seed per scenario; environment.snapshot_at may override only snapshot_at. No other starting-state override.",
+  "views": {
+    "agent": "id only, never OracleAgent",
+    "simulator": "caller only",
+    "evaluator": "gold and communication/safety rubric",
+    "harness": "environment and tool_results"
+  },
+  "held_out": {
+    "status": "deferred_by_user",
+    "decision": "Development only; defer holdout",
+    "ids": [],
+    "actual_case_count": 0,
+    "planned_minimum_text_cases": 10,
+    "evaluation_allowed": false,
+    "author": null,
+    "reviewer": null,
+    "reviewed_at": null,
+    "brief_status": "prepared_not_dispatched",
+    "answer_keys_created": false,
+    "access_control": "No independent boundary in this shared workspace; external custodian required before creation"
+  },
+  "held_out_audio": {
+    "status": "reservation_only_deferred",
+    "planned_separate_cases": 3,
+    "ids": [],
+    "actual_case_count": 0,
+    "author": null,
+    "reviewer": null,
+    "reviewed_at": null,
+    "review_status": "not_created_not_reviewed",
+    "audio_seconds": 0,
+    "evaluation_allowed": false,
+    "key_location": null,
+    "access_control": "Not implemented. Future custodian must store separately outside agent/repo access; .gitignore is not a boundary."
+  }
+}

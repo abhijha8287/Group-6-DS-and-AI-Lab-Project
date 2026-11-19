@@ -6,6 +6,7 @@ Run from the repository root:  python3 -m unittest discover -s tests -v
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
@@ -16,6 +17,7 @@ from voice_agent.inference.crm import CRMSandbox, is_confirmation  # noqa: E402
 from voice_agent.inference.outbound_gate import evaluate  # noqa: E402
 from voice_agent.inference.retrieval import BM25Index  # noqa: E402
 from voice_agent.models.llm import AnthropicClient, OpenAICompatibleClient  # noqa: E402
+from voice_agent.pipelines import episode  # noqa: E402
 from voice_agent.pipelines.episode import run_subset  # noqa: E402
 from voice_agent.data.preprocess import validate_knowledge_sources
 
@@ -102,6 +104,35 @@ class TestValidationLayer(unittest.TestCase):
 
 
 class TestEndToEndWithoutLLM(unittest.TestCase):
+    def test_caller_turn_limit_excludes_greeting_replies_and_tools(self):
+        agent = Mock()
+        agent.name, agent.usage = "boundary_test", {}
+        agent.greeting.return_value = "Welcome."
+        caller = Mock()
+        caller.usage = {}
+        caller.reply.side_effect = [f"Request {i}" for i in range(13)]
+
+        def reply_with_tool(text, sandbox, trace):
+            args = {"query": text}
+            trace.append({"type": "tool", "name": "search_docs", "arguments": args,
+                          "result": sandbox.execute("search_docs", args)})
+            return "Please continue."
+
+        agent.turn.side_effect = reply_with_tool
+        with patch.object(episode, "SingleAgent", return_value=agent), \
+                patch.object(episode, "LLMCaller", return_value=caller):
+            result = episode.run_episode(SOLAR.scenario("IN01"), SOLAR, "llm",
+                                         {"agent": None, "simulator": None}, [], BM25Index([]))
+
+        self.assertEqual(episode.MAX_CALLER_TURNS, 12)
+        self.assertEqual(result["status"], "turn_limit")
+        self.assertEqual(caller.reply.call_count, 12)
+        self.assertEqual(agent.turn.call_count, 12)
+        self.assertEqual([t["text"] for t in result["turns"] if t["type"] == "caller"],
+                         [f"Request {i}" for i in range(12)])
+        self.assertEqual(sum(t["type"] == "agent" for t in result["turns"]), 13)
+        self.assertEqual(sum(t["type"] == "tool" for t in result["turns"]), 12)
+
     def test_oracle_reproduces_every_gold_state(self):
         run = run_subset(SOLAR, select_tasks(SOLAR, [t["id"] for t in SOLAR.scenarios]), "oracle", {},
                          run_id="unittest_oracle", out_dir=Path(self._tmp()), log=lambda *_: None)

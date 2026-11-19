@@ -8,7 +8,7 @@ Modes:
 
 Examples:
   python3 scripts/run_m3_pipeline.py --mode oracle
-  python3 scripts/run_m3_pipeline.py --mode llm --tasks IN01 IN02
+  python3 scripts/run_m3_pipeline.py --mode llm --tasks IN01 --budget-batch APPROVED_BATCH_ID
 """
 
 import argparse
@@ -19,6 +19,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from voice_agent.data.loader import load_business, select_tasks  # noqa: E402
+from voice_agent.models.budget import CostLedger
 from voice_agent.models.llm import make_client  # noqa: E402
 from voice_agent.pipelines.episode import run_subset  # noqa: E402
 from voice_agent.utils.common import load_env  # noqa: E402
@@ -33,6 +34,7 @@ def main():
     parser.add_argument("--mode", default="oracle", choices=MODES)
     parser.add_argument("--tasks", nargs="*", help="task IDs (default: the 10 pilot dev tasks)")
     parser.add_argument("--run-id")
+    parser.add_argument("--budget-batch", help="Explicitly approved cost-ledger batch ID for paid text calls")
     args = parser.parse_args()
 
     load_env()
@@ -40,10 +42,14 @@ def main():
     tasks = select_tasks(pack, args.tasks, split="dev")
     clients = {}
     if args.mode == "llm":
-        clients = {role.lower(): make_client(role) for role in ("AGENT", "SIMULATOR", "JUDGE")}
+        ledger_path = Path(__file__).resolve().parents[1] / "experiments/cost_ledger.json"
+        budget = CostLedger(ledger_path, args.budget_batch) if args.budget_batch else None
+        clients = {role.lower(): make_client(role, budget=budget) for role in ("AGENT", "SIMULATOR", "JUDGE")}
     run = run_subset(pack, tasks, args.mode, clients, run_id=args.run_id)
     print(json.dumps(run["summary"], indent=2))
     print(f"Saved to {run['out_dir']}")
+    if run["summary"]["evaluation_error_tasks"] or any(r["status"].startswith("error") for r in run["results"]):
+        sys.exit(1)  # keep the attempt, but do not signal a successful evaluation
 
 
 if __name__ == "__main__":

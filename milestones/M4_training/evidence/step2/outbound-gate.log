@@ -1,0 +1,36 @@
+COMMIT: 4a61dedf732a2427a9cbf35ff5f9b6dff1f726d9
+STARTED UTC: 2026-11-19T10:29:51.872633+00:00
+$ python3 scripts/run_outbound_gate.py --out experiments/runs/m4_step2_outbound_gate
+solar     OUT01  ALLOW  -                                             ok
+solar     OUT02  BLOCK  no_explicit_consent                           ok
+solar     OUT03  BLOCK  opted_out                                     ok
+solar     OUT04  BLOCK  outside_calling_hours                         ok
+solar     OUT05  BLOCK  duplicate_event                               ok
+solar     OUT06  BLOCK  recent_attempt                                ok
+solar     OUT07  BLOCK  retry_limit                                   ok
+solar     OUT08  BLOCK  no_explicit_consent,not_allowlisted           ok
+solar     OUT09  ALLOW  -                                             ok
+solar     OUT10  BLOCK  no_explicit_consent,not_allowlisted           ok
+dental    OUT01  ALLOW  -                                             ok
+dental    OUT02  BLOCK  no_explicit_consent                           ok
+dental    OUT03  BLOCK  opted_out                                     ok
+dental    OUT04  BLOCK  outside_calling_hours                         ok
+dental    OUT05  BLOCK  duplicate_event                               ok
+dental    OUT06  BLOCK  recent_attempt                                ok
+dental    OUT07  BLOCK  retry_limit                                   ok
+dental    OUT08  BLOCK  no_explicit_consent,not_allowlisted           ok
+dental    OUT09  ALLOW  -                                             ok
+dental    OUT10  BLOCK  no_explicit_consent,not_allowlisted           ok
+furniture OUT01  ALLOW  -                                             ok
+furniture OUT02  BLOCK  no_explicit_consent                           ok
+furniture OUT03  BLOCK  opted_out                                     ok
+furniture OUT04  BLOCK  outside_calling_hours                         ok
+furniture OUT05  BLOCK  duplicate_event                               ok
+furniture OUT06  BLOCK  recent_attempt                                ok
+furniture OUT07  BLOCK  retry_limit                                   ok
+furniture OUT08  BLOCK  no_explicit_consent,not_allowlisted           ok
+furniture OUT09  ALLOW  -                                             ok
+furniture OUT10  BLOCK  no_explicit_consent,not_allowlisted           ok
+{'cases': 30, 'matches': 30, 'allowed': 6, 'blocked': 24, 'disallowed_calls_allowed': 0, 'reason_counts': {'allowed': 6, 'no_explicit_consent': 9, 'opted_out': 3, 'outside_calling_hours': 3, 'duplicate_event': 3, 'recent_attempt': 3, 'retry_limit': 3, 'not_allowlisted': 6}}
+
+EXIT CODE: 0

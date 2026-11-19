@@ -1,0 +1,11 @@
+{
+  "id": "DEV11",
+  "caller": {
+    "persona": "A prospective rooftop solar customer",
+    "goal": "Ask to save a new rooftop enquiry. Give your name as Asha Demo but, when asked for an email or other contact details, decline to provide them. Decline a callback or handoff and do not authorize a partial record.",
+    "provided_fields": {
+      "name": "Asha Demo"
+    },
+    "confirmation": "none"
+  }
+}

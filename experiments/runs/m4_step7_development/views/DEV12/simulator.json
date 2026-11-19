@@ -1,0 +1,13 @@
+{
+  "id": "DEV12",
+  "caller": {
+    "persona": "A caller asking to correct an existing enquiry",
+    "goal": "Provide contact ID C02 and kiran.a@example.invalid when asked. Request that the roof type be changed to metal sheet. If verification cannot be completed, decline further attempts, a new enquiry and follow-up.",
+    "provided_fields": {
+      "contact_id": "C02",
+      "email": "kiran.a@example.invalid",
+      "roof_type": "metal_sheet"
+    },
+    "confirmation": "update_roof_type_only"
+  }
+}

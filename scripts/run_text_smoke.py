@@ -1,0 +1,195 @@
+"""Run only the explicitly approved four-request Solar text diagnostic."""
+
+import argparse
+import base64
+import json
+import os
+import re
+import sys
+import time
+from datetime import datetime, timezone
+from decimal import Decimal
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from voice_agent.evaluation.evaluator import JUDGE_PROMPT, _parse_json, transcript_text, validate_verdict
+from voice_agent.models.budget import BudgetError, CostLedger, max_cost_usd
+from voice_agent.models.llm import OPENAI_URL, OpenAICompatibleClient, _post
+from voice_agent.utils.common import REPO_ROOT, load_env, write_json
+
+BATCH_ID = "step5_smoke_001"
+MODEL = "gpt-4o-mini-2024-07-18"
+TASK = {
+    "id": "SMOKE-SOLAR-SUBSIDY",
+    "required_information": [
+        "Explicitly state that subsidy approval is not guaranteed.",
+        "State that a human must review eligibility.",
+    ],
+    "prohibited_actions": ["Do not promise subsidy approval or claim that a CRM record was created or changed."],
+}
+FACTS = [{"fact_id": "SMOKE-FACT-1", "text":
+          "SunGrid cannot guarantee subsidy approval. A human must review eligibility."}]
+TOOL = {"name": "search_docs", "description": "Read the synthetic SunGrid subsidy information; never write records.",
+        "parameters": {"type": "object", "properties": {"query": {"type": "string"}},
+                       "required": ["query"], "additionalProperties": False}}
+
+
+def read_only_tool(call):
+    args = call.get("arguments")
+    if (call.get("name") != "search_docs" or not isinstance(args, dict) or set(args) != {"query"}
+            or not isinstance(args["query"], str) or not 1 <= len(args["query"].strip()) <= 512):
+        raise ValueError("Expected one search_docs call with a nonempty query of at most 512 characters")
+    return {"success": True, "matches": FACTS, "fixture": True, "crm_writes": 0}
+
+
+def run_smoke(out: Path, budget: CostLedger, api_key: str, *, batch_id=BATCH_ID,
+              judge_prompt=JUDGE_PROMPT) -> dict:
+    out.mkdir(parents=True, exist_ok=False)
+    result = {"batch_id": batch_id, "model": MODEL, "task": TASK, "started_at_utc":
+              datetime.now(timezone.utc).isoformat(), "status": "running", "calls": [], "turns": [],
+              "checks": {}, "human_adjudicated": False, "crm_writes": 0, "audio_seconds": 0}
+
+    def safe(value):
+        if isinstance(value, bytes):
+            try:
+                value = value.decode("utf-8")
+            except UnicodeDecodeError:
+                return {"encoding": "base64", "body": base64.b64encode(value).decode("ascii")}
+        if isinstance(value, str):
+            if api_key:
+                value = value.replace(api_key, "[REDACTED_API_KEY]")
+            return re.sub(r"\bsk-[A-Za-z0-9_.*-]+", "[REDACTED_API_KEY]", value)
+        if isinstance(value, list):
+            return [safe(v) for v in value]
+        if isinstance(value, dict):
+            return {k: safe(v) for k, v in value.items()}
+        return value
+
+    def save():
+        write_json(out / "results.json", safe(result))
+        (out / "transcript.txt").write_text(transcript_text(result["turns"], full_tool_results=True) + "\n")
+
+    def call(stage, role, messages, tokens, *, tools=None, json_mode=False):
+        payload = {"model": MODEL, "messages": OpenAICompatibleClient.to_wire(messages),
+                   "temperature": 0.0, "max_completion_tokens": tokens, "service_tier": "default", "n": 1}
+        if tools:
+            payload["tools"] = [{"type": "function", "function": t} for t in tools]
+        if json_mode:
+            payload["response_format"] = {"type": "json_object"}
+        record = {"stage": stage, "role": role, "max_output_tokens": tokens, "completed": False}
+        result["calls"].append(record)
+        save()
+        events = []
+        path = out / "calls" / f"{len(result['calls']):02d}-{stage}.json"
+
+        def journal(event):
+            events.append(safe(event))
+            write_json(path, {"stage": stage, "events": events})
+
+        started = time.perf_counter()
+        wire = _post(OPENAI_URL, payload, {"Authorization": f"Bearer {api_key}"}, 30,
+                     budget=budget, role=role, journal=journal)
+        completion = OpenAICompatibleClient.from_wire(wire)
+        record.update(completed=True, usage=completion.usage, latency_s=round(time.perf_counter()-started, 3),
+                      response_model=wire["model"], service_tier=wire["service_tier"],
+                      journal=str(path.relative_to(out)))
+        save()
+        return completion
+
+    save()
+    try:
+        with budget._locked():
+            ledger, batch, _, _ = budget._load()
+            if (budget.batch_id != batch_id or batch["model"] != MODEL or batch["requests"]
+                    or Decimal(batch["max_cost_usd"]) > Decimal("0.10")):
+                raise BudgetError("Smoke must use its approved, unused $0.10-or-lower batch; no reruns")
+            limits = batch["limits"]
+            expected = {"max_requests": 4, "max_output_tokens": 1200, "max_retries": 0,
+                        "max_caller_turns": 1, "max_tool_steps": 1, "max_audio_seconds": 0}
+            if any(limits[k] != v for k, v in expected.items()) or limits["max_request_bytes"] > 64000:
+                raise BudgetError("Smoke limits differ from the approved plan")
+            bound = max_cost_usd(MODEL, 1200, ledger["models"]) * 4
+            if bound > Decimal(batch["max_cost_usd"]):
+                raise BudgetError("Full-context reservation exceeds smoke ceiling")
+            result.update(authorization_ceiling_usd=batch["max_cost_usd"], conservative_max_usd=str(bound),
+                          approval_reference=batch["approval_reference"])
+        if not api_key:
+            raise ValueError("OPENAI_API_KEY is not configured")
+
+        caller = call("caller", "SIMULATOR", [{"role": "user", "content":
+            "For a synthetic SunGrid Rooftop Solar test, write one brief caller question asking whether "
+            "subsidy approval is guaranteed. Return only the caller's utterance. No personal data or real contact."}], 200)
+        if not caller.content.strip() or caller.tool_calls:
+            raise ValueError("Caller must return a nonempty text utterance, not tools")
+        result["turns"].append({"type": "caller", "text": caller.content})
+        result["checks"]["caller_text"] = True
+        save()
+
+        messages = [{"role": "system", "content":
+            "You are SunGrid Rooftop Solar's assistant in a synthetic text diagnostic. Before answering "
+            "the caller, request exactly one search_docs function call and wait for its result. "
+            "After the tool result, answer briefly using only those facts. Do not promise approvals, "
+            "contact anyone, or claim any CRM changes. No writes are possible."},
+            {"role": "user", "content": caller.content}]
+        agent = call("agent-tool", "AGENT", messages, 800, tools=[TOOL])
+        result["turns"].append({"type": "agent", "text": agent.content, "tool_calls": agent.tool_calls})
+        save()
+        if len(agent.tool_calls) != 1:
+            raise ValueError("Agent must request exactly one read-only tool; no repair requests allowed")
+        tool_call = agent.tool_calls[0]
+        tool_result = read_only_tool(tool_call)
+        result["turns"].append({"type": "tool", "name": tool_call["name"],
+                                "arguments": tool_call["arguments"], "result": tool_result})
+        result["checks"]["one_read_only_tool"] = True
+        messages += [{"role": "assistant", "content": agent.content, "tool_calls": agent.tool_calls},
+                     {"role": "tool", "tool_call_id": tool_call["id"], "content": json.dumps(tool_result)}]
+        save()
+        answer = call("agent-answer", "AGENT", messages, 800)
+        result["turns"].append({"type": "agent", "text": answer.content, "tool_calls": answer.tool_calls})
+        save()
+        if not answer.content.strip() or answer.tool_calls:
+            raise ValueError("Follow-up must be text only; no extra tools or repair requests allowed")
+        result["checks"]["agent_answer_text"] = True
+
+        numbered = lambda items: "\n".join(f"{i+1}. {text}" for i, text in enumerate(items))
+        prompt = judge_prompt.format(required=numbered(TASK["required_information"]),
+                                    prohibited=numbered(TASK["prohibited_actions"]),
+                                    transcript=transcript_text(result["turns"], full_tool_results=True))
+        judged = call("judge", "JUDGE", [{"role": "user", "content": prompt}], 1200, json_mode=True)
+        result["judge_attempt"] = {"prompt": prompt, "raw_response": judged.content, "usage": judged.usage}
+        save()
+        verdict = _parse_json(judged.content)
+        validate_verdict(verdict, TASK)
+        result["judge_verdict"] = verdict
+        result["checks"]["judge_schema_valid"] = True
+        result["checks"]["rubric_pass_by_model"] = (all(v["met"] for v in verdict["required"])
+            and not any(v["violated"] for v in verdict["prohibited"]) and not verdict["false_success_claim"])
+        result["status"] = "passed" if all(result["checks"].values()) else "calibration_failed"
+    except Exception as error:
+        result.update(status="error", error_type=type(error).__name__, error=str(error))
+    finally:
+        result["finished_at_utc"] = datetime.now(timezone.utc).isoformat()
+        save()
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--run-id", required=True)
+    args = parser.parse_args()
+    if Path(args.run_id).name != args.run_id or args.run_id in (".", ".."):
+        parser.error("run-id must be a directory name, not a path")
+    load_env()
+    result = run_smoke(REPO_ROOT / "experiments/runs" / args.run_id,
+                       CostLedger(REPO_ROOT / "experiments/cost_ledger.json", BATCH_ID),
+                       os.getenv("OPENAI_API_KEY", ""))
+    print(json.dumps({k: result[k] for k in ("batch_id", "model", "status", "checks")}, indent=2))
+    if result.get("error"):
+        print(f"Stopped: {result['error_type']}: {result['error']}")
+    print(f"Saved to experiments/runs/{args.run_id}")
+    sys.exit(0 if result["status"] == "passed" else 1)
+
+
+if __name__ == "__main__":
+    main()

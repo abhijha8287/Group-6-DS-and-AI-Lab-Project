@@ -180,6 +180,7 @@ class CRMSandbox:
         self.checked_slots: set[str] = set()
         self.observed: dict[str, dict] = {}
         self.log: list[dict] = []
+        self.checkpoint = None
 
     # -- conversation hooks ----------------------------------------------------
 
@@ -206,6 +207,8 @@ class CRMSandbox:
             entry["blocked"] = "invalid_arguments"
         entry["result"] = result
         self.log.append(entry)
+        if self.checkpoint is not None:
+            self.checkpoint({"state": deep_copy(self.state), "tool_log": deep_copy(self.log)})
         return result
 
     # -- validation helpers ----------------------------------------------------
