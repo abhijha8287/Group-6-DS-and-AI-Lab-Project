@@ -2,11 +2,11 @@
 
 To: User — self-review accepted, findings pending
 
-In the structured handoff, the user selected “I'll review it myself.” This request is assigned to the user for review. No findings or approval have been received, and no external teammate was contacted. Please review the two isolated knowledge documents, `questions.json`, and `sources.json` before any use as an approved evaluation set.
+In the structured handoff, the user selected “I'll review it myself.” Sarwar's F1–F5 current-page findings, inspected 2026-11-22, are recorded in `../policy_packs_report.md` under “Sarwar source verification findings — 2026-11-22.” This records current-page evidence only; the historical 2026-10-29 source access verification remains pending. Source reuse permission, licensing, policy-document changes, and approval remain pending. No external teammate was contacted. Please review the two isolated knowledge documents, `questions.json`, and `sources.json` before any use as an approved evaluation set.
 
 ## Checks requested
 
-- Check F1–F5 against the cited source pages and the inherited 2026-10-29 access record. Identify changed, overstated or unsupported paraphrases; do not assume the historical access date proves present accuracy.
+- F1–F5 current-page findings were recorded from official SolarSquare pages inspected 2026-11-22; see the dated evidence table in `../policy_packs_report.md`. Separately verify the historical 2026-10-29 access record, which is still unverified. Identify changed, overstated or unsupported paraphrases; do not treat current pages as evidence of historical page contents.
 - Check S1–S10 against the intended sandbox assumptions, especially identity binding, the new-enquiry exception, permitted writes, callback hours, all outbound gates, opt-out handling and atomic failures.
 - Check S11–S48 for distinct usefulness, consistent fictional scope and dates, precedence, cross-references, and no new permission to write, integrate or contact anyone. Check callback versus visit, consent versus identity and enquiry versus cancellation distinctions.
 - Check cancellation ambiguity, roof safety and property rights, subsidy and blackout limitations, unknown fields and other exceptions for unsupported conclusions or accidental legal, technical or financial claims.
@@ -16,8 +16,8 @@ In the structured handoff, the user selected “I'll review it myself.” This r
 
 ## Review record
 
-- Reviewer: User (self-review volunteered; not completed)
-- Date:
+- Reviewer: Sarwar (F1–F5 current-page findings recorded; full review not completed)
+- Date: 2026-11-22 (current-page inspection only)
 - Decision:
 
 ## Return corrections
