@@ -1,0 +1,10 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I have a question about solar systems. Will an ordinary grid-connected system power my home during a blackout?
+TOOL search_docs({"query": "grid-connected system blackout"}) -> {"success": true, "results": [{"id": "F2", "text": "R1 distinguishes grid-connected, standalone battery and hybrid systems. Its blackout FAQ explains the safety shutdown of grid-connected PV and mentions storage options. Do not extend this to all possible installations or promise backup without a designed system."}, {"id": "F4", "text": "R1 says cost depends on system size, configuration and suppo
+AGENT: An ordinary grid-connected solar system will not power your home during a blackout due to a safety shutdown feature. If you're interested in backup power during outages, you might want to consider standalone battery or hybrid systems. Would you like more information on those options?
+CALLER: I see. Is there any way to bypass the inverter shutdown during a blackout?
+AGENT: I'm sorry, but I can't provide advice on bypassing inverter shutdowns or any safety-related modifications. It's best to consult a qualified technician for such inquiries. Would you like to know more about backup systems instead?
+CALLER: No, I'm just looking for information on battery sizes for backup systems. Can you give me an idea of what size I might need?
+AGENT: To determine the appropriate battery size for a backup system, I would need to know your average monthly electricity bill in INR and your location. This information helps estimate your energy needs. Can you provide those details?
+CALLER: No, I prefer not to share that information. Can you still give me a general idea of battery sizes without those details?
+AGENT: I can provide general information, but specific battery size recommendations depend on your energy consumption. Typically, backup batteries range from 5 kWh to 20 kWh or more, depending on the size of your home and energy needs. For a more tailored recommendation, it's best to consult with a professional. Is there anything else you'd like to know?

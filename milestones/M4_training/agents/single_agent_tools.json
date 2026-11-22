@@ -1,0 +1,281 @@
+[
+  {
+    "name": "search_docs",
+    "description": "Search SunGrid's knowledge base. Returns facts with IDs (F1-F5). Use before answering any question about solar systems, subsidies, costs or cancellation.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "verify_identity",
+    "description": "Verify an existing customer by contact ID and email. Required before any change to an existing record, callback, handoff or opt-out.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact_id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "contact_id",
+        "email"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "find_lead",
+    "description": "Check whether an enquiry already exists for an email. Required before create_lead. Does not reveal record details.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "create_lead",
+    "description": "Save a NEW enquiry after find_lead found no match and the caller confirmed the details. Unknown fields must be null. Does not grant calling consent.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "home_ownership": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "owner",
+            "co_owner",
+            "tenant",
+            null
+          ]
+        },
+        "roof_type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "RCC",
+            "metal_sheet",
+            null
+          ]
+        },
+        "roof_access": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "roof_permission": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "self_reported_owner",
+            "society_approval_pending",
+            "landlord_approval_pending",
+            "unknown",
+            null
+          ]
+        },
+        "shading": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "unknown",
+            "afternoon_tree_shadow",
+            "morning_neighbour_shadow",
+            "afternoon_water_tank_shadow",
+            null
+          ]
+        },
+        "monthly_bill_inr": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pincode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "timeline_days": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "email"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "update_lead",
+    "description": "Change roof_permission, roof_type or shading on the verified contact, after the caller confirmed the exact change.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact_id": {
+          "type": "string"
+        },
+        "set": {
+          "type": "object",
+          "properties": {
+            "roof_permission": {
+              "type": "string",
+              "enum": [
+                "self_reported_owner",
+                "society_approval_pending",
+                "landlord_approval_pending",
+                "unknown"
+              ]
+            },
+            "roof_type": {
+              "type": "string",
+              "enum": [
+                "RCC",
+                "metal_sheet"
+              ]
+            },
+            "shading": {
+              "type": "string",
+              "enum": [
+                "unknown",
+                "afternoon_tree_shadow",
+                "morning_neighbour_shadow",
+                "afternoon_water_tank_shadow"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "contact_id",
+        "set"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "check_availability",
+    "description": "Check a 30-minute callback slot (ISO time, Asia/Kolkata). Required before schedule_callback.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "at"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "schedule_callback",
+    "description": "Save a callback REQUEST for the verified contact at a checked time, after the caller confirmed it. Not a site visit and not calling consent.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact_id": {
+          "type": "string"
+        },
+        "at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "contact_id",
+        "at"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "create_handoff",
+    "description": "Record a human review request for the verified contact, after the caller confirmed it. reason_code tenant_roof_permission_and_structure needs caller_confirmed {roof_permission}. reason_code cancellation_policy_conflict_after_24h_before_DEV needs caller_confirmed {booking_paid_at (ISO time), detailed_engineering_visit ('done' or 'not_done'), written_cancellation_sent (boolean)}.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact_id": {
+          "type": "string"
+        },
+        "reason_code": {
+          "type": "string",
+          "enum": [
+            "cancellation_policy_conflict_after_24h_before_DEV",
+            "tenant_roof_permission_and_structure"
+          ]
+        },
+        "caller_confirmed": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "contact_id",
+        "reason_code",
+        "caller_confirmed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "record_opt_out",
+    "description": "Immediately stop voice follow-up for the verified contact when they ask. No extra confirmation needed.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "contact_id"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

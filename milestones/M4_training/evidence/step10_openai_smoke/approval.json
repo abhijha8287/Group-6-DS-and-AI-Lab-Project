@@ -1,0 +1,10 @@
+{
+  "approved_by": "Abhishek Jha (user), in-session answer: 'Approve both batches (Recommended)'",
+  "approved_at_utc": "2026-11-22T10:30:08.748143+00:00",
+  "question": "Approve paid OpenAI Step 10 check on gpt-4o-mini: single_v2 and multi on IN02, IN05, IN10; 2 batches of at most 100 requests; hard cap $2.00 per batch ($4.00 total) from text_development; no real calls, no audio; failed runs kept.",
+  "batches": [
+    "step10_openai_single_v2_001",
+    "step10_openai_multi_001"
+  ],
+  "scope_note": "Development smoke for Steps 9-10 only. Not a registered m4-comparison-v1 cell, not held-out data, not a model or architecture decision."
+}

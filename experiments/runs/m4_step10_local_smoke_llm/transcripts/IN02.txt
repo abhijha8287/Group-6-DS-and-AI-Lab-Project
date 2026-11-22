@@ -1,0 +1,19 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I'm Diya. I'm checking if a rooftop solar system is feasible for my home in Pune.
+AGENT: I'm Diya. Could you please share your email address so I can check if you already have an enquiry with us?
+CALLER: diya@example.invalid
+TOOL find_lead({"email": "diya@example.invalid"}) -> {"success": true, "email": "diya@example.invalid", "match_found": false}
+AGENT: Great, Diya. It seems there's no existing enquiry for your email. Would you like me to create a new enquiry with your details?
+CALLER: Yes, I confirm. Please proceed to create the enquiry with my details.
+TOOL create_lead({"name": "Diya", "email": "diya@example.invalid", "home_ownership": null, "pincode": null, "shading": null, "location": null, "monthly_bill_inr": null, "roof_access": null, "roof_permission": null, "roof_type": null, "timeline_days": null}) -> {"success": true, "id": "C13", "contact": {"id": "C13", "name": "Diya", "email": "diya@example.invalid", "home_ownership": null, "roof_type": null, "roof_access": null, "roof_permission": null, "shading": null, "monthly_bill_inr": null, "location": null, "pincode": null, "timeline_days": null, "status": "new", "consent": false, "consent_record": null, "opted_out": false, "attempts": 0, "last_attem
+AGENT: Your enquiry has been successfully created, Diya. Let me collect some details to proceed. Could you share your home ownership status (owner, co-owner, tenant)?
+CALLER: Owner
+TOOL update_lead({"set": {"roof_permission": "self_reported_owner"}, "contact_id": "C13"}) -> {"success": false, "error": "identity_not_verified", "atomic": true}
+AGENT: To proceed, I need to verify your identity. Could you please share your contact ID and email address?
+CALLER: My email is diya@example.invalid. I don't have a contact ID.
+AGENT: I'll verify your email address with our system. One moment, please.
+CALLER: Yes, I confirm. Please proceed.
+TOOL verify_identity({"contact_id": "C13", "email": "diya@example.invalid"}) -> {"success": false, "verified_contact_id": null, "error": "verification_failed"}
+AGENT: It seems there was an issue verifying your identity. Could you please share your contact ID again?
+CALLER: I don't have a contact ID.
+AGENT: To verify your identity, we need your contact ID. Could you please check if you have one available?

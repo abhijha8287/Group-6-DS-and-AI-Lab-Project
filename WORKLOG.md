@@ -67,7 +67,7 @@ Status: partial milestone; text reliability, development fixtures, measurement p
 | Member | Contributions | Approx. hours |
 |---|---|---|
 | Srijan (S.) | Directed the AI-assisted M4 workflow and scope decisions; selected local LiveKit with direct OpenAI Realtime as the future voice direction; approved two capped read-only text diagnostics; selected development-only preparation and deferred protected holdout; requested preparation of the M4 report, worklog and his acknowledgement. Selected policy self-review, but that review remains pending. Implementation, tests, fixtures, technical reviews and document drafts were AI-assisted, not claimed as manually authored code. | Not recorded |
-| Abhishek Jha (A.J.) | M4 contribution details and personal confirmation pending. | Not recorded |
+| Abhishek Jha (A.J.) | Steps 9–10 and 12–14 on branch `abhishek-m4` (22 Nov 2026): directed and reviewed the AI-assisted corrected single agent (prompt v2, provenance guard, output check) and multi-agent candidate (coordinator + knowledge, qualification and CRM-planner specialists), 25 new tests and saved prompt/config artifacts; found and fixed four defects via smoke runs; set up the OpenAI key/credit and diagnosed the quota failure; approved each paid batch and the model-selection rule; ran the development matrix (180 episodes, about $0.90); prepared the voice cost/time proposal, the M4 report update and slides. Personal confirmation pending. | Not recorded |
 | Sarwar Karim Akhand (S.K.A.) | M4 contribution details and personal confirmation pending. | Not recorded |
 | Omkar Shankar Pawar (O.S.P.) | M4 contribution details and personal confirmation pending. | Not recorded |
 

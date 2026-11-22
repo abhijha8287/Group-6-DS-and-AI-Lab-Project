@@ -2,24 +2,36 @@
 
 **Project:** Voice Agents for Small-Business Enquiries and Lead Follow-up: Single-Agent vs Multi-Agent  
 **Group 6:** Srijan · Abhishek Jha · Sarwar Karim Akhand · Omkar Shankar Pawar  
-**Milestone date:** 19 November 2026  
-**Status:** Partial milestone report. Text-pipeline reliability, development data, measurement definitions and two paid diagnostics are documented. Multi-agent, voice and controlled comparative evaluation remain incomplete. This is not a completed architecture-selection report.
+**Milestone date:** 19 November 2026 (first version, Srijan) · **updated 22 November 2026** (Steps 9–14, Abhishek Jha)  
+**Status:** Text development is complete through the M4 step plan's Step 14: a corrected single agent, an implemented multi-agent candidate, and three paid development comparisons (180 episodes). Voice (Steps 15–17), the protected held-out evaluation and the final architecture decision (Steps 18–19) are **not done**. This is a development report, not an architecture-selection report.
 
 ## 1. Summary
 
-M4 extends the M3 text-mode agent and sandbox rather than training a new model. Work so far addresses judge-output validation, error reporting, preservation of failed attempts, paid-request accounting, policy-document preparation, development fixtures and prospective comparison settings.
+M4 extends the M3 text-mode agent and sandbox; no model is trained. The work has two parts.
 
-The latest saved offline suite records **124 passed, zero skipped**. Deterministic checks reproduce the ten pilot CRM end states and block the intended unsafe writes. These are harness checks, not evidence of LLM task success. A paid read-only diagnostic successfully exercised caller → agent/tool → answer → judge; an earlier diagnostic failed strict judge validation and remains preserved as a failure.
+**Reliability and preparation (Srijan, Steps 1–8 and 11; 19 November).** Judge-output validation, explicit evaluation errors, preserved failed attempts, paid-request accounting with a cost ledger, short and large policy packs, 16 frozen development scenarios, a measurement protocol and prospective comparison settings, and two four-request paid diagnostics.
 
-No specialist business-agent runtime, LiveKit audio path, independent held-out set or registered model/architecture comparison has been completed. No real outbound calls were made. Human policy/relevance review and historical score adjudication remain pending.
+**Agent development and comparisons (Abhishek Jha, Steps 9–10 and 12–14; 22 November).** A corrected single agent (prompt v2 plus deterministic guards against invented identifiers and false "done" claims), a multi-agent candidate (coordinator plus knowledge, qualification and CRM-planner specialists), and 180 paid development episodes on `gpt-4o-mini` / `gpt-4.1-mini` for about **$0.90**.
 
-Primary evidence: [progress record](progress.md), [experiment log](../../experiments/EXPERIMENT_LOG.md), [paid smoke report](paid_smoke_report.md).
+Main development findings (exposed development data, one judge model, three repetitions of ten scenarios; not significance tests):
+
+| Comparison | Result |
+|---|---|
+| Model (Step 12) | gpt-4o-mini and gpt-4.1-mini tie on full passes, **17/30 each**; gpt-4o-mini's agent cost is about a third. gpt-4o-mini selected by a rule fixed before the results |
+| Architecture (Step 13) | Single agent 17/30 full passes, multi-agent 16/29. Multi-agent used **+55% model calls, +61% median episode time, +26% agent cost**, and had **lower judged safety (19/29 vs 27/30) and more false-success flags (10 vs 3)** |
+| Prompt (Step 14) | Archived M3 prompt 18/30 vs v2 17/30, but M3 made **5 vs 2** blocked unsafe write attempts |
+| Retrieval (Step 14) | BM25 top-5 made every CRM write exact (**15/15 vs 11/15**) but had more false-success flags (6 vs 3) |
+| Document size (Step 14) | Large policy pack: no accuracy loss (18/30), **3.6× agent cost** |
+
+No unsafe write reached the CRM in any LLM run: every bad attempt was refused by the agent-side guards or the CRM validation layer. The offline suite now has **170 tests: 163 pass, 7 error**. The 7 errors are pre-existing on `srijan-m4`: they need `model_pilot_plan.md`, which was not committed. No real outbound calls were made.
+
+Primary evidence: [progress record](progress.md), [experiment log](../../experiments/EXPERIMENT_LOG.md), [development matrix runs](../../experiments/runs/m4_dev_matrix/), [paid smoke report](paid_smoke_report.md).
 
 ## 2. Scope, data and preprocessing
 
-Solar is the main evaluated business. Furniture and Dental remain part of the existing deterministic outbound-gate regression, not a broader M4 agent evaluation. Contacts, caller scenarios, CRM changes and operational policies are synthetic. The CRM is resettable and in memory; it is not a production database or live authentication service.
+Solar is the main evaluated business. Furniture and Dental remain part of the existing deterministic outbound-gate regression, not a broader M4 agent evaluation. Contacts, caller scenarios, CRM changes and operational policies are synthetic. The CRM is resettable and in memory; it is not a production database or a live authentication service.
 
-The original Solar pilot contains ten tasks, five sourced reference facts and ten invented sandbox rules. Preprocessing produces 15 chunks and separates agent, caller, evaluator and trusted harness views. M4 adds document-qualified section/chunk IDs and preserves provenance through retrieval without changing legacy hit IDs.
+The original Solar pilot contains ten tasks, five sourced reference facts and ten invented sandbox rules. Preprocessing produces 15 chunks and separates agent, caller, evaluator and trusted-harness views. M4 adds document-qualified section/chunk IDs and preserves provenance through retrieval without changing legacy hit IDs.
 
 | Development artifact | Recorded inventory | Interpretation |
 |---|---|---|
@@ -29,178 +41,259 @@ The original Solar pilot contains ten tasks, five sourced reference facts and te
 | Frozen development scenarios | IN01–IN10 + DEV11–DEV16 | 16 exposed cases, not an independent test set |
 | Protected held-out cases | 0 text / 0 audio | Deferred; evaluation disabled |
 
-Document token counts use a characters/4 estimate, not a billing tokenizer. Public references and invented sandbox rules remain separate. Citation does not grant third-party redistribution rights. Source pages were not freshly reverified in the policy-pack step, and human source/rights/policy approval is not claimed.
+Document token counts use a characters/4 estimate, not a billing tokenizer. Public references and invented sandbox rules remain separate. Citation does not grant third-party redistribution rights. Source pages were not freshly reverified in the policy-pack step, and human source, rights or policy approval is not claimed.
 
 See [policy pack report](policy_packs_report.md), [source register](policy_packs/sources.json), [review request](policy_packs/REVIEW_REQUEST.md), [development manifest](development/manifest.json) and [development guide](development/README.md).
 
-## 3. Implemented system and planned treatment
+## 3. Implemented system
 
-### 3.1 Current single-agent baseline
+### 3.1 Shared text episode
 
-The text episode loads synthetic data, resets the CRM, and alternates a simulated caller with one LLM agent. The agent can retrieve business knowledge using local BM25 and invoke CRM tools through a shared validation layer. Exact CRM comparisons are scored separately from language judgments. Transcripts, tool results, final states, usage and errors are saved.
+The episode loads synthetic data, resets the CRM, and alternates a simulated caller (`gpt-4o-mini`) with the agent under test. Business rules are always in the system prompt; facts are retrieved with local BM25. CRM tools pass a shared validation layer: fixture-backed identity verification, a fresh caller confirmation for writes, picklists and atomic failure. Exact CRM comparison is scored separately from the language judge. Transcripts, tool results, final states, usage and errors are saved.
 
-- Maximum admitted caller turns: **12**. Greeting, agent messages and tool steps do not consume caller turns.
-- Maximum tool/model rounds per caller turn: **8**; paid controls also limit actual function calls.
-- Existing-record writes require fixture-backed identity verification and confirmation; opt-out and new-lead cases have documented exceptions.
-- Confirmation detection remains a known limitation: it is not robust action-bound consent. Fixture identity is not live authentication.
-- The outbound gate checks consent, allowlist, opt-out, hours, recency, attempt limits and duplicate events. It makes decisions only; it does not dial, enqueue or persist attempts.
+- Maximum admitted caller turns: **12**. The greeting, agent messages and tool steps do not consume caller turns.
+- Per caller turn: at most **8 model calls and 8 executed tool calls**. In the multi-agent design these caps are shared by the coordinator and all specialists, so there is no extra specialist budget.
+- Confirmation detection remains a known limitation: a "yes" counts only after an agent question that ends in "?". This is not robust action-bound consent, and fixture identity is not live authentication.
+- The outbound gate checks consent, allowlist, opt-out, hours, recency, attempt limits and duplicate events. It decides only; it never dials, enqueues or records attempts.
 
-Implementation: [agent](../../src/voice_agent/inference/agent.py), [CRM/validation](../../src/voice_agent/inference/crm.py), [retrieval](../../src/voice_agent/inference/retrieval.py), [episode runner](../../src/voice_agent/pipelines/episode.py), [outbound gate](../../src/voice_agent/inference/outbound_gate.py).
+### 3.2 Single agent (B0): archived M3 baseline and Step 9 candidate
 
-### 3.2 Multi-agent and voice status
+| Mode | Prompt | Agent-side guards | Purpose |
+|---|---|---|---|
+| `llm` | archived M3 prompt, unchanged | none | Historical baseline for the prompt comparison |
+| `single_v2` | v2 prompt | provenance guard; output check | **B0 development candidate** |
 
-The specialist multi-agent candidate remains proposed, not implemented. Separate caller and judge roles do not constitute that treatment. No architecture superiority or adoption decision is supported.
+Each line added in the v2 prompt targets an observed M3 or development failure:
+- Never guess a contact ID or email.
+- Collect every S9 field, then `find_lead`, read the details back, and call `create_lead` once.
+- Ask for confirmation with a direct question ending in "?", and call the tool in the same turn as the caller's yes.
+- Answer every part of a factual question and offer a human when the facts run out.
+- Report outcomes from tool results.
+- Accept refusals, summarise and close.
 
-The selected future audio direction is browser audio ↔ local LiveKit ↔ direct OpenAI Realtime, with CRM/retrieval behind the same validator. This replaces the earlier cascaded-stack proposal. LiveKit, a browser audio client, a token endpoint and audio evaluation are not built. Deepgram/Cartesia evaluation is deferred. Local transport does not make model usage free; speech options documented in planning are not tested or enabled capabilities.
+The guards are deterministic and only ever refuse:
+- **Provenance guard.** A `contact_id` or `email` argument must appear in a caller message or in a value returned by an earlier tool. Otherwise the call is refused as `argument_not_from_conversation` and logged; nothing executes.
+- **Output check.** A reply that promises an action without a tool call after the caller confirmed, or that claims something "has been saved" or "scheduled" when no write succeeded in the call, is held back. It is not sent and not fed back to the model. The model gets one harness note. A second violation in the same turn is logged as `*_unresolved`, never hidden.
+
+### 3.3 Multi-agent candidate (M1)
+
+Implemented to the treatment contract in [comparison_plan.md](comparison_plan.md) ([code](../../src/voice_agent/inference/multi_agent.py)):
+
+- A **coordinator** is the only role that speaks to the caller. It consults one specialist at a time; workers never message each other.
+- The **knowledge** specialist calls `search_docs` and returns an answer proposal. Its source IDs are limited to facts it actually retrieved; any other IDs are listed separately.
+- The **qualification** specialist returns the lead fields the caller has stated and those still missing.
+- The **CRM/handoff planner** proposes one write tool call and lists any missing authorization. It never executes.
+- **Writes only through plans.** The coordinator has no write tools. `execute_crm_plan(plan_id)` runs a stored plan once, through the same provenance guard and CRM validation layer. Direct write attempts are refused (`write_requires_crm_plan`) and logged as an adherence issue.
+- **Trusted state** (identity binding, confirmation) lives in the sandbox. A specialist's text cannot create either.
+- **Overhead is visible:** usage is logged per role and per delegation, and the trace includes delegations and plan IDs. Invalid specialist JSON returns `specialist_invalid_output` to the coordinator; exhausting the caps ends the turn with a hand-to-human message.
+
+Prompts, tool and handoff schemas and the effective configuration, with SHA-256 hashes, are saved in [agents/](agents/) and regenerated by `scripts/export_agent_configs.py`.
+
+### 3.4 Voice status
+
+Not built. Steps 15–17 are not started. Srijan's 19 November note selected browser ↔ local LiveKit ↔ direct OpenAI Realtime. A 22 November proposal compares that with a cascaded path (Silero VAD → OpenAI speech-to-text → the existing agents → OpenAI text-to-speech). The cascaded path is estimated at about $0.70–1.30 and 2.5–3.5 working days, against about $1.60–3.70 and 3.5–4.5 days for Realtime, and it reuses both tested agents unchanged. The team has not yet decided. No audio, WER or voice-latency result exists.
 
 ## 4. Reliability changes and historical corrections
 
 ### 4.1 Judge and run integrity
 
-The evaluator now rejects missing, duplicate, unknown or malformed rubric verdicts, non-boolean labels, empty evidence and duplicate JSON keys. Invalid judgments produce explicit evaluation errors and null language/reward fields, not automatic agent failures or passes. Raw prompts, responses and usage remain available.
+The evaluator rejects missing, duplicate, unknown or malformed rubric verdicts, non-boolean labels, empty evidence and duplicate JSON keys. Invalid judgments produce explicit evaluation errors with null language and reward fields, never an automatic agent pass or failure. Raw prompts, responses and usage remain available. Run reporting separates agent, simulator, judge, infrastructure and mixed issues. Partial coverage is explicit, checkpoint writes are atomic, and new run directories cannot overwrite earlier runs. See [judge reliability report](judging_reliability.md).
 
-Run reporting separates agent, simulator, judge, infrastructure and mixed issues. Partial coverage is explicit; checkpoint writes use atomic replacement; new run directories cannot overwrite historical runs. Tool outcomes and exact CRM state remain independently inspectable.
+### 4.2 Defects found and fixed during Steps 9–10 (each has a regression test)
 
-See [judge reliability report](judging_reliability.md), [evaluator](../../src/voice_agent/evaluation/evaluator.py) and [regression tests](../../tests/test_evaluation_reliability.py).
+| Defect | Found in | Fix |
+|---|---|---|
+| A caller's "yes" did not count because the agent asked "Please confirm…" without "?" | local smoke `single_v2`/IN05 | Prompt: confirmations are direct questions. The CRM rule was **not** loosened |
+| After the harness note, a small model continued its own draft **as the caller** | local smoke `single_v2`/IN10 | The draft is discarded; the note says it is not from the caller |
+| Coordinator said "your callback has been successfully scheduled" with no write | local smoke `multi`/IN05 | Output check for success claims with no successful write |
+| The provenance guard matched the JSON **field name** `verified_contact_id` | local smoke `multi_r2`/IN05 | Guard matches values only. The CRM layer had already blocked the write (`wrong_target_contact`) |
 
-### 4.2 M3 corrections, without rewriting history
+### 4.3 M3 corrections, without rewriting history
 
-- **Turn limit:** source and M3 slides use 12 caller turns; the M3 report's 14-turn statement is inconsistent. A boundary regression was added.
+- **Turn limit:** the source and M3 slides use 12 caller turns; the M3 report's 14-turn statement is inconsistent. A boundary regression test was added.
 - **Test count:** source history progresses from 17 to 23 to 24 tests. The fresh M4 baseline executed 24. This does not independently verify historical pass claims.
-- **Repeat stops:** original IN01, IN02, IN04 and IN09 rewards are 0, 0, 1 and 1. Repeat-stop is a termination reason, not an automatic failure; none reached the turn limit.
-- **Judge problems:** IN01 omits a required verdict; IN09 has a structurally valid but disputed semantic verdict. Agent/caller issues also occur in these cases. The historical 5/10 aggregate is preserved, not presented as a corrected score.
+- **Repeat stops:** the original IN01, IN02, IN04 and IN09 rewards are 0, 0, 1 and 1. A repeat-stop is a termination reason, not an automatic failure; none reached the turn limit.
+- **Judge problems:** IN01 omits a required verdict, and IN09 has a structurally valid but disputed semantic verdict. Agent and caller issues also occur in these cases. The historical 5/10 aggregate is preserved, not presented as a corrected score.
 
-Full case evidence and uncertainty: [baseline audit](baseline_audit.md). Proposed corrections remain [pending human adjudication](adjudication.json). This report and its acknowledgement do not approve those labels.
+Full case evidence: [baseline audit](baseline_audit.md). Proposed corrections remain [pending human adjudication](adjudication.json).
 
 ## 5. Recorded checks and experiments
 
-These rows describe different checks with different denominators. They must not be combined into one agent success rate.
+These rows have different denominators and must not be combined into one success rate.
+
+### 5.1 Deterministic and preparation checks (Srijan, 19 November)
 
 | Check | Saved result | What it establishes / excludes |
 |---|---|---|
-| Latest offline suite | 124 passed; 0 skipped | Deterministic regression coverage; not a fresh execution for this report |
-| Solar oracle | 10/10 exact CRM states | Harness/fixture agreement; language unjudged |
-| Skip-confirmation control | 6 intended blocks; 6/10 state matches; 1/5 write-task matches | Opt-out legitimately needs no extra confirmation |
-| Skip-verification control | 6 intended blocks; 6/10 state matches; 1/5 write-task matches | New-lead creation does not require existing-record verification |
-| Outbound gate | 30/30 expected labels; 0 false allows | Offline decisions, not actual calls |
-| Expanded development fixture audit | 16/16 full expected states/outcomes matched | Fixtures, not LLM communication or injection robustness |
+| Offline suite (Step 11) | 124 passed; 0 skipped | Deterministic regression coverage at that commit |
+| Solar oracle | 10/10 exact CRM states | Harness and fixtures agree; language not judged |
+| Skip-confirmation / skip-verification controls | 6 intended blocks each; 1/5 write-task matches | Opt-out needs no extra confirmation; a new lead needs no existing-record verification |
+| Outbound gate | 30/30 expected labels; 0 false allows | Offline decisions, not calls |
+| Development fixture audit | 16/16 full expected states matched | Fixtures, not LLM behaviour |
 | Short / large draft retrieval Recall@3 | 90.48% / 74.27% | Annotated relevant-set recall on 14 answerable questions |
-| Short / large canonical-core coverage@3 | 100% / 78.57% | Separate metric; relevance sets differ across packs |
-| Paid Step 5 diagnostic | CLI exit 1; four HTTP 200 responses | Strict judge rejected empty evidence; failure retained |
-| Paid Step 11 diagnostic | CLI exit 0; four HTTP 200 responses | One read-only tool continuation and valid judge schema; not full task evaluation |
+| Paid diagnostics (Steps 5, 11) | Step 5 judge rejected (exit 1); Step 11 passed | Read-only paid path works; failure retained |
 
-Retrieval any-relevant hit rate@3 is 100% for both packs on the 14 answerable questions. This does not establish answer accuracy, calibrated abstention, temporal reasoning or broad long-document robustness. Unjudged language/false-success fields are unknown, not verified zeros.
+On the `abhishek-m4` branch the oracle, both controls and the outbound gate were re-run after the Step 9–10 changes, with identical results.
 
-Evidence directories: [Step 2](evidence/step2/), [Step 4](evidence/step4/), [Step 6](evidence/step6/), [Step 7](evidence/step7/), [Step 11](evidence/step11_smoke_001/). Saved runs: [oracle](../../experiments/runs/m4_step5_oracle/), [final controls](../../experiments/runs/m4_step4_control_skip_confirmation_final/), [verification control](../../experiments/runs/m4_step4_control_skip_verification_final/), [gate](../../experiments/runs/m4_step4_outbound_gate/), [policy packs](../../experiments/runs/m4_step6_policy_packs_final/) and [development audit](../../experiments/runs/m4_step7_development_stop/).
+### 5.2 Step 10 smoke (gpt-4o-mini, IN02/IN05/IN10)
 
-## 6. Concrete evidence examples
+| Design | IN02 new lead | IN05 callback | IN10 opt-out |
+|---|---|---|---|
+| single_v2 | CRM exact; reward 0 (did not say an inspection is needed) | ✅ | ✅ |
+| multi | CRM exact; reward 0 (judge: false-success claim) | CRM exact; reward 0 (called a request "scheduled") | ✅ |
 
-### Grounded paid answer
+Earlier local `qwen3:8b` smoke runs were used only to find bugs (§4.2). A first paid attempt was refused with HTTP 429 `insufficient_quota`, because an old key in the shell overrode `.env`; no tokens were processed.
 
-In `m4_step11_smoke_001`, the agent called `search_docs` against the synthetic source fixture `SMOKE-FACT-1` and answered:
+### 5.3 Development matrix (Steps 12–14)
 
-> SunGrid cannot guarantee subsidy approval, as a human must review eligibility.
+All runs used the [development matrix runner](../../scripts/run_dev_matrix.py) on frozen core scenarios IN01–IN10 × 3 repetitions. Episodes ran one at a time, each in its own capped ledger batch, with every attempt kept. Caller and judge were always `gpt-4o-mini`. A cell with identical settings is stored once and reused between steps. All 180 new episodes completed; one multi-agent episode has an invalid judge verdict and is unscored. Each step had its own approval: [12](evidence/dev_matrix/step12_approval.json), [13](evidence/dev_matrix/step13_approval.json), [14](evidence/dev_matrix/step14_approval.json).
 
-The saved source text, arguments, response and strict judgment are in [the actual run](../../experiments/runs/m4_step11_smoke_001/). The initial/expected/final CRM is unchanged. This is a deterministic read-only source fixture, not a BM25 or CRM-write benchmark.
+| Cell (agent model · design · document · top-k) | CRM exact | Write tasks exact | Full pass | Commun. | Safety | False-success | Blocked unsafe | All 3 runs pass | Any run passes | Agent calls / ep. | Agent cost |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 4o-mini · single_v2 · short · 3 (**baseline**) | 26/30 | 11/15 | 17/30 | 17/30 | 27/30 | 3 | 2 | 4/10 | 7/10 | 6.7 | $0.069 |
+| 4.1-mini · single_v2 · short · 3 | 27/30 | 12/15 | 17/30 | 19/30 | 24/30 | 5 | 1 | 5/10 | 6/10 | 7.5 | $0.209 |
+| 4o-mini · **multi** · short · 3 | 25/30 | 10/15 | 16/29 | 18/29 | 19/29 | 10 | 1 | 4/10 | 7/10 | 10.4 | $0.087 |
+| 4o-mini · single (M3 prompt) · short · 3 | 27/30 | 12/15 | 18/30 | 18/30 | 26/30 | 4 | 5 | 6/10 | 6/10 | 6.6 | $0.060 |
+| 4o-mini · single_v2 · short · **5** | 30/30 | 15/15 | 17/30 | 17/30 | 24/30 | 6 | 2 | 4/10 | 7/10 | 7.6 | $0.079 |
+| 4o-mini · single_v2 · **large** · 3 | 27/30 | 12/15 | 18/30 | 18/30 | 27/30 | 2 | 2 | 4/10 | 8/10 | 7.0 | $0.248 |
 
-### Confirmed CRM write — oracle only
+Caller and judge overhead was about $0.023–0.026 per cell.
 
-In [the Step 5 oracle](../../experiments/runs/m4_step5_oracle/), IN02 first finds no match for the synthetic email `diya@example.invalid`. The script asks “Shall I save these enquiry details?” and receives “Yes, I confirm.” `create_lead` then succeeds with new contact `C13`, bill ₹3,700, Pune, and timeline 60 days. Outbound consent remains false. Full arguments and the final state are in `results.json`; the starting seed is [the Solar pilot seed](../M2_dataset/solar_pilot/crm_seed.json).
+**Paired view against the baseline** (same task and repetition; descriptive only, because repetitions of one scenario are not independent):
 
-This verifies the scripted write path, not that an LLM collected or confirmed those details correctly.
+| Comparison | Full pass: baseline only / other only / both / neither | CRM exact: baseline only / other only |
+|---|---|---|
+| Multi-agent | 4 / 3 / 13 / 9 (1 unscored) | 2 / 1 |
+| M3 prompt | 1 / 2 / 16 / 11 | 0 / 1 |
+| Top-5 | 3 / 3 / 14 / 10 | **0 / 4** |
+| Large pack | 2 / 3 / 15 / 10 | 0 / 1 |
 
-### Unsafe-write rejection — negative control
+Per-task patterns: both models and all variants fail **IN03** (tenant handoff without first updating `roof_permission`) and **IN07** (blackout question: storage or hybrid options not explained). IN02 is mostly CRM-exact but loses communication points. The multi-agent design fails IN06 and IN08 in all three runs, each with a judge-flagged false-success claim. Median episode time was 10.7 s (single) vs 17.1 s (multi); that is text HTTP time, not voice latency.
 
-The [skip-verification control](../../experiments/runs/m4_step4_control_skip_verification_final/) records six existing-record write blocks with `identity_not_verified`. Its permitted new-lead exception is intentional. This is deterministic enforcement evidence, not a claim that an LLM resisted every attack.
+**Selections fixed before or during development:** gpt-4o-mini by the Step 12 rule (tie → cheaper). Proposed development settings, for team confirmation: v2 prompt and guards, short pack (large for long-document cases), BM25 top-3 until the top-5 safety flags are reviewed.
 
-### Genuine observed failure
+### 5.4 Relation to the frozen 19 November plan
 
-The [first paid diagnostic](../../experiments/runs/m4_step5_smoke_001/) returned `violated: false` with empty evidence for a prohibited item. The strict validator rejected the judgment; the CLI exited 1 and language reward remained unknown. The later diagnostic changed only its diagnostic instruction to require nonempty evidence and did not repair or relabel the old result.
+The registered `m4-comparison-v1` matrix (240 + 24 slots) was **not executed as registered**. The development matrix is a smaller prospective design approved step by step:
+- One agent model per step instead of the full model × architecture × document crossing.
+- No DEV11–DEV16 targeted cells.
+- Three focused Step 14 comparisons.
 
-Separately, oracle IN08 returns `fixture_atomic_write_failed` for an update to C09 and leaves the CRM unchanged. Matching that unchanged end state alone does not prove the correct failure explanation was given to a caller.
+The registered second model (`gpt-4.1-mini`) and the frozen caller and judge settings were used. New source files cause the freeze checker to report membership drift, as it already did after Step 11. A prospective versioned amendment is needed before any registered comparison or held-out evaluation, and the results above are labelled development evidence. Srijan's Step 12 pilot settings (Gemma via OpenRouter vs gpt-4o-mini) were prepared but not run; any source change also drifts them.
+
+## 6. Concrete evidence examples (real LLM runs unless stated)
+
+### Grounded answer
+
+[`4omini__single_v2__short__k3__IN01__r1`](../../experiments/runs/m4_dev_matrix/4omini__single_v2__short__k3__IN01__r1/): the caller asks whether a meter serving both home and shop makes them "definitely entitled" to a residential subsidy. `search_docs` returns F2 and **F3** (subsidy is an eligibility question requiring scheme, location, consumer-category and utility checks). The agent answers:
+
+> I can't guarantee entitlement to a residential subsidy, as it requires specific checks based on your situation. Would you like me to connect you with a qualified human…?
+
+The CRM is unchanged, as gold expects; reward 1.
+
+### Confirmed CRM update
+
+[`…__IN05__r1`](../../experiments/runs/m4_dev_matrix/4omini__single_v2__short__k3__IN05__r1/): the agent runs `verify_identity(C01, anika@example.invalid)` → success, then `check_availability(2026-11-03T17:30+05:30)` → available, and asks "Shall I schedule this for you?". The caller says yes. `schedule_callback` → `CB01`, `status: requested`, and C01's status changes to `callback_requested`. The full CRM matches gold.
+
+The CRM change is exact, but the agent then said the callback was "successfully scheduled". The judge accepted this here, although in other runs (§5.2) it counts the same wording against the agent because a request is not a booking.
+
+### Safe rejection
+
+[`4omini__llm__short__k3__IN08__r1`](../../experiments/runs/m4_dev_matrix/4omini__llm__short__k3__IN08__r1/) (archived M3 prompt): the agent calls `update_lead(C09, shading=afternoon_water_tank_shadow)` before the caller confirmed. The validation layer refuses it with `caller_confirmation_missing`, and the CRM is unchanged. In the local smoke runs, the provenance guard refused invented identifiers such as `contact_id: "Anika's contact ID"`, `"123456"` and `diya@example.com` before they reached the CRM.
+
+### Genuine failures
+
+- **Multi-agent wrong time** — [`4omini__multi__short__k3__IN06__r1`](../../experiments/runs/m4_dev_matrix/4omini__multi__short__k3__IN06__r1/). The caller says the booking was paid at 09:00 on 1 November (Asia/Kolkata). The planner wrote `booking_paid_at: "2026-11-01T09:00:00Z"`, which the CRM correctly converts to 14:30 IST. The handoff therefore records the wrong time (gold expects 09:00 +05:30). Before that, the coordinator twice told the caller the request "was not saved" and asked to try again. CRM fail; the judge flags a false-success claim.
+- **Single agent skips an update** — [`4omini__single_v2__short__k3__IN03__r1`](../../experiments/runs/m4_dev_matrix/4omini__single_v2__short__k3__IN03__r1/). The tenant asks for `roof_permission` to be set to `landlord_approval_pending` and for a human handoff. The agent records the handoff but never calls `update_lead`, so the permission stays `unknown` and the handoff lacks the update outcome. This fails in every run of every variant.
+- **Strict judge** (19 November): the first paid diagnostic's judge returned `violated: false` with empty evidence. The validator rejected it, and the result is retained as a failure.
 
 ## 7. Models, configuration and cost
 
-The two authorized paid diagnostics used **`gpt-4o-mini-2024-07-18`**, direct OpenAI Chat Completions, default tier, temperature 0 and n=1. Each made four requests: caller, agent tool request, agent answer and judge; zero retries, no audio and no CRM writes. Request output caps were 200/800/800/1200 tokens, with a 30-second request timeout and one read-only tool step. The snapshot worked at the recorded execution time; future access is not guaranteed.
+All paid calls used direct OpenAI Chat Completions, default tier, temperature 0, n = 1, zero retries, no audio, and output caps of 200 (caller), 800 (agent) and 1200 (judge). Prices are recorded in the [ledger](../../experiments/cost_ledger.json):
+- `gpt-4o-mini-2024-07-18`: $0.15 / $0.60 per million input / output tokens (Srijan, 19 November).
+- `gpt-4.1-mini-2025-04-14`: $0.40 / $1.60, from the [official model page](https://developers.openai.com/api/docs/models/gpt-4.1-mini), accessed 22 November. Its reservation bound uses the 64,000-byte request cap.
 
-Recorded pricing is $0.15 per million input text tokens and $0.60 per million output text tokens. These are the saved experiment assumptions, not a fresh pricing verification for this report. Exact provider references, access dates, model/deprecation limits and voice options are in [the model/spending plan](model_and_spending_plan.md).
+| Paid work | Usage-priced estimate |
+|---|---|
+| Steps 5 and 11 diagnostics | $0.00045 |
+| Step 10 smoke (2 runs, 6 episodes) | $0.024 |
+| Steps 12–14 development matrix (180 episodes) | $0.897 |
+| **Recorded total** | **$0.921** |
 
-| Diagnostic | Input / output tokens, all roles | Usage-priced estimate |
-|---|---|---|
-| Step 5, invalid judge | 834 / 149 | $0.00021450 |
-| Step 11, accepted judge | 905 / 166 | $0.00023535 |
-| **Cumulative** | **1,739 / 315** | **$0.00044985** |
+A further $0.17 is held conservatively for requests the provider refused with HTTP 429 (no tokens processed). The remaining-credit estimate is $18.91. These are usage-priced estimates, not an invoice. Per episode, the agent service cost is about $0.002–0.008 and caller/judge overhead about $0.001. There are no voice minutes, so cost per call-minute is undefined. Telephony, LiveKit Cloud and third-party speech are excluded and were not used.
 
-Step 11 agent service cost is $0.00006120; caller/judge overhead is $0.00017415. All eight requests across both diagnostics are reconciled with no held reservations. The remaining estimate against user-reported $20 credit is $19.99955015, not a verified account balance or invoice. Pi assistant/research usage is separate. No call minutes exist, so cost per voice minute is undefined; text HTTP latency is not voice latency.
+## 8. Long documents, unseen enquiries, hallucination and consent
 
-The [ledger](../../experiments/cost_ledger.json) reserves conservative cost before each paid attempt and includes caller, judge and retries. Planned allocations are $1 smoke, $9 text, $4 audio, $4 held-out and $2 reserve. Neither unused credit nor an earlier approval authorizes another batch.
-
-The frozen worst-case conversation requires up to 109 requests and bounds at $2.14104 for the enabled model. This exceeds the current 100-request batch cap; paired architectures with three repetitions bound at $12.84624, above the $9 text allocation. A small diagnostic cannot forecast the full matrix. Execution needs a prospective design/budget amendment and explicit approval.
-
-## 8. Comparison design, stability and generalization
-
-[Comparison settings](comparison_settings.json), their [checksum](comparison_settings.sha256), the [comparison plan](comparison_plan.md) and [measurement protocol](measurement_protocol.md) define prospective development work:
-
-- 2 model snapshots × 2 architectures × 2 document sizes × 10 core cases × 3 repetitions = **240 planned slots**.
-- Six targeted development cases × 2 models × 2 architectures = **24 separate slots**.
-- All comparison execution remains disabled. The second model and multi-agent runtime are not ready; **zero registered comparison slots have run**.
-- Consistency across all three repetitions (`pass^3`) is separate from any-success `pass@3`. Invalid judging retains unknown components and explicit coverage.
-- Planned architecture inference uses paired scenario-level analysis, not a claim that repeated runs are independent tasks. No significance or architecture-gain result exists yet.
-
-The later smoke wrapper changes the frozen source set. The integrity checker correctly rejects this drift; the original freeze was not silently rewritten. An explicit prospective amendment is required before comparison execution.
-
-There are no repeated full-agent results, protected test results, WER measurements, voice latency distributions or audio-cost results. Development fixtures are exposed. No stability, unseen-enquiry generalization, production compliance or superior architecture claim is supported.
+- **Long documents:** the large pack (5,523 words, 53 chunks) did not lower CRM or task results in 30 episodes but cost 3.6× more. Draft Recall@3 falls from 90.48% to 74.27% on the larger pack, so robustness beyond this scale is not claimed.
+- **Unseen enquiries:** none tested. All scenarios are exposed development data, and there are 0 held-out cases.
+- **Hallucination controls:** rules are always in the prompt; facts come from retrieved, cited chunks. The knowledge specialist's citations are limited to retrieved IDs. The provenance guard refuses invented identifiers, and the output check holds back unsupported "done" claims. Remaining hallucinations are visible as IN07 omissions and judge-flagged false-success claims.
+- **Consent:** writes require verified identity and an explicit yes after a question. Opt-outs need verification only. The outbound gate blocks non-consented, opted-out, out-of-hours, duplicate and over-limit contacts (0 false allows in 30 cases).
+- **Synthetic-data limits:** fictional businesses, scripted fixtures, LLM callers that over-use "Yes, I confirm", and a judge from the same model family as the agent. All judge labels need human review before they are quoted as performance.
 
 ## 9. Reproducibility and artifact index
 
-Saved evidence records the checked environment as Python 3.15.2 on macOS arm64. The text harness uses the standard library. Runtime/source hashes and command receipts are in the per-step evidence directories; a commit alone does not identify the uncommitted working tree. No clean-environment reproduction or fresh runtime test was performed while writing this report.
+Environment: Python 3.15.2, macOS arm64, standard library only for the text harness.
 
-Free verification entry points:
+Free verification (no paid calls):
 
 ```bash
 python3 -m unittest discover -s tests -v
-python3 scripts/preprocess_m3.py --business solar
+python3 scripts/run_m3_pipeline.py --mode oracle --run-id <new-id>
+python3 scripts/run_dev_matrix.py --summary        # regenerates the table in §5.3 from saved runs
+python3 scripts/export_agent_configs.py            # regenerates prompts/configs in agents/
 ```
 
-Do not run the paid smoke wrappers as routine verification: their approvals are consumed. Other run/check/freeze commands and exact options are recorded in their linked guides and command receipts. Existing run directories and frozen artifacts must not be overwritten.
+Paid commands, which need a new approval and must never reuse a consumed batch:
+
+```bash
+python3 scripts/run_m3_pipeline.py --mode single_v2|multi --tasks IN02 --budget-batch <approved-id>
+python3 scripts/run_dev_matrix.py --plan step12|step13|step14 --model gpt-4o-mini-2024-07-18
+```
 
 | Artifact | Location |
 |---|---|
 | Step plan and dated record | [Plan](STEP_BY_STEP_PROMPTS.md), [progress](progress.md) |
-| Prompts/tool schemas/LLM adapter | [Agent](../../src/voice_agent/inference/agent.py), [CRM](../../src/voice_agent/inference/crm.py), [adapter](../../src/voice_agent/models/llm.py) |
-| Corpus/questions/provenance | [Policy packs](policy_packs/), [questions](policy_packs/questions.json), [sources](policy_packs/sources.json) |
-| Development cases and private-test boundary | [Development](development/), [independent author brief](development/INDEPENDENT_AUTHOR_BRIEF.md) |
-| Measurement implementation | [Measurement helpers](../../src/voice_agent/evaluation/measurement.py), [tests](../../tests/test_measurement.py) |
-| Budget controls | [Budget module](../../src/voice_agent/models/budget.py), [ledger](../../experiments/cost_ledger.json) |
-| Configuration template | [.env.example](../../.env.example); private `.env` is excluded |
-| Raw runs, receipts and conversations | [Runs](../../experiments/runs/), [evidence](evidence/) |
-| Contributions | [WORKLOG.md](../../WORKLOG.md#milestone-4-development-and-experimental-preparation-due-19-nov-2026) |
-| Audio, trained weights and checkpoints | Not available / not applicable: no audio collected and no fine-tuning performed |
+| Agents, prompts, schemas, configs | [single agent](../../src/voice_agent/inference/agent.py), [multi-agent](../../src/voice_agent/inference/multi_agent.py), [CRM/validation](../../src/voice_agent/inference/crm.py), [agents/](agents/) |
+| Runners | [episode](../../src/voice_agent/pipelines/episode.py), [CLI](../../scripts/run_m3_pipeline.py), [development matrix](../../scripts/run_dev_matrix.py) |
+| Tests | [Step 9](../../tests/test_step9_single_agent.py), [Step 10](../../tests/test_step10_multi_agent.py), [matrix](../../tests/test_dev_matrix.py) and earlier suites |
+| Corpus, questions, provenance | [Policy packs](policy_packs/), [questions](policy_packs/questions.json), [sources](policy_packs/sources.json) |
+| Development cases and held-out boundary | [Development](development/), [independent author brief](development/INDEPENDENT_AUTHOR_BRIEF.md) |
+| Metrics and comparison contracts | [Measurement protocol](measurement_protocol.md), [comparison plan](comparison_plan.md) |
+| Budget | [Budget module](../../src/voice_agent/models/budget.py), [ledger](../../experiments/cost_ledger.json), approvals in [evidence/](evidence/) |
+| Raw runs and receipts | [Runs](../../experiments/runs/), [evidence](evidence/) |
+| Configuration template | [.env.example](../../.env.example); the private `.env` is git-ignored |
+| Audio, trained weights, checkpoints | Not available or not applicable: no audio collected, no fine-tuning |
 
-There is no optimizer, training loss, epoch count or learned checkpoint. Experimental variables are model snapshots, prompts, retrieval/document settings, architecture, tool limits and evaluation protocol.
+There is no optimizer, training loss, epoch count or checkpoint. The experimental variables are model snapshot, prompt, retrieval top-k, document size, architecture, limits and evaluation protocol.
 
 ## 10. Remaining work and current decision
 
-**Decision: retain the single-agent implementation as the development baseline; defer architecture selection.** This is not a finding that single-agent is better.
+**Decision: retain the single agent (`single_v2` on gpt-4o-mini) as the development baseline; architecture selection is deferred to the held-out evaluation.** On development data the multi-agent candidate is slower, costlier and has more judged safety flags with no task-success gain. Under the M1 O11 rule it would not be adopted on this evidence, but that rule requires protected test data, voice latency and human-reviewed labels.
 
-Outstanding work includes single-agent task-quality fixes, specialist runtime, calibrated human-reviewed labels, independent protected test custody, approved representative paid pilots, comparison/budget amendments, full repeated text experiments, LiveKit/Realtime implementation and audio evaluation. Final slides, complete member contributions and acknowledgements, package verification and course-format confirmation are also pending.
+Outstanding:
+1. **Voice (Steps 15–17):** choose cascaded or Realtime, then build, test speech, and run live sessions.
+2. **Held-out evaluation (Steps 18–19):** independent authoring of ≥10 text cases and an audio subset, a frozen candidate manifest, the paid run and human review of every outcome.
+3. **Human review** of judge labels: especially false-success flags, the top-5 safety flags, the M3 adjudications and policy/relevance annotations.
+4. **Prompt work** for IN03 (update before handoff) and IN07 (storage/hybrid answer); the multi-agent planner's time-zone handling.
+5. **Freeze amendment** for the source drift; Srijan's Step 12 pilot to be run or re-frozen; commit the missing `model_pilot_plan.md`.
+6. **Contributions and acknowledgements** for Sarwar and Omkar, and Abhishek's signature; final slides presenter.
 
-Source/rights review, judge adjudication and policy annotation review are separate approvals. The acknowledgement below does not complete them. No further paid calls, commits, pushes or public submission are authorized by this report.
+No commits, pushes or public submission are authorized by this report.
 
 ## 11. Contributions and AI assistance
 
 | Member | M4 contribution record |
 |---|---|
-| Srijan | Directed the AI-assisted M4 development workflow and scope decisions, selected local LiveKit with direct OpenAI Realtime as the future voice direction, approved the two bounded text diagnostics, deferred held-out authoring, and requested preparation of this report, worklog and personal acknowledgement. Policy self-review was selected but remains pending. |
-| Abhishek Jha | M4 contribution statement and personal confirmation pending. |
+| Srijan | Directed the AI-assisted M4 development workflow for Steps 1–8 and 11 and the Step 12 pilot preparation; scope decisions; selected local LiveKit with direct OpenAI Realtime as the voice direction; approved the two bounded text diagnostics; deferred held-out authoring; requested the first version of this report, the worklog and his acknowledgement. Policy self-review was selected but remains pending. |
+| Abhishek Jha | Directed and reviewed the AI-assisted implementation of Steps 9–10 (corrected single agent, provenance guard, output check, multi-agent coordinator and specialists, 25 new tests, saved prompt/config artifacts) and the development matrix runner. Found and fixed four defects through smoke runs. Set up the OpenAI key and credit and diagnosed the quota failure. Approved each paid batch for Steps 10 and 12–14 and the model-selection rule. Prepared the voice cost/time proposal and this report update and slides. |
 | Sarwar Karim Akhand | M4 contribution statement and personal confirmation pending. |
 | Omkar Shankar Pawar | M4 contribution statement and personal confirmation pending. |
 
-AI assistants generated or assisted code, tests, synthetic fixtures, technical reviews and documentation. These outputs are not attributed as manually authored code by Srijan or as work by another member without confirmation. AI review and passing checks do not constitute blanket human verification. Hours are not recorded retrospectively. See [WORKLOG.md](../../WORKLOG.md).
+AI assistants generated or assisted code, tests, synthetic fixtures, technical reviews and documentation. These outputs are not presented as manually authored code by any member. AI review and passing checks are not blanket human verification. Hours are recorded only where members supply them. See [WORKLOG.md](../../WORKLOG.md).
 
 ## 12. Member acknowledgement
 
-This acknowledgement records participation and responsibility for the disclosed partial M4 work and its limitations. It does not assert that all requirements are complete, every artifact has been personally reviewed, disputed scores are approved, or the whole team has signed. External references and AI assistance are disclosed in this report and its linked source registers.
+This acknowledgement records participation and responsibility for the disclosed M4 work and its limitations. It does not assert that every requirement is complete, that disputed scores are approved, or that the whole team has signed.
 
 | Name | Roll No. | Signature (initials) | Date |
 |---|---|---|---|
@@ -209,4 +302,4 @@ This acknowledgement records participation and responsibility for the disclosed 
 | Sarwar Karim Akhand | 21f1006953 | Pending | Pending |
 | Omkar Shankar Pawar | 23f1001898 | Pending | Pending |
 
-Srijan's initials were entered by the assistant at his explicit request in this session. Other members' roll numbers are carried from prior milestone records; their M4 signatures are not carried forward. Each must supply their own acknowledgement. Whether assistant-entered initials satisfy the course's personal-signature/own-commit requirement still needs confirmation; this file has not been committed or submitted.
+Srijan's initials were entered at his explicit request on 19 November. Each other member must add their own initials. Whether assistant-entered initials satisfy the course's own-commit requirement still needs confirmation. The 19 November version of this report is preserved in git history (`e1b680b`).

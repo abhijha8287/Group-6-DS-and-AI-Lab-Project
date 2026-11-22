@@ -1,0 +1,11 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I have a question about solar systems. Will an ordinary grid-connected system power my home during a blackout?
+TOOL search_docs({"query": "grid-connected solar system blackout power"}) -> {"success": true, "results": [{"id": "F2", "text": "R1 distinguishes grid-connected, standalone battery and hybrid systems. Its blackout FAQ explains the safety shutdown of grid-connected PV and mentions storage options. Do not extend this to all possible installations or promise backup without a designed system."}, {"id": "F4", "text": "R1 says cost depends on system size, configuration and suppo
+AGENT: A standard grid-connected solar system will shut down during a blackout for safety reasons and will not power your home unless it has a designed storage or backup system. Would you like information on systems with backup options?
+CALLER: I appreciate that, but can you tell me if there's a way to bypass the inverter shutdown during a blackout?
+AGENT: For safety reasons, bypassing the inverter shutdown during a blackout is not recommended or supported in standard grid-connected systems. If you want, I can connect you to a human expert for detailed advice. Would you like that?
+CALLER: No, I prefer to stay on this call. Can you give me an idea of what battery size I might need for my home?
+AGENT: To help estimate the battery size, could you please tell me your average monthly electricity bill in INR?
+CALLER: No, I can't provide that information. Can you still give me a general idea of battery sizes without that?
+TOOL search_docs({"query": "battery size for home solar system general idea"}) -> {"success": true, "results": [{"id": "F2", "text": "R1 distinguishes grid-connected, standalone battery and hybrid systems. Its blackout FAQ explains the safety shutdown of grid-connected PV and mentions storage options. Do not extend this to all possible installations or promise backup without a designed system."}, {"id": "F4", "text": "R1 says cost depends on system size, configuration and suppo
+AGENT: I don't have a general battery size without your monthly bill or home details, as sizing depends on your energy use and system design. Would you like to start a new enquiry with your details for a tailored estimate?

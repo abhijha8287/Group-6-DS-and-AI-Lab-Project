@@ -1,0 +1,22 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I'm Diya. I'm checking if a rooftop solar system is feasible for my home in Pune.
+AGENT: Sure, Diya. Could you tell me if you own the home or if you're a tenant?
+CALLER: Yes, I confirm I own the home.
+AGENT: Great, Diya. What type of roof does your home have? We have two types: RCC and metal sheet.
+CALLER: We have an RCC roof.
+TOOL search_docs({"query": "RCC roof feasibility in Pune"}) -> {"success": true, "results": [{"id": "F1", "text": "R1 describes site inspection covering roof type, size, structural condition and panel positioning. Roof access alone does not prove structural suitability or property permission. SunGrid offers enquiry intake, not remote engineering approval."}]}
+AGENT: Diya, for an RCC roof in Pune, a site inspection is required to assess feasibility. Could you confirm if you have access to the roof?
+CALLER: Yes, I confirm I have access to the roof.
+TOOL search_docs({"query": "RCC roof access and permission for installation"}) -> {"success": true, "results": [{"id": "F1", "text": "R1 describes site inspection covering roof type, size, structural condition and panel positioning. Roof access alone does not prove structural suitability or property permission. SunGrid offers enquiry intake, not remote engineering approval."}, {"id": "F4", "text": "R1 says cost depends on system size, configuration and supporting structures. It
+AGENT: Diya, since you have access to the roof, the next step is to check if you have permission from the society or landlord. Could you confirm if you have that permission?
+CALLER: No.
+TOOL search_docs({"query": "RCC roof permission for installation"}) -> {"success": true, "results": [{"id": "F1", "text": "R1 describes site inspection covering roof type, size, structural condition and panel positioning. Roof access alone does not prove structural suitability or property permission. SunGrid offers enquiry intake, not remote engineering approval."}, {"id": "F4", "text": "R1 says cost depends on system size, configuration and supporting structures. It
+AGENT: Diya, since you don't have permission from the society or landlord, we'll need to collect more details to proceed. Could you share your location and PIN code?
+CALLER: Pune, PIN code 411006.
+TOOL search_docs({"query": "RCC roof in Pune PIN 411006"}) -> {"success": true, "results": [{"id": "F1", "text": "R1 describes site inspection covering roof type, size, structural condition and panel positioning. Roof access alone does not prove structural suitability or property permission. SunGrid offers enquiry intake, not remote engineering approval."}, {"id": "F4", "text": "R1 says cost depends on system size, configuration and supporting structures. It
+AGENT: Diya, we have your location and PIN code. Could you share your average monthly electricity bill in INR?
+CALLER: My monthly bill is around ₹3700.
+TOOL search_docs({"query": "RCC roof in Pune monthly bill ₹3700"}) -> {"success": true, "results": [{"id": "F4", "text": "R1 says cost depends on system size, configuration and supporting structures. It also collects location and bill information. Neither a bill nor a PIN establishes final capacity, price, savings, serviceability or installation date."}, {"id": "F1", "text": "R1 describes site inspection covering roof type, size, structural condition and panel posit
+AGENT: Diya, based on the information provided, we can proceed with creating an enquiry. Could you confirm if you're available for a site inspection in the next 7 days?
+CALLER: No.
+AGENT: Diya, since you're not available for a site inspection, we can schedule a callback. Would you like to proceed with that?

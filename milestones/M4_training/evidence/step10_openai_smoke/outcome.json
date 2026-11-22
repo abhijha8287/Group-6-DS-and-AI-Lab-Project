@@ -1,0 +1,16 @@
+{
+  "recorded_at_utc": "2026-11-22T10:31:02.781830+00:00",
+  "result": "blocked_before_any_model_ran",
+  "runs": [
+    "experiments/runs/m4_step10_openai_single_v2_001",
+    "experiments/runs/m4_step10_openai_multi_001"
+  ],
+  "requests_attempted": 7,
+  "requests_completed": 0,
+  "diagnosis": {
+    "model_lookup_GET_/v1/models/gpt-4o-mini-2024-07-18": "200 (key valid, model visible; free endpoint)",
+    "chat_completions": "HTTP 429 insufficient_quota / credit_balance_exhausted: 'You have no credits remaining.'"
+  },
+  "billing_note": "Provider refused every request with insufficient_quota, so no tokens were processed. The ledger keeps the 7 failed reservations as unreconciled (conservative), per its rules; they are not spend.",
+  "next_action": "Add API credit to the OpenAI organisation that owns this key, or use the key/organisation that holds the team's $20 credit. Then re-run under new run IDs; these batches are not reused silently."
+}

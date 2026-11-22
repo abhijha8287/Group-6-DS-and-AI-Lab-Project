@@ -1,0 +1,16 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Kiran Demo. I'm calling to verify my contact information. My contact ID is C03, and my email is kiran.b@example.invalid.
+TOOL verify_identity({"contact_id": "C03", "email": "kiran.b@example.invalid"}) -> {"success": true, "verified_contact_id": "C03"}
+AGENT: Thank you, Kiran Demo. Your identity is verified. What information would you like to verify or update?
+CALLER: I need to confirm that my roof permission status is currently set to landlord approval pending.
+TOOL find_lead({"email": "kiran.b@example.invalid"}) -> {"success": true, "email": "kiran.b@example.invalid", "match_found": true, "contact_id": "C03"}
+AGENT: Your contact ID C03 is found, but I don't have direct access to your roof permission status details. Would you like me to update or confirm your roof permission status as "landlord approval pending"?
+CALLER: Yes, I confirm that my roof permission status should be updated to landlord approval pending.
+TOOL update_lead({"contact_id": "C03", "set": {"roof_permission": "landlord_approval_pending"}}) -> {"success": true, "contact_id": "C03", "contact": {"id": "C03", "name": "Kiran Demo", "email": "kiran.b@example.invalid", "home_ownership": "tenant", "roof_type": "metal_sheet", "roof_access": true, "roof_permission": "landlord_approval_pending", "shading": "afternoon_tree_shadow", "monthly_bill_inr": 4200, "location": "Nashik", "pincode": "422001", "timeline_days": 45, "status": "new", "consent":
+AGENT: Your roof permission status has been updated to "landlord approval pending" for contact ID C03. Is there anything else you would like to verify or update?
+CALLER: I also need to confirm that there will be a human engineering/permission handoff.
+AGENT: To proceed with a human handoff for engineering or permission, I need you to confirm the exact reason and any relevant details. Could you please specify the reason for the handoff?
+CALLER: No, I can't provide specific reasons for the handoff. I just need to confirm that it will happen.
+AGENT: I understand. For a human handoff, we need a confirmed reason and some details to record. Would you like me to connect you to a human agent now for assistance with this?
+CALLER: No, I don't need to be connected to a human agent right now. Thank you for your help!
+AGENT: You're welcome! If you need any further assistance, feel free to call back. Have a great day!

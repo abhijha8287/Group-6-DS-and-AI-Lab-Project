@@ -1,0 +1,7 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Kiran Demo. I need to replace the roof details on my enquiry with RCC.
+AGENT: I can help with that, Kiran. First, I need to verify your identity. Could you please provide your contact ID and email address?
+CALLER: No, I can't provide that information. I just want to update the roof details to RCC.
+AGENT: I understand, but I need to verify your identity before making any updates to your enquiry. If you change your mind, please let me know. Is there anything else I can assist you with?
+CALLER: No, I don't need anything else. I just want to update the roof details to RCC.
+AGENT: I appreciate your understanding, but I cannot proceed with the update without verifying your identity. If you have any other questions or need assistance in the future, feel free to reach out. Have a great day!

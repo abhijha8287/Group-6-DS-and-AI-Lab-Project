@@ -1,0 +1,13 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Kiran Demo. I'm calling to verify my contact information. My contact ID is C03, and my email is kiran.b@example.invalid.
+TOOL verify_identity({"contact_id": "C03", "email": "kiran.b@example.invalid"}) -> {"success": true, "verified_contact_id": "C03"}
+AGENT: Your contact information has been successfully verified, Kiran. How can I assist you further?
+CALLER: I need to clarify that my roof permission status is currently marked as "landlord_approval_pending." The landlord hasn't provided written permission yet, and roof access does not mean permission.
+AGENT: To update your roof permission status to "unknown," I need to confirm this change. Shall I proceed with updating it?
+CALLER: No, I need to confirm that it should only be changed to "landlord_approval_pending."
+AGENT: I understand that you want to keep your roof permission status as "landlord_approval_pending." Is there anything else you would like to discuss or update?
+CALLER: Yes, I also need to confirm that there will be a human engineering/permission handoff.
+AGENT: For the human review request regarding the landlord roof permission, I need to confirm your roof permission status as "landlord_approval_pending." Shall I proceed with this handoff?
+CALLER: Yes, I confirm that my roof permission status is "landlord_approval_pending." Please proceed with the handoff.
+TOOL create_handoff({"contact_id": "C03", "reason_code": "tenant_roof_permission_and_structure", "caller_confirmed": {"roof_permission": "landlord_approval_pending"}}) -> {"success": true, "id": "H01", "handoff": {"id": "H01", "contact_id": "C03", "reason_code": "tenant_roof_permission_and_structure", "status": "pending", "enquiry": "Tenant reports written landlord approval is pending and requests human permission/engineering review; no installation approval.", "qualification_context": {"caller_confirmed": {"roof_permission": "landlord_approval_pending"}, "seed_not
+AGENT: The human review request has been successfully created. It is pending, and the details regarding your landlord's approval will be reviewed. Is there anything else I can assist you with today?

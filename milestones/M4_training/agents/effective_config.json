@@ -1,0 +1,68 @@
+{
+  "business": "solar",
+  "business_clock": "2026-11-02T11:00:00+05:30",
+  "model": "set per run (AGENT_MODEL / LLM_MODEL); both designs use the same client for every role",
+  "temperature": 0.0,
+  "agent_max_output_tokens": 800,
+  "limits": {
+    "max_caller_turns": 12,
+    "max_model_calls_per_caller_turn": 8,
+    "max_tool_steps_per_caller_turn": 8,
+    "multi_agent_specialists_share_these_caps": true,
+    "knowledge_specialist_search_rounds": 3
+  },
+  "retrieval": {
+    "method": "BM25 over F* fact chunks",
+    "k1": 1.5,
+    "b": 0.75,
+    "top_k": 3,
+    "rules": "all S* rules in every system prompt",
+    "embedding_model": "not applicable"
+  },
+  "designs": {
+    "llm": {
+      "class": "SingleAgent",
+      "prompt": "single_agent_m3_prompt.txt",
+      "guards": "none",
+      "note": "archived M3 baseline, behaviour unchanged"
+    },
+    "single_v2": {
+      "class": "SingleAgent",
+      "prompt": "single_agent_v2_prompt.txt",
+      "guards": [
+        "provenance: contact_id/email must come from the caller or a tool result",
+        "promised action without a tool call, or a success claim with no successful write in the call: draft held back, one corrective nudge per turn; a repeat is logged as *_unresolved"
+      ],
+      "tools": "single_agent_tools.json"
+    },
+    "multi": {
+      "class": "MultiAgent",
+      "prompts": [
+        "multi_agent_coordinator_prompt.txt",
+        "multi_agent_knowledge_prompt.txt",
+        "multi_agent_qualification_prompt.txt",
+        "multi_agent_planner_prompt.txt"
+      ],
+      "guards": "same two guards as single_v2",
+      "tools": "multi_agent_coordinator_tools.json",
+      "handoff_contract": "multi_agent_handoff_contract.json"
+    }
+  },
+  "promise_pattern": "\\b(i will|i'll|let me|i am going to|i'm going to|i shall)\\b[^.?!]*\\b(save|schedul|record|updat|creat|book|request|submit|register|log)",
+  "promise_nudge": "Harness check (this message is not from the caller): your draft reply said you would save, schedule or record something, but you did not call a tool, so that draft was not sent. If the caller has already agreed, call the needed tool now. If not, ask the caller a direct question ending with '?'. Reply only as the assistant, never as the caller.",
+  "success_claim_pattern": "\\b(has|have) been (successfully )?(saved|scheduled|recorded|updated|created|booked|requested|submitted|registered|logged|added|stopped)\\b|\\bsuccessfully (saved|scheduled|recorded|updated|created|booked|requested|submitted|registered|logged|added|stopped)\\b|\\bi(?:'ve| have) (saved|scheduled|recorded|updated|created|booked|requested|submitted|registered|logged|added|stopped)\\b",
+  "success_claim_nudge": "Harness check (this message is not from the caller): your draft reply said something was saved or done, but no record-changing tool succeeded in this turn, so that draft was not sent. Check the tool results. If the caller has agreed and the step is still needed, call the tool now. Otherwise tell the caller plainly that it has not been saved. Reply only as the assistant, never as the caller.",
+  "validation_layer": "src/voice_agent/inference/crm.py, unchanged rules, shared by all designs",
+  "sha256": {
+    "single_agent_m3_prompt.txt": "e4d8a460f7918c48196a4d4f79cf585cbea74cccdaad8f14412acfbbe1879adf",
+    "single_agent_v2_prompt.txt": "b0f0335e730bc7ed580de919d922d6086d8aa591462391a9b28a224add961aa5",
+    "multi_agent_coordinator_prompt.txt": "a96f03523a378e5001c466beb0afced9c152d1d353ac6e6c3a4b8b1442deadfc",
+    "multi_agent_knowledge_prompt.txt": "865dbab530b926f1b5c42680ea7d562f4491efdf0c7634bbaff2ca39982b9255",
+    "multi_agent_qualification_prompt.txt": "8284f4ca5996ba9681fd299f9fffd83c505c47b03058eaf17ff43b981377bd88",
+    "multi_agent_planner_prompt.txt": "45d1acd2eedf0c937cbce39cba4594eca433729b5866b13be3ed0e177d4a9e5b",
+    "single_agent_tools.json": "fcd15911553a1de1098fba9a2755d7f046c3cb43dec421ed872d4fd56ff58ad9",
+    "multi_agent_coordinator_tools.json": "30265c76f9b329bd304fb9a460a09e7d0aa0f99799883cbcecadf9275d9ec14b",
+    "multi_agent_planner_write_schemas.json": "86113033a34d38cf313ae1aa029d12a51be8a9f3c0fe911abc087056e1c77caa",
+    "multi_agent_handoff_contract.json": "92eff4559a72ce3ecd75be4169da27ba55216db88de8237af75237f1fc010402"
+  }
+}

@@ -1,0 +1,9 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Samar Demo. I'm calling to verify some details regarding my feasibility enquiry. My contact ID is C09 and my email is samar@example.invalid.
+TOOL verify_identity({"contact_id": "C09", "email": "samar@example.invalid"}) -> {"success": true, "verified_contact_id": "C09"}
+AGENT: Thank you, Samar. I've verified your identity. What details would you like to check regarding your feasibility enquiry?
+CALLER: I need to confirm that the shading on my roof is due to an afternoon water tank shadow.
+AGENT: I can update your shading to "afternoon_water_tank_shadow." Shall I save this change?
+CALLER: Yes, I confirm. Please go ahead and save the change to afternoon_water_tank_shadow.
+TOOL update_lead({"contact_id": "C09", "set": {"shading": "afternoon_water_tank_shadow"}}) -> {"success": false, "error": "fixture_atomic_write_failed", "atomic": true}
+AGENT: I'm sorry, but the update to your shading was not saved due to a technical issue. Would you like to try again or check something else?

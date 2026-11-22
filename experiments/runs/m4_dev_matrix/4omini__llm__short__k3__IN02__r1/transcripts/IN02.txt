@@ -1,0 +1,33 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I'm Diya Demo, and I'm exploring the feasibility of installing solar panels on my rooftop. Can you help me with that?
+AGENT: Sure, Diya! I can help you with that. Could you please provide me with your email address?
+CALLER: My email address is diya@example.invalid.
+TOOL find_lead({"email": "diya@example.invalid"}) -> {"success": true, "email": "diya@example.invalid", "match_found": false}
+AGENT: I didn't find any existing enquiries for that email address. Can you confirm your name and provide details about your home ownership status, roof type, roof access, shading, average monthly bill in INR, location, and timeline for installation?
+CALLER: Yes, I confirm my name is Diya Demo. I am the owner of my home, and my roof type is RCC. I have roof access and I am the self-reported owner for roof permission. There is morning shade from a neighboring building. My average monthly bill is 3700 INR, and I am located in Pune, with the pincode 411006. I am looking at a timeline of about 60 days for installation.
+AGENT: Thank you for the details, Diya! To summarize, I will save the following information:
+
+- Name: Diya Demo
+- Email: diya@example.invalid
+- Home Ownership: Owner
+- Roof Type: RCC
+- Roof Access: Yes
+- Roof Permission: Self-reported owner
+- Shading: Morning neighbor shadow
+- Average Monthly Bill: 3700 INR
+- Location: Pune
+- Pincode: 411006
+- Timeline: 60 days
+
+Shall I go ahead and save this information?
+CALLER: Yes, I confirm you can save this information.
+TOOL create_lead({"name": "Diya Demo", "email": "diya@example.invalid", "home_ownership": "owner", "roof_type": "RCC", "roof_access": true, "roof_permission": "self_reported_owner", "shading": "morning_neighbour_shadow", "monthly_bill_inr": 3700, "location": "Pune", "pincode": "411006", "timeline_days": 60}) -> {"success": true, "id": "C13", "contact": {"id": "C13", "name": "Diya Demo", "email": "diya@example.invalid", "home_ownership": "owner", "roof_type": "RCC", "roof_access": true, "roof_permission": "self_reported_owner", "shading": "morning_neighbour_shadow", "monthly_bill_inr": 3700, "location": "Pune", "pincode": "411006", "timeline_days": 60, "status": "new", "consent": false, "consent_record": 
+AGENT: I've successfully saved your information, Diya! Your enquiry is now recorded. Is there anything else you would like to know or do regarding your solar panel installation?
+CALLER: I would like to know if my monthly bill alone guarantees that I can get a suitable solar system installed.
+TOOL search_docs({"query": "monthly bill solar system installation guarantee"}) -> {"success": true, "results": [{"id": "F4", "text": "R1 says cost depends on system size, configuration and supporting structures. It also collects location and bill information. Neither a bill nor a PIN establishes final capacity, price, savings, serviceability or installation date."}, {"id": "F2", "text": "R1 distinguishes grid-connected, standalone battery and hybrid systems. Its blackout FAQ ex
+AGENT: Your monthly bill is an important factor, but it doesn't guarantee a suitable solar system installation. The final capacity, price, and installation date depend on various factors, including system size, configuration, and location. Would you like more information on specific system types?
+CALLER: No, I don't need more information on that. Also, I prefer not to receive any follow-up calls.
+TOOL record_opt_out({"contact_id": "C13"}) -> {"success": false, "error": "identity_not_verified", "atomic": true}
+AGENT: I can't process your opt-out request without verifying your identity first. Could you please provide your contact ID and email address for verification?
+CALLER: No, I won't provide any contact ID. I prefer not to receive follow-up calls or any callbacks.
+AGENT: I understand your preference, but I need to verify your identity to process the opt-out request. If you change your mind or have any other questions, feel free to ask.

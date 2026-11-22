@@ -1,0 +1,11 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Pranav Demo. I'm calling to dispute a cancellation charge on my account. My contact ID is C07, and my email is pranav@example.invalid.
+TOOL verify_identity({"contact_id": "C07", "email": "pranav@example.invalid"}) -> {"success": true, "verified_contact_id": "C07"}
+AGENT: Thank you for verifying, Pranav. Could you please provide the booking payment date, whether the detailed engineering visit was done, and if you have sent a written cancellation notice? This will help me understand the cancellation charge dispute.
+CALLER: Sure. The booking payment was made at 09:00 on 2026-11-01. No detailed engineering visit has occurred, and I have not sent a written cancellation notice.
+AGENT: To confirm, your booking payment was made at 09:00 on 2026-11-01, no detailed engineering visit was done, and no written cancellation notice was sent. Shall I save these details and create a handoff for your cancellation charge dispute?
+CALLER: Yes, I confirm. However, I would like to know if the refund is automatic.
+TOOL create_handoff({"contact_id": "C07", "reason_code": "cancellation_policy_conflict_after_24h_before_DEV", "caller_confirmed": {"booking_paid_at": "2026-11-01T09:00:00+05:30", "detailed_engineering_visit": "not_done", "written_cancellation_sent": false}}) -> {"success": true, "id": "H01", "handoff": {"id": "H01", "contact_id": "C07", "reason_code": "cancellation_policy_conflict_after_24h_before_DEV", "status": "pending", "enquiry": "Caller requests policy interpretation 26 hours after booking, before DEV, with no written cancellation; no cancellation or refund approved.", "qualification_context": {"caller_confirmed": {"booking_paid_at": "2026-11-01T09
+AGENT: I have saved your details and created a handoff for your cancellation charge dispute. The refund is not automatic; it requires review based on policy clauses. Would you like me to arrange a callback to discuss this further?
+CALLER: No, I do not want a callback. Please just record a human policy-review request for my dispute.
+AGENT: The human policy-review request for your dispute is already recorded as a handoff. Is there anything else I can assist you with today?

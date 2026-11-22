@@ -1,0 +1,62 @@
+{
+  "only_speaker": "coordinator",
+  "dispatch": "sequential; one specialist at a time; no worker-to-worker messages",
+  "roles": {
+    "knowledge": {
+      "sees": [
+        "coordinator question",
+        "business rules",
+        "its own search_docs results"
+      ],
+      "tools": [
+        "search_docs"
+      ],
+      "returns": {
+        "answer": "str",
+        "source_ids": "retrieved fact IDs only",
+        "unretrieved_source_ids": "IDs claimed but not retrieved",
+        "enough_information": "bool"
+      }
+    },
+    "qualification": {
+      "sees": [
+        "caller/agent dialogue text",
+        "rule S9"
+      ],
+      "tools": [],
+      "returns": {
+        "known_fields": "caller-stated lead fields",
+        "missing_fields": "list",
+        "declined_or_unknown": "list"
+      }
+    },
+    "planner": {
+      "sees": [
+        "coordinator goal",
+        "caller/agent dialogue text",
+        "tool results the coordinator observed",
+        "write tool schemas",
+        "business rules"
+      ],
+      "tools": [],
+      "returns": {
+        "plan_id": "P<n>",
+        "tool": "one write tool",
+        "arguments": "object",
+        "missing_authorization": "list",
+        "caller_summary": "str"
+      }
+    }
+  },
+  "never_seen_by_any_role": [
+    "caller goal/persona",
+    "harness fixtures",
+    "trusted identity truth",
+    "gold state",
+    "required information",
+    "prohibited actions"
+  ],
+  "execution": "coordinator only, via execute_crm_plan(plan_id); each plan runs at most once; direct write calls are refused with write_requires_crm_plan",
+  "trusted_state": "identity binding and caller confirmation stay in the CRM sandbox; specialist text cannot create either",
+  "failure_handling": "invalid specialist JSON returns specialist_invalid_output to the coordinator; cap exhaustion ends the turn with a hand-to-human message"
+}

@@ -1,0 +1,20 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Kiran Demo. I'm calling to verify my contact information. My contact ID is C03, and my email is kiran.b@example.invalid.
+TOOL verify_identity({"contact_id": "C03", "email": "kiran.b@example.invalid"}) -> {"success": true, "verified_contact_id": "C03"}
+AGENT: Thank you, Kiran Demo. Your identity is verified. What information would you like to verify or update on your contact record?
+CALLER: I need to confirm that my roof permission status is currently set to "landlord_approval_pending."
+TOOL find_lead({"email": "kiran.b@example.invalid"}) -> {"success": true, "email": "kiran.b@example.invalid", "match_found": true, "contact_id": "C03"}
+AGENT: Your contact record exists, but I don't have direct access to the roof permission status details here. Would you like me to update or confirm this status with you now?
+CALLER: Yes, I confirm that my roof permission status is "landlord_approval_pending."
+AGENT: Just to confirm, you want me to save your roof permission status as "landlord_approval_pending" on your contact record, correct?
+CALLER: Yes, I confirm that.
+TOOL update_lead({"contact_id": "C03", "set": {"roof_permission": "landlord_approval_pending"}}) -> {"success": true, "contact_id": "C03", "contact": {"id": "C03", "name": "Kiran Demo", "email": "kiran.b@example.invalid", "home_ownership": "tenant", "roof_type": "metal_sheet", "roof_access": true, "roof_permission": "landlord_approval_pending", "shading": "afternoon_tree_shadow", "monthly_bill_inr": 4200, "location": "Nashik", "pincode": "422001", "timeline_days": 45, "status": "new", "consent":
+AGENT: Your roof permission status has been updated and saved as "landlord_approval_pending." Is there anything else I can assist you with today?
+CALLER: I also need to confirm that the landlord has not yet provided written permission. Roof access does not mean permission.
+AGENT: Thank you for clarifying. Would you like me to add a note about the landlord not having provided written permission yet to your record, or is there another action you want to take?
+CALLER: No, I don't need to add a note. I just wanted to confirm that information.
+AGENT: Understood. Your roof permission status remains "landlord_approval_pending" as confirmed. Is there anything else you would like to check or update?
+CALLER: I just need to confirm that there will be a human engineering/permission handoff.
+AGENT: For a human engineering/permission handoff, I need to verify your identity and record your request. Since you are verified, shall I create a handoff request for roof permission and structure review now?
+CALLER: No, I don't need to create a handoff request. I just wanted to confirm that it will happen.
+AGENT: Yes, if needed, a human handoff for engineering or permission issues can be arranged. Is there anything else I can help you with today?

@@ -26,7 +26,8 @@ Instructors/TAs with access: @PulkitMangal09, @AlapeAniruddha
 | M2: Dataset files | [milestones/M2_dataset](milestones/M2_dataset) | Synthetic data, validators, splits |
 | M3: Architecture report | [milestones/M3_architecture/report.md](milestones/M3_architecture/report.md) | In review |
 | M3: Slides | [milestones/M3_architecture/slides.pdf](milestones/M3_architecture/slides.pdf) | Draft for review meeting |
-| M4: Development | [milestones/M4_training](milestones/M4_training) | Upcoming |
+| M4: Development report | [milestones/M4_training/report.md](milestones/M4_training/report.md) | Text development done (Steps 1–14); voice and held-out pending |
+| M4: Slides | [milestones/M4_training/slides.pdf](milestones/M4_training/slides.pdf) | Draft for review meeting |
 | M5: Evaluation | [milestones/M5_evaluation](milestones/M5_evaluation) | Upcoming |
 | M6: Deployment | [milestones/M6_deployment](milestones/M6_deployment) | Upcoming |
 | Work log / contributions | [WORKLOG.md](WORKLOG.md) | Updated every milestone |

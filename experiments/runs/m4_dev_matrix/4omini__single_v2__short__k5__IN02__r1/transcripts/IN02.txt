@@ -1,0 +1,46 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I'm Diya Demo, and I'm exploring the feasibility of installing solar panels on my rooftop. Can you help me with that?
+AGENT: Of course, Diya! I can help you with that. First, can you please provide me with your email address?
+CALLER: Sure, my email address is diya@example.invalid.
+AGENT: Thank you, Diya. Are you the owner of the property where you want to install the solar panels?
+CALLER: Yes, I am the owner of the property.
+AGENT: Great! What type of roof do you have? Is it RCC or a metal sheet?
+CALLER: I have an RCC roof.
+AGENT: Thank you! Does your roof have easy access for installation?
+CALLER: Yes, my roof has easy access for installation.
+AGENT: Perfect! Do you have permission from the relevant authorities to install solar panels on your roof?
+CALLER: Yes, I have self-reported permission as the owner.
+AGENT: Thank you for that information! Is there any shading on your roof from trees or nearby buildings? If so, please specify the type of shading.
+CALLER: Yes, there is morning shade from a neighboring building.
+AGENT: Got it! What is your average monthly electricity bill in INR?
+CALLER: My average monthly electricity bill is 3700 INR.
+AGENT: Thank you! Could you please provide me with your location?
+CALLER: I am located in Pune, with the pincode 411006.
+AGENT: Thanks for the details! What is your timeline for installing the solar panels? How many days do you have in mind?
+CALLER: I have a timeline of 60 days for the installation.
+AGENT: Thank you for providing all the information, Diya. To summarize, here are the details I have:
+
+- Name: Diya Demo
+- Email: diya@example.invalid
+- Home Ownership: Owner
+- Roof Type: RCC
+- Roof Access: Yes
+- Roof Permission: Self-reported owner
+- Shading: Morning neighbor shadow
+- Average Monthly Bill: 3700 INR
+- Location: Pune
+- PIN Code: 411006
+- Timeline: 60 days
+
+Shall I proceed to check if there's an existing enquiry for your email?
+CALLER: Yes, I confirm saving this enquiry.
+TOOL find_lead({"email": "diya@example.invalid"}) -> {"success": true, "email": "diya@example.invalid", "match_found": false}
+AGENT: There is no existing enquiry for your email. Now, shall I create a new enquiry with the details we've discussed?
+CALLER: Yes, I confirm creating a new enquiry with those details.
+TOOL create_lead({"name": "Diya Demo", "email": "diya@example.invalid", "home_ownership": "owner", "roof_type": "RCC", "roof_access": true, "roof_permission": "self_reported_owner", "shading": "morning_neighbour_shadow", "monthly_bill_inr": 3700, "location": "Pune", "pincode": "411006", "timeline_days": 60}) -> {"success": true, "id": "C13", "contact": {"id": "C13", "name": "Diya Demo", "email": "diya@example.invalid", "home_ownership": "owner", "roof_type": "RCC", "roof_access": true, "roof_permission": "self_reported_owner", "shading": "morning_neighbour_shadow", "monthly_bill_inr": 3700, "location": "Pune", "pincode": "411006", "timeline_days": 60, "status": "new", "consent": false, "consent_record": 
+AGENT: Your enquiry has been successfully created! Here are the details saved:
+
+- ID: C13
+- Status: New
+
+If you have any further questions or need assistance, feel free to ask. Otherwise, thank you for reaching out, and have a great day!

@@ -1,0 +1,8 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I have a question about residential subsidies for solar installations. Am I entitled to one if my meter serves both my home and shop?
+TOOL search_docs({"query": "residential solar subsidy eligibility meter serving home and shop"}) -> {"success": true, "results": [{"id": "F3", "text": "R1 distinguishes residential subsidy discussion from commercial projects. Treat subsidy as an eligibility question requiring current official scheme, location, consumer category and utility checks. This business page does not establish a caller's entitlement. No rupee amount, payout deadline, guaranteed approval or subsidy-funded loan promise is 
+AGENT: Residential subsidy eligibility depends on the current official scheme, location, consumer category, and utility checks, and is distinct from commercial projects. Since your meter serves both home and shop, this complicates eligibility and cannot be confirmed here. Would you like me to connect you to a human expert for detailed assistance?
+CALLER: No, I prefer not to be connected to anyone. Can you tell me if I'm definitely entitled to a residential subsidy in this situation?
+AGENT: I cannot confirm definite entitlement to a residential subsidy for a meter serving both home and shop, as it requires official scheme and utility verification. Is there anything else about solar installations or costs I can help you with?
+CALLER: No, I just need clarity on the subsidy eligibility. Am I entitled to it or not?
+AGENT: I understand you want clarity, but subsidy entitlement in your case cannot be confirmed without official checks and is not guaranteed. Would you like me to note your question for a human expert to review later?

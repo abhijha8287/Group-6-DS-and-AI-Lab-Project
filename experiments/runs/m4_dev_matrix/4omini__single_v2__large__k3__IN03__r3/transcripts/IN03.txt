@@ -1,0 +1,15 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Kiran Demo. I'm calling to verify my contact information. My contact ID is C03 and my email is kiran.b@example.invalid.
+TOOL verify_identity({"contact_id": "C03", "email": "kiran.b@example.invalid"}) -> {"success": true, "verified_contact_id": "C03"}
+AGENT: Your contact information has been successfully verified. How can I assist you further?
+CALLER: I wanted to clarify that my roof permission status is currently marked as landlord approval pending. The landlord hasn't provided written permission yet, and roof access does not mean permission.
+AGENT: To update your roof permission status to "unknown," I need to confirm that change. Shall I proceed with this update?
+CALLER: No, I need to confirm that it should be changed to "landlord_approval_pending" instead.
+AGENT: Just to clarify, you want to keep your roof permission status as "landlord approval pending." Is that correct?
+CALLER: Yes, I confirm that I want to keep my roof permission status as "landlord approval pending."
+AGENT: Thank you for confirming. Your roof permission status will remain as "landlord approval pending." Is there anything else I can assist you with today?
+CALLER: I also need to confirm a human engineering/permission handoff. Can you assist with that?
+AGENT: I can help with that. Since this requires a human review request, I need to confirm your roof permission status as "landlord approval pending." Shall I proceed with creating the handoff for this reason?
+CALLER: Yes, I confirm that you can proceed with creating the handoff for the reason of my roof permission status being "landlord approval pending."
+TOOL create_handoff({"contact_id": "C03", "reason_code": "tenant_roof_permission_and_structure", "caller_confirmed": {"roof_permission": "landlord_approval_pending"}}) -> {"success": true, "id": "H01", "handoff": {"id": "H01", "contact_id": "C03", "reason_code": "tenant_roof_permission_and_structure", "status": "pending", "enquiry": "Tenant reports written landlord approval is pending and requests human permission/engineering review; no installation approval.", "qualification_context": {"caller_confirmed": {"roof_permission": "landlord_approval_pending"}, "seed_not
+AGENT: The human engineering/permission handoff has been successfully created. The status is currently pending, and it will address your request regarding the landlord's written approval. Is there anything else you would like to discuss?

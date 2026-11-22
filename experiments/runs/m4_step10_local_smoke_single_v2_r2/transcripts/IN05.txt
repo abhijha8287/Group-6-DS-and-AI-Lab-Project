@@ -1,0 +1,13 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I'm Anika. I'd like to schedule a callback to discuss a future roof survey. Can you check if 17:30 Asia/Kolkata on 2026-11-03 works for a 30-minute call?
+TOOL check_availability({"at": "2026-11-03T17:30:00+05:30"}) -> {"success": true, "available": true, "at": "2026-11-03T17:30:00+05:30"}
+AGENT: The slot at 17:30 on 2026-11-03 is available. Shall I schedule the callback for you?
+CALLER: Yes, I confirm the callback at 17:30 on 2026-11-03. Please proceed with scheduling.
+TOOL schedule_callback({"contact_id": "Anika", "at": "2026-11-03T17:30:00+05:30"}) -> {"success": false, "error": "identity_not_verified", "atomic": true}
+AGENT: I need to verify your identity to schedule the callback. Could you please provide your contact ID and email address?
+CALLER: My contact ID is C01, and my email is anika@example.invalid.
+TOOL verify_identity({"contact_id": "C01", "email": "anika@example.invalid"}) -> {"success": true, "verified_contact_id": "C01"}
+AGENT: I have verified your identity. Shall I proceed with scheduling the callback at 17:30 on 2026-11-03?
+CALLER: Yes, I confirm the callback at 17:30 on 2026-11-03. Please proceed.
+TOOL schedule_callback({"at": "2026-11-03T17:30:00+05:30", "contact_id": "C01"}) -> {"success": true, "id": "CB01", "status": "requested", "callback": {"id": "CB01", "contact_id": "C01", "at": "2026-11-03T17:30:00+05:30", "purpose": "requested_enquiry", "status": "requested"}, "contact": {"id": "C01", "name": "Anika Demo", "email": "anika@example.invalid", "home_ownership": "owner", "roof_type": "RCC", "roof_access": true, "roof_permission": "self_reported_owner", "shading": "unk
+AGENT: Your callback has been successfully scheduled for 17:30 on 2026-11-03. We will contact you during that time to discuss the roof survey. Thank you, and have a great day!

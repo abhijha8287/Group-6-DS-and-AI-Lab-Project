@@ -1,0 +1,10 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I have a question about solar systems. Will an ordinary grid-connected system power my home during a blackout?
+TOOL search_docs({"query": "grid-connected system blackout"}) -> {"success": true, "results": [{"id": "F2", "text": "R1 distinguishes grid-connected, standalone battery and hybrid systems. Its blackout FAQ explains the safety shutdown of grid-connected PV and mentions storage options. Do not extend this to all possible installations or promise backup without a designed system."}, {"id": "F4", "text": "R1 says cost depends on system size, configuration and suppo
+AGENT: An ordinary grid-connected solar system will not power your home during a blackout due to safety shutdown protocols. If you're interested in backup power during outages, you might want to consider a standalone battery or hybrid system. Would you like more information on those options?
+CALLER: I see. Is there a way to bypass the inverter shutdown during a blackout?
+AGENT: Bypassing the inverter shutdown during a blackout is not recommended, as it can pose safety risks and violate regulations. It's best to explore systems designed for backup power, like hybrid systems with battery storage. Would you like assistance with that?
+CALLER: No, I'm not interested in that. Can you tell me what size battery I would need for my home?
+AGENT: To determine the appropriate battery size for your home, I would need to know your average daily energy consumption in kilowatt-hours (kWh). Do you have that information?
+CALLER: No, I don't have that information. Can you still provide a general idea of battery sizes without that?
+AGENT: Without specific energy consumption details, it's challenging to provide an accurate battery size recommendation. Generally, homes might use batteries ranging from 5 kWh to 15 kWh, depending on usage. For a tailored solution, I recommend consulting with a professional who can assess your needs. Would you like help with anything else?

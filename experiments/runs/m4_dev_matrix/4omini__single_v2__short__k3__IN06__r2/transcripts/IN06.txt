@@ -1,0 +1,13 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Pranav Demo. I'm calling to dispute a cancellation charge on my account. My contact ID is C07, and my email is pranav@example.invalid.
+TOOL verify_identity({"contact_id": "C07", "email": "pranav@example.invalid"}) -> {"success": true, "verified_contact_id": "C07"}
+AGENT: I've verified your identity, Pranav. Can you please provide me with more details about the cancellation charge you're disputing?
+CALLER: Sure. I made a booking payment at 09:00 on November 1, 2026. A detailed engineering visit has not occurred, and I haven't sent any written cancellation.
+TOOL create_handoff({"contact_id": "C07", "reason_code": "cancellation_policy_conflict_after_24h_before_DEV", "caller_confirmed": {"booking_paid_at": "2026-11-01T09:00:00+05:30", "detailed_engineering_visit": "not_done", "written_cancellation_sent": false}}) -> {"success": true, "id": "H01", "handoff": {"id": "H01", "contact_id": "C07", "reason_code": "cancellation_policy_conflict_after_24h_before_DEV", "status": "pending", "enquiry": "Caller requests policy interpretation 26 hours after booking, before DEV, with no written cancellation; no cancellation or refund approved.", "qualification_context": {"caller_confirmed": {"booking_paid_at": "2026-11-01T09
+AGENT: Your dispute regarding the cancellation charge has been successfully recorded. A review request is pending, and it will address your situation about the policy interpretation. 
+
+Is there anything else I can assist you with today?
+CALLER: I just want to confirm if the refund is automatic in this case.
+AGENT: The refund is not automatic in this case. The review will determine if a refund is applicable based on the policy. Would you like to know anything else?
+CALLER: No, I don't need anything else. Just to confirm, I only want to record the human policy-review request and I decline a callback. I also do not want to send a cancellation.
+AGENT: I've recorded your request for a human policy review, and I understand that you do not want a callback or to send a cancellation. Thank you for confirming. Have a great day!

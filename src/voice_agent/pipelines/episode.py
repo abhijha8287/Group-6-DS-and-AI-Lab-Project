@@ -16,6 +16,7 @@ from voice_agent.data.preprocess import check_views, chunk_knowledge, task_views
 from voice_agent.evaluation.evaluator import classify_issues, score, transcript_text
 from voice_agent.evaluation.simulator import STOP, LLMCaller, ScriptedCaller
 from voice_agent.inference.agent import OracleAgent, SingleAgent
+from voice_agent.inference.multi_agent import MultiAgent
 from voice_agent.inference.crm import CRMSandbox
 from voice_agent.inference.retrieval import BM25Index
 from voice_agent.models.budget import BudgetError, CostLedger
@@ -23,6 +24,9 @@ from voice_agent.models.llm import LLMError
 from voice_agent.utils.common import RUNS_DIR, write_json
 
 MAX_CALLER_TURNS = 12
+# LLM-driven modes. "llm" is the archived M3 single agent, unchanged; "single_v2" is the
+# Step 9 corrected single agent (B0 candidate); "multi" is the Step 10 multi-agent (M1).
+LLM_MODES = ("llm", "single_v2", "multi")
 # The call ends when the agent signs off without asking anything further.
 SIGN_OFF = re.compile(r"\b(goodbye|bye|have a (great|good|nice) day)\b", re.I)
 
@@ -32,11 +36,14 @@ def agent_ended_call(text: str) -> bool:
 
 
 def run_episode(task: dict, pack: BusinessPack, mode: str, clients: dict, chunks: list[dict],
-                index: BM25Index, *, checkpoint=None, stop_on_protocol_issue=False) -> dict:
+                index: BM25Index, *, checkpoint=None, stop_on_protocol_issue=False, top_k: int = 3) -> dict:
     views = task_views(task)
     check_views(views)
     sandbox = CRMSandbox(pack.seed, views["harness"], index)
     sandbox.checkpoint = checkpoint
+    if top_k not in (3, 5):
+        raise ValueError("Only the registered BM25 top-k values 3 and 5 are allowed")
+    sandbox.top_k = top_k
     rules = [c for c in chunks if c["kind"] == "sandbox_rule"]
 
     turns: list[dict] = []
@@ -45,8 +52,12 @@ def run_episode(task: dict, pack: BusinessPack, mode: str, clients: dict, chunks
     stage, status = "agent", "completed"
     started = time.perf_counter()
     try:
-        if mode == "llm":
-            agent = SingleAgent(clients["agent"], pack.name, rules, pack.seed["snapshot_at"])
+        if mode in LLM_MODES:
+            if mode == "multi":
+                agent = MultiAgent(clients["agent"], pack.name, rules, pack.seed["snapshot_at"])
+            else:
+                agent = SingleAgent(clients["agent"], pack.name, rules, pack.seed["snapshot_at"],
+                                    prompt_version="v2" if mode == "single_v2" else "m3")
             stage = "simulator"
             caller = LLMCaller(clients["simulator"], views["simulator"]["caller"])
         elif mode == "oracle":
@@ -60,7 +71,7 @@ def run_episode(task: dict, pack: BusinessPack, mode: str, clients: dict, chunks
         agent_text = agent.greeting()
         turns.append({"type": "agent", "text": agent_text})
         previous_caller = None
-        budget = getattr(clients.get("agent"), "budget", None) if mode == "llm" else None
+        budget = getattr(clients.get("agent"), "budget", None) if mode in LLM_MODES else None
         caller_limit = budget.limits["max_caller_turns"] if isinstance(budget, CostLedger) else MAX_CALLER_TURNS
         for _ in range(caller_limit):
             if agent_ended_call(agent_text):
@@ -73,7 +84,7 @@ def run_episode(task: dict, pack: BusinessPack, mode: str, clients: dict, chunks
                     issues.append({"category": "simulator", "stage": stage, "code": status,
                                    "message": "Caller stopped before exercising the scenario."})
                 break
-            if mode == "llm" and caller_text == previous_caller:  # LLM caller stuck repeating itself
+            if mode in LLM_MODES and caller_text == previous_caller:  # LLM caller stuck repeating itself
                 status = "caller_repeat_stop"
                 issues.append({"category": "simulator", "stage": stage, "code": status,
                                "message": "Repeat guard ended the episode; goal coverage needs review.",
@@ -103,13 +114,13 @@ def run_episode(task: dict, pack: BusinessPack, mode: str, clients: dict, chunks
                        "message": str(err), "error_type": type(err).__name__})
     elapsed = time.perf_counter() - started
 
-    judge_allowed = mode == "llm" and not status.startswith("error")
+    judge_allowed = mode in LLM_MODES and not status.startswith("error")
     if stop_on_protocol_issue and (status != "completed" or any(
             i["category"] in ("simulator", "infrastructure", "judge") for i in issues)):
         judge_allowed = False
     result = score(task, pack.seed, sandbox.state, turns, sandbox.log,
                    judge_client=clients.get("judge") if judge_allowed else None)
-    if mode == "llm":
+    if mode in LLM_MODES:
         for entry in sandbox.log:
             if entry.get("blocked"):
                 issues.append({"category": "agent", "stage": "tools", "code": "tool_validation_block",
@@ -131,7 +142,7 @@ def run_episode(task: dict, pack: BusinessPack, mode: str, clients: dict, chunks
 
 
 def run_subset(pack: BusinessPack, tasks: list[dict], mode: str, clients: dict,
-               run_id: str | None = None, out_dir=None, log=print) -> dict:
+               run_id: str | None = None, out_dir=None, log=print, top_k: int = 3) -> dict:
     run_id = run_id or f"{datetime.now():%Y%m%d-%H%M}_{pack.key}_{mode}"
     out = (out_dir or RUNS_DIR) / run_id
     out.mkdir(parents=True, exist_ok=False)  # retries must use a new ID, never replace an attempt
@@ -155,7 +166,8 @@ def run_subset(pack: BusinessPack, tasks: list[dict], mode: str, clients: dict,
         for task in tasks:
             current_task = task["id"]
             log(f"[{run_id}] {task['id']} ({task['category']}) ...")
-            record = run_episode(task, pack, mode, clients, chunks, index)
+            record = run_episode(task, pack, mode, clients, chunks, index, top_k=top_k)
+            record["top_k"] = top_k
             results.append(record)
             save("running")
             log(f"    status={record['status']} db_pass={record['db_pass']} "

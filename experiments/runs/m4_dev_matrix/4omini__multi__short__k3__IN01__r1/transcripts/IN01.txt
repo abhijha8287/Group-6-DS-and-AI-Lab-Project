@@ -1,0 +1,8 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I have a question about residential subsidies for solar installations. Am I entitled to one if my meter serves both my home and shop?
+TOOL search_docs({"query": "residential subsidies solar installations properties meter home shop"}) -> {"success": true, "results": [{"id": "F2", "text": "R1 distinguishes grid-connected, standalone battery and hybrid systems. Its blackout FAQ explains the safety shutdown of grid-connected PV and mentions storage options. Do not extend this to all possible installations or promise backup without a designed system."}, {"id": "F3", "text": "R1 distinguishes residential subsidy discussion from commerc
+AGENT: Subsidy eligibility depends on the current official scheme, your location, consumer category, and utility checks. It's best to verify these details directly with the relevant authorities. Would you like assistance with anything else?
+CALLER: I understand, but can you tell me if I'm definitely entitled to a residential subsidy in this situation?
+AGENT: I can't provide a definite answer on subsidy entitlement in your situation, as it requires specific details about your location and utility checks. I recommend contacting the relevant authorities for accurate information. Would you like to ask something else?
+CALLER: No, I just want to clarify if I'm entitled to a residential subsidy when the meter serves both my home and shop.
+AGENT: I understand your concern, but I can't confirm your entitlement to a residential subsidy in this case. It's best to check with the relevant authorities who can provide specific guidance based on your situation. Is there anything else I can assist you with?

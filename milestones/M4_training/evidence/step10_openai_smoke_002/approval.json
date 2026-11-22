@@ -1,0 +1,10 @@
+{
+  "approved_by": "Abhishek Jha (user), in-session: 'I have added credit ... do those things by OpenAI and close the Ollama model.'",
+  "approved_at_utc": "2026-11-22T10:45:08.572812+00:00",
+  "scope": "Re-run of the previously approved Step 10 smoke (single_v2 and multi on IN02, IN05, IN10) on gpt-4o-mini after credit was added; same caps: 2 batches, <=100 requests and $2.00 each, from text_development. Includes one tiny credit-check request in the single_v2 batch.",
+  "batches": [
+    "step10_openai_single_v2_002",
+    "step10_openai_multi_002"
+  ],
+  "scope_note": "Development smoke only; not a registered comparison cell or held-out data."
+}

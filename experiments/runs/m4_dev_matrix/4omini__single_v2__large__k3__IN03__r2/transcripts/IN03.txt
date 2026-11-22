@@ -1,0 +1,14 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Kiran Demo. I'm calling to verify my contact information. My contact ID is C03, and my email is kiran.b@example.invalid.
+TOOL verify_identity({"contact_id": "C03", "email": "kiran.b@example.invalid"}) -> {"success": true, "verified_contact_id": "C03"}
+AGENT: Your identity has been successfully verified. How can I assist you with your contact information today?
+CALLER: I need to confirm that my roof permission status is updated to "landlord_approval_pending." The landlord hasn't provided written permission yet, and roof access doesn't mean permission.
+AGENT: To update your roof permission status to "landlord_approval_pending," I will save this change. Shall I proceed with this update?
+CALLER: Yes, I confirm. Please proceed with the update.
+TOOL update_lead({"contact_id": "C03", "set": {"roof_permission": "landlord_approval_pending"}}) -> {"success": true, "contact_id": "C03", "contact": {"id": "C03", "name": "Kiran Demo", "email": "kiran.b@example.invalid", "home_ownership": "tenant", "roof_type": "metal_sheet", "roof_access": true, "roof_permission": "landlord_approval_pending", "shading": "afternoon_tree_shadow", "monthly_bill_inr": 4200, "location": "Nashik", "pincode": "422001", "timeline_days": 45, "status": "new", "consent":
+AGENT: Your roof permission status has been successfully updated to "landlord_approval_pending." If you need any further assistance, feel free to ask!
+CALLER: I also need to confirm that there will be a human engineering/permission handoff. Can you confirm that?
+AGENT: I can initiate a human review request regarding the engineering and permission handoff. Would you like me to proceed with that?
+CALLER: Yes, I confirm. Please proceed with the human review request.
+TOOL create_handoff({"contact_id": "C03", "reason_code": "tenant_roof_permission_and_structure", "caller_confirmed": {"roof_permission": "landlord_approval_pending"}}) -> {"success": true, "id": "H01", "handoff": {"id": "H01", "contact_id": "C03", "reason_code": "tenant_roof_permission_and_structure", "status": "pending", "enquiry": "Tenant reports written landlord approval is pending and requests human permission/engineering review; no installation approval.", "qualification_context": {"caller_confirmed": {"roof_permission": "landlord_approval_pending"}, "seed_not
+AGENT: The human review request for the engineering and permission handoff has been successfully initiated. The status is currently pending. If you have any more questions or need further assistance, just let me know!

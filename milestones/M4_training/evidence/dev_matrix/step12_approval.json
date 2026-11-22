@@ -1,0 +1,13 @@
+{
+  "plan": "step12",
+  "approved_by": "Abhishek Jha (user), in-session answer: 'Step 12 only for now'",
+  "approved_at_utc": "2026-11-22T10:54:20.582200+00:00",
+  "scope": "60 cells: single_v2, short pack, BM25 top-3, core IN01-IN10 x 3 repetitions x agent model {gpt-4o-mini-2024-07-18, gpt-4.1-mini-2025-04-14}; caller and judge gpt-4o-mini; sequential; interleaved model order.",
+  "models": [
+    "gpt-4o-mini-2024-07-18",
+    "gpt-4.1-mini-2025-04-14"
+  ],
+  "max_total_usd": "8.00",
+  "selection_rule_fixed_before_results": "Common model for Steps 13-14 = more full passes (reward 1) over the 30 episodes; if tied, the cheaper model (gpt-4o-mini).",
+  "not_approved": "Steps 13 and 14 need a separate approval."
+}

@@ -1,0 +1,12 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I’d like to verify some details regarding my feasibility enquiry. My contact ID is C09 and my email is samar@example.invalid.
+TOOL verify_identity({"contact_id": "C09", "email": "samar@example.invalid"}) -> {"success": true, "verified_contact_id": "C09"}
+AGENT: Your identity has been verified successfully. What details would you like to check regarding your feasibility enquiry?
+CALLER: I need to confirm that the shading on my roof is due to an afternoon water tank shadow.
+TOOL search_docs({"query": "shading implications rooftop solar installation water tank shadow"}) -> {"success": true, "results": [{"id": "F4", "text": "R1 says cost depends on system size, configuration and supporting structures. It also collects location and bill information. Neither a bill nor a PIN establishes final capacity, price, savings, serviceability or installation date."}]}
+AGENT: Shading from a water tank can affect the efficiency of your rooftop solar installation, but specific implications on capacity or performance aren't detailed in the information I have. Would you like to speak with a specialist for more insights?
+CALLER: No, I just want to confirm the shading detail. Please update it to afternoon_water_tank_shadow.
+AGENT: I can update the shading detail to "afternoon_water_tank_shadow" for your record. Do you confirm this change?
+CALLER: Yes, I confirm.
+TOOL update_lead({"contact_id": "C09", "set": {"shading": "afternoon_water_tank_shadow"}}) -> {"success": false, "error": "fixture_atomic_write_failed", "atomic": true}
+AGENT: The update to your shading detail was not saved due to a technical issue. Is there anything else I can assist you with?

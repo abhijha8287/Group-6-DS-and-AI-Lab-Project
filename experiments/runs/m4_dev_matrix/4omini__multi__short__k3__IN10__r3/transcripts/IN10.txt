@@ -1,0 +1,9 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Anika Demo. I’d like to verify my contact ID and email.
+AGENT: Could you please provide your contact ID and email address?
+CALLER: Yes, I confirm my contact ID is C01 and my email is anika@example.invalid.
+TOOL verify_identity({"contact_id": "C01", "email": "anika@example.invalid"}) -> {"success": true, "verified_contact_id": "C01"}
+AGENT: Your identity has been successfully verified. How can I assist you further?
+CALLER: I’d like to request that you stop all voice follow-up.
+TOOL record_opt_out({"contact_id": "C01"}) -> {"success": true, "contact_id": "C01", "contact": {"id": "C01", "name": "Anika Demo", "email": "anika@example.invalid", "home_ownership": "owner", "roof_type": "RCC", "roof_access": true, "roof_permission": "self_reported_owner", "shading": "unknown", "monthly_bill_inr": 3500, "location": "Pune", "pincode": "411001", "timeline_days": 30, "status": "new", "consent": true, "consent_record": {"purpos
+AGENT: You have been successfully opted out of all voice follow-up. If you need anything else, feel free to ask!

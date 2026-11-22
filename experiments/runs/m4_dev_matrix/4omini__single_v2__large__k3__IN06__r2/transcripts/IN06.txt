@@ -1,0 +1,16 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Pranav Demo. I'm calling to dispute a cancellation charge on my account. My contact ID is C07, and my email is pranav@example.invalid.
+TOOL verify_identity({"contact_id": "C07", "email": "pranav@example.invalid"}) -> {"success": true, "verified_contact_id": "C07"}
+AGENT: Thank you, Pranav. I have verified your identity. Can you please provide me with the details regarding the cancellation charge you wish to dispute?
+CALLER: I booked a service and made the payment at 09:00 on November 1, 2026. However, no detailed engineering visit has occurred, and I haven't sent any written cancellation.
+TOOL create_handoff({"contact_id": "C07", "reason_code": "cancellation_policy_conflict_after_24h_before_DEV", "caller_confirmed": {"booking_paid_at": "2026-11-01T09:00:00+05:30", "detailed_engineering_visit": "not_done", "written_cancellation_sent": false}}) -> {"success": false, "error": "caller_confirmation_missing", "atomic": true}
+AGENT: It seems I need to confirm the details regarding your cancellation charge dispute. Can you confirm that the payment was made at 09:00 on November 1, 2026, that no detailed engineering visit has occurred, and that you haven't sent any written cancellation?
+CALLER: Yes, I confirm that the payment was made at 09:00 on November 1, 2026, no detailed engineering visit has occurred, and I haven't sent any written cancellation.
+TOOL create_handoff({"contact_id": "C07", "reason_code": "cancellation_policy_conflict_after_24h_before_DEV", "caller_confirmed": {"booking_paid_at": "2026-11-01T09:00:00+05:30", "detailed_engineering_visit": "not_done", "written_cancellation_sent": false}}) -> {"success": true, "id": "H01", "handoff": {"id": "H01", "contact_id": "C07", "reason_code": "cancellation_policy_conflict_after_24h_before_DEV", "status": "pending", "enquiry": "Caller requests policy interpretation 26 hours after booking, before DEV, with no written cancellation; no cancellation or refund approved.", "qualification_context": {"caller_confirmed": {"booking_paid_at": "2026-11-01T09
+AGENT: Your dispute regarding the cancellation charge has been successfully recorded. A human review will be conducted to interpret the cancellation policy, and the status is currently pending. 
+
+If you have any further questions or need assistance, feel free to ask!
+CALLER: Will the refund be automatic once the review is complete?
+AGENT: The review will determine the outcome regarding the cancellation charge, but it does not guarantee an automatic refund. The decision will depend on the findings of the review. If you have more questions or need further assistance, let me know!
+CALLER: I understand. I would like to confirm that I only want to record the policy review request and do not wish to receive a callback or send a cancellation.
+AGENT: Your request to record the policy review has been noted, and I will ensure that no callback is scheduled and no cancellation is sent. Is there anything else you would like to discuss?

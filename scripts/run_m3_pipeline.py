@@ -1,7 +1,9 @@
 """Small-scale end-to-end run for Milestone 3.
 
 Modes:
-  llm                      LLM agent + LLM caller + LLM judge (needs LLM_PROVIDER/LLM_MODEL in .env)
+  llm                      archived M3 single agent + LLM caller + LLM judge (needs LLM_PROVIDER/LLM_MODEL)
+  single_v2                M4 Step 9 corrected single agent (B0 candidate), same caller and judge
+  multi                    M4 Step 10 multi-agent coordinator + specialists (M1 candidate), same caller and judge
   oracle                   harness check: replays the expected tool calls (no LLM)
   control_skip_confirmation, control_skip_verification
                            negative controls that must be blocked (no LLM)
@@ -24,7 +26,7 @@ from voice_agent.models.llm import make_client  # noqa: E402
 from voice_agent.pipelines.episode import run_subset  # noqa: E402
 from voice_agent.utils.common import load_env  # noqa: E402
 
-MODES = ["llm", "oracle", "control_skip_confirmation", "control_skip_verification"]
+MODES = ["llm", "single_v2", "multi", "oracle", "control_skip_confirmation", "control_skip_verification"]
 
 
 def main():
@@ -41,7 +43,7 @@ def main():
     pack = load_business(args.business)
     tasks = select_tasks(pack, args.tasks, split="dev")
     clients = {}
-    if args.mode == "llm":
+    if args.mode in ("llm", "single_v2", "multi"):
         ledger_path = Path(__file__).resolve().parents[1] / "experiments/cost_ledger.json"
         budget = CostLedger(ledger_path, args.budget_batch) if args.budget_batch else None
         clients = {role.lower(): make_client(role, budget=budget) for role in ("AGENT", "SIMULATOR", "JUDGE")}

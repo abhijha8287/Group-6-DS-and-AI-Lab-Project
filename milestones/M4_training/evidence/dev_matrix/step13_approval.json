@@ -1,0 +1,12 @@
+{
+  "plan": "step13",
+  "approved_by": "Abhishek Jha (user), in-session answer: 'Approve Steps 13-14 (Recommended)'",
+  "approved_at_utc": "2026-11-22T11:15:52.403941+00:00",
+  "scope": "Single_v2 vs multi on gpt-4o-mini, short pack, top-3, core IN01-IN10 x 3; single_v2 cells reused from Step 12 (identical settings); 30 new multi cells.",
+  "models": [
+    "gpt-4o-mini-2024-07-18"
+  ],
+  "model_selection": "gpt-4o-mini chosen by the Step 12 rule fixed before results (17 vs 17 full passes; cheaper wins).",
+  "max_total_usd": "8.00",
+  "cap_note": "Hard stop applies to the total of all dev-matrix batches (Steps 12-14 together)."
+}

@@ -1,0 +1,25 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I'm Diya. I'm checking if a rooftop solar system is feasible for my home in Pune.
+AGENT: Sure, Diya. Could you tell me if you own the home where you want to install the solar system?
+CALLER: Yes, I confirm I own the home.
+AGENT: Great, Diya. What type of roof does your home have?
+CALLER: RCC roof.
+AGENT: Okay, Diya. Do you have permission to install solar panels on your roof?
+CALLER: No.
+AGENT: I see. Could you please explain why you don't have permission to install solar panels on your roof?
+CALLER: I self-reported as the owner, but I don't have formal permission yet.
+AGENT: I understand. Could you tell me if there are any obstacles or delays in obtaining the necessary permissions?
+CALLER: No.
+AGENT: Okay, Diya. Could you share the average monthly electricity bill for your home in Pune?
+CALLER: Yes, my monthly bill is around ₹3700.
+AGENT: Got it, Diya. Could you tell me your location in Pune, including the PIN code?
+CALLER: Pune, PIN code 411006.
+AGENT: Thank you, Diya. Could you let me know your preferred timeline for moving forward with the solar installation?
+CALLER: I'd like to proceed within 60 days.
+AGENT: Great, Diya. Could you confirm if there are any shading issues on your roof that might affect the solar panel efficiency?
+CALLER: Yes, there is morning shade from a neighbouring building.
+AGENT: I see. Could you tell me if you have access to the roof for installation purposes?
+CALLER: Yes, I confirm I have access to the roof.
+AGENT: Thank you, Diya. Could you confirm if you'd like to proceed with the solar installation as per your provided details?
+CALLER: Yes, I confirm I'd like to proceed with the solar installation as per my provided details.
+AGENT: Diya, we have created a lead for your solar installation with the details you provided. Could you please confirm your email address so we can proceed further?

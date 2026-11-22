@@ -1,0 +1,12 @@
+{
+  "model": "gpt-4.1-mini-2025-04-14",
+  "mode": "single_v2",
+  "doc": "short",
+  "k": 3,
+  "task": "IN10",
+  "rep": 3,
+  "id": "41mini__single_v2__short__k3__IN10__r3",
+  "agent_batch": "dm_41mini__single_v2__short__k3__IN10__r3__agent",
+  "eval_batch": "dm_41mini__single_v2__short__k3__IN10__r3__eval",
+  "approval_reference": "milestones/M4_training/evidence/dev_matrix/step12_approval.json"
+}

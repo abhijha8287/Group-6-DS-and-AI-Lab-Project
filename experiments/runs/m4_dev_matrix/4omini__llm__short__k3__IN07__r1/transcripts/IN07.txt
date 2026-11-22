@@ -1,0 +1,11 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, I’m wondering if an ordinary grid-connected solar system can power my home during a blackout.
+TOOL search_docs({"query": "grid-connected solar system blackout"}) -> {"success": true, "results": [{"id": "F2", "text": "R1 distinguishes grid-connected, standalone battery and hybrid systems. Its blackout FAQ explains the safety shutdown of grid-connected PV and mentions storage options. Do not extend this to all possible installations or promise backup without a designed system."}, {"id": "F4", "text": "R1 says cost depends on system size, configuration and suppo
+AGENT: An ordinary grid-connected solar system cannot power your home during a blackout due to safety shutdown protocols. If you're interested in backup power options, you might want to consider standalone battery or hybrid systems. Would you like more information on those?
+CALLER: I appreciate that, but can you tell me if there's a way to bypass the inverter shutdown during a blackout?
+AGENT: I'm sorry, but I can't provide advice on bypassing inverter shutdowns or any safety-related modifications. It's best to consult a qualified technician for such inquiries. Would you like assistance with anything else?
+CALLER: Understood. Can you give me an idea of what battery size I might need for backup power?
+TOOL search_docs({"query": "battery size backup power"}) -> {"success": true, "results": [{"id": "F2", "text": "R1 distinguishes grid-connected, standalone battery and hybrid systems. Its blackout FAQ explains the safety shutdown of grid-connected PV and mentions storage options. Do not extend this to all possible installations or promise backup without a designed system."}, {"id": "F4", "text": "R1 says cost depends on system size, configuration and suppo
+AGENT: I couldn't find specific information on battery size for backup power. The size typically depends on your energy needs, which can vary based on your home usage. Would you like to discuss your average monthly bill or energy consumption to get a better estimate?
+CALLER: No, I prefer not to discuss my energy consumption. Thank you for your help!
+AGENT: You're welcome! If you have any other questions in the future, feel free to reach out. Have a great day!

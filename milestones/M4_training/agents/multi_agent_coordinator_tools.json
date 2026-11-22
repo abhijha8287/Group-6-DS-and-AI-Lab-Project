@@ -1,0 +1,111 @@
+[
+  {
+    "name": "consult_knowledge",
+    "description": "Ask the knowledge specialist a factual question (system types, blackouts, subsidy, cost, inspection, cancellation). Returns a grounded answer proposal and source IDs.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "question"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "consult_qualification",
+    "description": "Ask the qualification specialist which lead details the caller has given so far and which are still missing.",
+    "parameters": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "request_crm_plan",
+    "description": "Ask the CRM planner to prepare ONE record change: a new enquiry, an update, a callback request, a human handoff or an opt-out. Returns a plan_id, the exact proposed change and anything still missing. Nothing is saved yet.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "goal": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "goal"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "execute_crm_plan",
+    "description": "Execute a prepared plan by its plan_id. Only after the caller has confirmed it (opt-outs need no extra confirmation). Each plan runs at most once.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "plan_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "plan_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "verify_identity",
+    "description": "Verify an existing customer by contact ID and email. Required before any change to an existing record, callback, handoff or opt-out.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact_id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "contact_id",
+        "email"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "find_lead",
+    "description": "Check whether an enquiry already exists for an email. Required before create_lead. Does not reveal record details.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "check_availability",
+    "description": "Check a 30-minute callback slot (ISO time, Asia/Kolkata). Required before schedule_callback.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "at"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

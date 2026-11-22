@@ -181,6 +181,7 @@ class CRMSandbox:
         self.observed: dict[str, dict] = {}
         self.log: list[dict] = []
         self.checkpoint = None
+        self.top_k = 3  # BM25 results per search_docs call; Step 14 compares 3 with 5
 
     # -- conversation hooks ----------------------------------------------------
 
@@ -207,6 +208,18 @@ class CRMSandbox:
             entry["blocked"] = "invalid_arguments"
         entry["result"] = result
         self.log.append(entry)
+        if self.checkpoint is not None:
+            self.checkpoint({"state": deep_copy(self.state), "tool_log": deep_copy(self.log)})
+        return result
+
+    def record_rejection(self, name: str, args, code: str, detail: dict | None = None) -> dict:
+        """Log a call refused before reaching a tool (e.g. by the agent-side
+        provenance guard or the multi-agent write rule). Nothing is executed,
+        so the CRM state cannot change; the refusal is kept in the same log."""
+        result = {"success": False, "error": code, **(detail or {})}
+        if name in WRITE_TOOLS:
+            result["atomic"] = True
+        self.log.append({"tool": name, "args": args, "blocked": code, "result": result})
         if self.checkpoint is not None:
             self.checkpoint({"state": deep_copy(self.state), "tool_log": deep_copy(self.log)})
         return result
@@ -257,7 +270,7 @@ class CRMSandbox:
     # -- tools -----------------------------------------------------------------
 
     def _search_docs(self, query: str):
-        hits = self.index.search(query, k=3) if self.index else []
+        hits = self.index.search(query, k=self.top_k) if self.index else []
         return {"success": True, "results": [{"id": h["id"], "text": h["text"]} for h in hits]}
 
     def _verify_identity(self, contact_id: str, email: str):

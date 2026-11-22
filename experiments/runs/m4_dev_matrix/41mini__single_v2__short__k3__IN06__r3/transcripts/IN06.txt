@@ -1,0 +1,17 @@
+AGENT: Hello, you've reached SunGrid Rooftop Solar. How can I help you today?
+CALLER: Hi, this is Pranav Demo. I'm calling to dispute a cancellation charge on my account. My contact ID is C07.
+AGENT: Hi Pranav, I can assist with your cancellation charge dispute. Could you please provide the email address registered with your account for verification?
+CALLER: Yes, I confirm my email address is pranav@example.invalid.
+TOOL verify_identity({"contact_id": "C07", "email": "pranav@example.invalid"}) -> {"success": true, "verified_contact_id": "C07"}
+AGENT: Thank you, Pranav. Your identity is verified. Could you please provide details about the cancellation charge dispute, such as when you made the cancellation and any related information?
+CALLER: I haven't sent a written cancellation. My booking payment was made at 09:00 on November 1, 2026, and no detailed engineering visit has occurred.
+TOOL create_handoff({"contact_id": "C07", "reason_code": "cancellation_policy_conflict_after_24h_before_DEV", "caller_confirmed": {"booking_paid_at": "2026-11-01T09:00:00+05:30", "detailed_engineering_visit": "not_done", "written_cancellation_sent": false}}) -> {"success": false, "error": "caller_confirmation_missing", "atomic": true}
+AGENT: I need to confirm that you want me to record your dispute with these details: booking payment at 09:00 on November 1, 2026, no detailed engineering visit done, and no written cancellation sent. Shall I save this dispute request?
+CALLER: Yes, I confirm that you can record my dispute with those details.
+TOOL create_handoff({"contact_id": "C07", "reason_code": "cancellation_policy_conflict_after_24h_before_DEV", "caller_confirmed": {"booking_paid_at": "2026-11-01T09:00:00+05:30", "detailed_engineering_visit": "not_done", "written_cancellation_sent": false}}) -> {"success": true, "id": "H01", "handoff": {"id": "H01", "contact_id": "C07", "reason_code": "cancellation_policy_conflict_after_24h_before_DEV", "status": "pending", "enquiry": "Caller requests policy interpretation 26 hours after booking, before DEV, with no written cancellation; no cancellation or refund approved.", "qualification_context": {"caller_confirmed": {"booking_paid_at": "2026-11-01T09
+AGENT: Your dispute about the cancellation charge has been recorded with details of your booking payment time, no engineering visit done, and no written cancellation sent. This means your case is pending review for policy interpretation. Is there anything else I can assist you with?
+CALLER: Could you tell me if a refund is automatic in this situation?
+TOOL search_docs({"query": "refund policy after 24 hours before detailed engineering visit cancellation"}) -> {"success": true, "results": [{"id": "F5", "text": "R2 requires a written cancellation request rather than a verbal one and differentiates stages including the detailed engineering visit. Its stage table and later change-of-mind clause can point to different outcomes after 24 hours. Do not resolve that tension in the caller's favour or against them: request human interpretation with payment time, 
+AGENT: Refund is not automatic in your situation. The policy requires a written cancellation request and differentiates stages including the detailed engineering visit, so your case needs human interpretation for refund eligibility. Would you like me to arrange a callback with a specialist to discuss this further?
+CALLER: No, I do not want a callback. Thank you for the information.
+AGENT: You're welcome, Pranav. If you need any more help in the future, feel free to call. Have a great day!
