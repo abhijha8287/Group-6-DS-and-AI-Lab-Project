@@ -68,6 +68,43 @@ The following findings record a current-page inspection on **2026-11-22**. They 
 
 The evidence locations above refer to the rendered page text inspected on 2026-11-22 and may move or change. No source content was added to the policy-pack knowledge documents. The findings do not resolve source rights, license terms, historical access verification, or human approval.
 
+## Sarwar S1–S48 consistency audit — 2026-11-22
+
+**Status: complete consistency review; pack approval remains pending.** The full S1–S48 set was reviewed together across both policy documents and checked against `questions.json`, `sources.json`, policy-pack preprocessing/validation, and DEV11–DEV16. Exactly one confirmed internal inconsistency was corrected. No source claims or source attributions were changed. The frozen development inputs were not changed.
+
+### Confirmed defect and correction
+
+| Section / files | Before | After | Related evaluator correction |
+|---|---|---|---|
+| S3 in `policy_packs/short/knowledge.md` and `policy_packs/large/knowledge.md` | “Only enquiry field updates, callback requests, opt-outs and structured human handoffs are supported.” | “Supported actions are new-enquiry creation only under S1's no-match and explicit-confirmation exception, enquiry field updates, callback requests, opt-outs and structured human handoffs.” | Q07 in `policy_packs/questions.json` now includes the qualified new-enquiry action, requires canonical sections S1 and S3, and labels both as relevant in both packs. |
+
+S1 explicitly permits creation of a new enquiry after a no-match email lookup and explicit confirmation, while the former S3 stated an exhaustive supported-action list that omitted creation. Since S3 describes the action boundary, the omission made S1 and S3 inconsistent and made Q07's former supported-action answer incomplete. S3 now names the exception without broadening it; all prohibitions remain. The copies of shared S3 text are identical in the short and large policy packs.
+
+### Other reviewed sections
+
+- **S1–S10:** No other confirmed contradiction found in identity binding, duplicate handling, new-enquiry limits, voice consent, callback prerequisites, outbound gates, opt-out, CRM scope, or atomic failure behavior. S2's confirmation rule retains the explicit S8 opt-out exception. S3's existing prohibitions remain intact.
+- **S11–S34:** No confirmed contradiction found in callback versus visit, enquiry versus cancellation, missing identity/contact data, roof permission/safety, unknown versus negative fields, cancellation escalation, callback save failures, handoff provenance, or caller-asserted authority.
+- **S35–S44:** The office, visitor, procurement, inventory, meeting, and equipment examples remain explicitly fictional and do not add a customer CRM, calendar, purchasing, stock, document-delivery, or outbound capability.
+- **S45:** Precedence remains consistent: additional sections do not override F1–F5/S1–S10 or create permissions.
+- **S46–S48:** The date ranges and stated exceptions are internally consistent as fictional text. S46 labels are not CRM fields; S47's accessibility exception permits review only; S48 does not assert that a copy was generated or delivered. No temporal engine is claimed.
+
+### Cross-file and implementation checks
+
+- `questions.json`: Q07 was the only evaluator item needing correction. Other expected answers and canonical versus pack-specific section annotations remain unchanged in this correction pass.
+- `sources.json`: R1 remains mapped to F1–F4 and R2 to F5; permission/license and historical-access status remain as recorded. No source claims were changed to satisfy policy annotations.
+- Preprocessing and validation: `scripts/preprocess_policy_packs.py` and `src/voice_agent/data/preprocess.py` enforce structural IDs, source metadata, and annotation integrity, but did not enforce semantic agreement between the S1 exception and S3's supported-action list. No code defect requiring implementation changes was found. A targeted regression test was added to `tests/test_policy_packs.py` for the S3/Q07 relationship.
+- DEV11–DEV16: Expected states and communication requirements remain consistent with their frozen snapshot. DEV11 declines contact details and therefore does not exercise successful new-enquiry creation; DEV12–DEV16 do not exercise the corrected action-list omission. The frozen documents, scenario JSON, and manifest were left unchanged.
+
+### Possible improvements and human decisions
+
+- **Possible clarity improvement, S46:** Specify the reference instant for deciding whether a known deadline is “within 48 hours.” This is not a contradiction in the current fictional text.
+- **Possible clarity improvement, S47:** Define how “calendar days before” is counted near midnight or when a visitor request arrives on the proposed date. This is not a contradiction in the current fictional text.
+- Human review remains required for the intended policy meanings and the pending F1–F5 source/rights questions recorded above. This audit does not approve the policy pack or resolve source permission, licensing, or historical access verification.
+
+### Tests
+
+Added `test_new_enquiry_exception_is_in_supported_actions_and_q07` to `tests/test_policy_packs.py`. Test execution was attempted with `python -m unittest discover -s tests -p test_policy_packs.py -v` and the analogous `test_development.py` command. Both could not start: the discovered Python 3.11 virtual environment points to a missing Windows Store runtime, and the available standalone Python 3.13 runtime lacks the standard library `encodings` module. Therefore no test pass is claimed; rerun both commands in a complete Python environment.
+
 ## Questions and retrieval annotations
 
 One shared evaluator file contains **14 matched answerable questions and 6 unanswerable questions**. Shared canonical sections and expected answers cannot drift between packs. Unanswerable cases cover refund amount, a particular roof's suitability, a specific system's backup capability, live callback availability/saved state, duplicate-name identity and guaranteed subsidy amount. Each records missing information, a clarification/escalation action and supporting boundary sections. No agent response or successful abstention is inferred from retrieval alone.
