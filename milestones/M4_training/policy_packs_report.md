@@ -50,7 +50,60 @@ The pack is a snapshot as of 2026-11-19. Earlier dates are explicitly invented v
 | R2 | `https://www.solarsquare.in/cancellation-policy/` | Inherited 2026-10-29 | Unknown/not granted; license unknown |
 | SYNTHETIC | Original fictional project draft, S1–S48 | Not an external source | No external rights implied; human review pending |
 
-No source was freshly fetched or reverified in this step. Only existing narrow factual paraphrases were inherited; no third-party source prose, media or customer records were imported. Public availability and paraphrasing are not a rights clearance or a legal assurance. The historical cancellation ambiguity remains unresolved; no refund entitlement, current subsidy amount or engineering approval is introduced.
+During the original Step 6 work, no source was freshly fetched or reverified; only existing narrow factual paraphrases were inherited. The current-page review recorded below is a separate inspection on 2026-11-22 and does not verify the historical 2026-10-29 access record. No third-party source prose, media or customer records were imported. Public availability and paraphrasing are not a rights clearance or a legal assurance. The policy knowledge documents and source claims have not been silently rewritten or approved. No refund entitlement, current subsidy amount or engineering approval is introduced.
+
+## Sarwar source verification findings — 2026-11-22
+
+The following findings record a current-page inspection on **2026-11-22**. They are not evidence that the same page content was accessed on the historical **2026-10-29** date recorded for R1 and R2. The repository's historical access verification remains pending. Source reuse permission and licensing also remain pending; this review makes no legal-clearance claim. These findings are documentation for human review only: F1–F5 in the policy knowledge documents and their source claims remain unchanged, and the pack remains unapproved.
+
+**Supplementary evidence distinction:** The URLs listed in the F1–F5 table are additional official SolarSquare pages inspected for this human review on 2026-11-22. They are supplementary review evidence, not proof of the historical 2026-10-29 access record and not an automatic change to the original R1/R2 source mappings in `sources.json`. Any change to canonical source attribution requires separate review and approval.
+
+| Claim | Current official page evidence inspected on 2026-11-22 | Bounded finding for review |
+|---|---|---|
+| F1 | [SolarSquare Know More Solar](https://www.solarsquare.in/know-more-solar/), “Precision designs…” / roof survey discussion (page lines 215–235); [SolarSquare commercial page](https://www.solarsquare.in/commercial/) (redirects to `/commercial-solar-panel/`), “Great solar starts with precision designs” (lines 208–210); [Solar panel direction and angle article](https://www.solarsquare.in/blog/what-should-be-the-best-angle-for-a-solar-panel-does-direction-matter/), direction/tilt overview (lines 157–169), “Shadow Analysis” (208–210), and angle FAQ (218–226). | Partially supported. Pages describe roof survey, measurements, shadow analysis, orientation/direction assessment, and tilt/angle assessment. Do not infer that every specific roof type or structural detail in F1 was verified by these pages. Roof access, property permission, and structural suitability remain distinct. |
+| F2 | [On-grid vs off-grid vs hybrid solar inverters](https://www.solarsquare.in/blog/on-grid-vs-off-grid-vs-hybrid-solar-inverters/), comparison table (lines 176–183), hybrid outage explanation (273–277), and on-grid/hybrid comparison (325–330). | Supported at the system-type and general blackout-behaviour level. Preserve the page's configuration limits: backup depends on compatible battery storage and configured backup loads; duration/load support depends on system and battery conditions. Do not promise backup for a particular installation. |
+| F3 | [PM Surya Ghar page](https://www.solarsquare.in/pm-surya-ghar-muft-bijli-yojana/), “Eligibility & documents” (lines 242–246). | Supported as a residential-versus-commercial/industrial distinction on this SolarSquare page. It does not determine an individual's eligibility; do not infer entitlement from this source. |
+| F4 | [SolarSquare homepage](https://www.solarsquare.in/), “Calculate your savings” form (lines 238–258; additional enquiry form lines 599–625); [Commercial solar page](https://www.solarsquare.in/commercial/) (redirects to `/commercial-solar-panel/`), pricing qualifications (lines 275–298). | Supported. The homepage requests a PIN code and average monthly electricity bill. Commercial price information is expressly indicative, not fixed, and described as dependent on multiple factors. Neither input nor indicative pricing establishes a caller's final price, savings, serviceability, or installation date. |
+| F5 | [SolarSquare cancellation policy](https://www.solarsquare.in/cancellation-policy/), written-request rule and stage table (lines 143–163); change-of-mind clause (lines 165–170); other refund qualifications in sections 3–9. | Supported that the page requires a written request and specifies stage-dependent cancellation/refund outcomes. Preserve all stated qualifications and the conflict between parts of the page; escalate ambiguous cases for human interpretation. This does not authorize a refund determination or execution. |
+
+The evidence locations above refer to the rendered page text inspected on 2026-11-22 and may move or change. No source content was added to the policy-pack knowledge documents. The findings do not resolve source rights, license terms, historical access verification, or human approval.
+
+## Sarwar S1–S48 consistency audit — 2026-11-22
+
+**Status: complete consistency review; pack approval remains pending.** The full S1–S48 set was reviewed together across both policy documents and checked against `questions.json`, `sources.json`, policy-pack preprocessing/validation, and DEV11–DEV16. Exactly one confirmed internal inconsistency was corrected. No source claims or source attributions were changed. The frozen development inputs were not changed.
+
+### Confirmed defect and correction
+
+| Section / files | Before | After | Related evaluator correction |
+|---|---|---|---|
+| S3 in `policy_packs/short/knowledge.md` and `policy_packs/large/knowledge.md` | “Only enquiry field updates, callback requests, opt-outs and structured human handoffs are supported.” | “Supported actions are new-enquiry creation only under S1's no-match and explicit-confirmation exception, enquiry field updates, callback requests, opt-outs and structured human handoffs.” | Q07 in `policy_packs/questions.json` now includes the qualified new-enquiry action, requires canonical sections S1 and S3, and labels both as relevant in both packs. |
+
+S1 explicitly permits creation of a new enquiry after a no-match email lookup and explicit confirmation, while the former S3 stated an exhaustive supported-action list that omitted creation. Since S3 describes the action boundary, the omission made S1 and S3 inconsistent and made Q07's former supported-action answer incomplete. S3 now names the exception without broadening it; all prohibitions remain. The copies of shared S3 text are identical in the short and large policy packs.
+
+### Other reviewed sections
+
+- **S1–S10:** No other confirmed contradiction found in identity binding, duplicate handling, new-enquiry limits, voice consent, callback prerequisites, outbound gates, opt-out, CRM scope, or atomic failure behavior. S2's confirmation rule retains the explicit S8 opt-out exception. S3's existing prohibitions remain intact.
+- **S11–S34:** No confirmed contradiction found in callback versus visit, enquiry versus cancellation, missing identity/contact data, roof permission/safety, unknown versus negative fields, cancellation escalation, callback save failures, handoff provenance, or caller-asserted authority.
+- **S35–S44:** The office, visitor, procurement, inventory, meeting, and equipment examples remain explicitly fictional and do not add a customer CRM, calendar, purchasing, stock, document-delivery, or outbound capability.
+- **S45:** Precedence remains consistent: additional sections do not override F1–F5/S1–S10 or create permissions.
+- **S46–S48:** The date ranges and stated exceptions are internally consistent as fictional text. S46 labels are not CRM fields; S47's accessibility exception permits review only; S48 does not assert that a copy was generated or delivered. No temporal engine is claimed.
+
+### Cross-file and implementation checks
+
+- `questions.json`: Q07 was the only evaluator item needing correction. Other expected answers and canonical versus pack-specific section annotations remain unchanged in this correction pass.
+- `sources.json`: R1 remains mapped to F1–F4 and R2 to F5; permission/license and historical-access status remain as recorded. No source claims were changed to satisfy policy annotations.
+- Preprocessing and validation: `scripts/preprocess_policy_packs.py` and `src/voice_agent/data/preprocess.py` enforce structural IDs, source metadata, and annotation integrity, but did not enforce semantic agreement between the S1 exception and S3's supported-action list. No code defect requiring implementation changes was found. A targeted regression test was added to `tests/test_policy_packs.py` for the S3/Q07 relationship.
+- DEV11–DEV16: Expected states and communication requirements remain consistent with their frozen snapshot. DEV11 declines contact details and therefore does not exercise successful new-enquiry creation; DEV12–DEV16 do not exercise the corrected action-list omission. The frozen documents, scenario JSON, and manifest were left unchanged.
+
+### Possible improvements and human decisions
+
+- **Possible clarity improvement, S46:** Specify the reference instant for deciding whether a known deadline is “within 48 hours.” This is not a contradiction in the current fictional text.
+- **Possible clarity improvement, S47:** Define how “calendar days before” is counted near midnight or when a visitor request arrives on the proposed date. This is not a contradiction in the current fictional text.
+- Human review remains required for the intended policy meanings and the pending F1–F5 source/rights questions recorded above. This audit does not approve the policy pack or resolve source permission, licensing, or historical access verification.
+
+### Tests
+
+Added `test_new_enquiry_exception_is_in_supported_actions_and_q07` to `tests/test_policy_packs.py`. Test execution was attempted with `python -m unittest discover -s tests -p test_policy_packs.py -v` and the analogous `test_development.py` command. Both could not start: the discovered Python 3.11 virtual environment points to a missing Windows Store runtime, and the available standalone Python 3.13 runtime lacks the standard library `encodings` module. Therefore no test pass is claimed; rerun both commands in a complete Python environment.
 
 ## Questions and retrieval annotations
 

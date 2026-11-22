@@ -35,6 +35,19 @@ class PolicyPackTests(unittest.TestCase):
         self.assertEqual(sources["R1"]["license"], "unknown")
         self.assertEqual(sources["SYNTHETIC"]["human_review"], "pending")
 
+    def test_new_enquiry_exception_is_in_supported_actions_and_q07(self):
+        packs, annotations, _ = BUILD["prepare"](PACKS)
+        s3 = next(c["text"] for c in packs["short"]["chunks"] if c["section_id"] == "S3")
+        self.assertIn("new-enquiry creation", s3)
+        self.assertIn("S1", s3)
+        self.assertIn("no-match", s3)
+        self.assertIn("explicit-confirmation", s3)
+        q07 = next(q for q in annotations["questions"] if q["id"] == "Q07")
+        self.assertEqual(set(q07["required_section_ids"]), {"S1", "S3"})
+        self.assertIn("new enquiry", q07["expected_answer"].lower())
+        for variant in ("short", "large"):
+            self.assertTrue({"S1", "S3"} <= set(q07["relevant_section_ids_by_pack"][variant]))
+
     def test_chunk_and_source_ids_survive_retrieval(self):
         packs, _, _ = BUILD["prepare"](PACKS)
         for variant, pack in packs.items():

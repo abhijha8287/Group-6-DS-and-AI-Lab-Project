@@ -286,7 +286,7 @@ No commits, pushes or public submission are authorized by this report.
 |---|---|
 | Srijan | Directed the AI-assisted M4 development workflow for Steps 1–8 and 11 and the Step 12 pilot preparation; scope decisions; selected local LiveKit with direct OpenAI Realtime as the voice direction; approved the two bounded text diagnostics; deferred held-out authoring; requested the first version of this report, the worklog and his acknowledgement. Policy self-review was selected but remains pending. |
 | Abhishek Jha | Directed and reviewed the AI-assisted implementation of Steps 9–10 (corrected single agent, provenance guard, output check, multi-agent coordinator and specialists, 25 new tests, saved prompt/config artifacts) and the development matrix runner. Found and fixed four defects through smoke runs. Set up the OpenAI key and credit and diagnosed the quota failure. Approved each paid batch for Steps 10 and 12–14 and the model-selection rule. Prepared the voice cost/time proposal and this report update and slides. |
-| Sarwar Karim Akhand | M4 contribution statement and personal confirmation pending. |
+| Sarwar Karim Akhand |Reviewed the M4 policy knowledge base (S1–S48) and verified current source evidence for F1–F5. Identified and corrected an inconsistency between S1 and S3 regarding conditional new-enquiry creation in both short and large policy packs. Updated Q07, added a focused regression test, and documented the findings and review requirements. Changes committed on `feature/sarwar-m4-policy-review` (commit `ab9117e`), with a PR targeting `abhishek-m4`. Automated tests could not run due to a local Python environment issue. Personal confirmation pending. |
 | Omkar Shankar Pawar | Reviewed by hand the judge-flagged false-success claims in the Step 12–14 development runs and recorded where I agreed or disagreed with the gpt-4o-mini judge. Wrote an offline analysis script over the 180 saved episodes that adds confidence intervals, exact sign tests on the paired comparisons and a scenario-level bootstrap. Broke down per-role latency and cost to explain the multi-agent design's extra calls and time. Did the error analysis of the recurring IN03, IN06 and IN07 failures. |
 
 AI assistants generated or assisted code, tests, synthetic fixtures, technical reviews and documentation. These outputs are not presented as manually authored code by any member. AI review and passing checks are not blanket human verification. Hours are recorded only where members supply them. See [WORKLOG.md](../../WORKLOG.md).
@@ -299,7 +299,7 @@ This acknowledgement records participation and responsibility for the disclosed 
 |---|---|---|---|
 | Srijan | 22f3002208 | S. | 19 November 2026 |
 | Abhishek Jha | 23f3004013 | Pending | Pending |
-| Sarwar Karim Akhand | 21f1006953 | Pending | Pending |
+| Sarwar Karim Akhand | 21f1006953 | S.K.A | 22 November 2026 |
 | Omkar Shankar Pawar | 23f1001898 | O.S.P. | 19 November 2026 |
 
 Srijan's initials were entered at his explicit request on 19 November. Each other member must add their own initials. Whether assistant-entered initials satisfy the course's own-commit requirement still needs confirmation. The 19 November version of this report is preserved in git history (`e1b680b`).
