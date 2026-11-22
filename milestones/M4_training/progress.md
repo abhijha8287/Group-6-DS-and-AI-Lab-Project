@@ -320,3 +320,16 @@ User explicitly approved `step11_smoke_001` only, max $0.10, with “yup lets ru
 - Step 8 settings/checksum remain unchanged. New diagnostic sources correctly trigger its source-membership drift check; a prospective amendment is required before any comparison. No comparison slots were run, no audio/heldout cases created or inspected, and no provider-console changes made.
 
 Report: `paid_smoke_report.md`. **Stop: paid path accounted for; no further paid calls authorized.**
+
+## Step 12 preparation — explicitly reduced cloud-model pilot (2026-11-19)
+
+**Prepared offline; inference approval pending.** No local Ollama runtime/model/cache was available. User instead chose OpenRouter and explicitly reduced scope to six attempts: IN02 ×3 each, Gemma4 26B A4B free versus direct gpt-4o-mini-2024-07-18. This is not a local benchmark or the original ten-scenario comparison. Steps13–14 remain paused.
+
+- Both keys configured; key values never displayed. Read-only OpenRouter account metadata validated the credential, not model inference availability. Its separate credit arithmetic remainder was3.212111249 at the saved timestamp; key limit_remaining50 is not account balance or spending approval. OpenAI credit estimate stays19.99955015; canonical ledger unchanged.
+- `model_pilot_plan.md`, `model_pilot_settings.json` and checksum prospectively freeze the six slots, interleaved model order, identical SingleAgent/caller/judge/prompt/short document/BM25k3/tools/full CRM reset and limits. Corrected judge prompt requires nonempty non-violation evidence for both arms; validator remains strict, historical scores unchanged.
+- Proposed group ceiling: OpenAI **$7.17840**, OpenRouter **$0**, under the $9 text allocation. Twelve finite agent/evaluation sub-batches preserve existing100-request/batch cap and single logical episode counters. No extra turns, retries, replacements, random model/provider fallback, paid free-route substitute or BYOK.
+- Restricted free adapter pins Google AI Studio and exact Gemma free ID, zero request prices, strict data policy and no reasoning; requires explicit zero response cost and is_byok=false or halts. Existing direct transport rejects foreign-provider catalog entries. All future requests require the matching group approval before registration; no batches are registered now.
+- Incremental raw journals, full state/tool checkpoints, caller outputs and ledger-derived service/evaluation costs are implemented. Pilot-known simulator/noncompletion stops skip further paid judging. Unknown metrics remain null; human action/claim/failure/dispute review pending. N=1 cannot certify broad model superiority or final model selection.
+- **139 offline tests passed, zero skips.** Frozen integrity check passed; overwrite correctly refused. AI review found simulator-stop judging, BYOK uncertainty, approval validation order and missing cost summary; corrected and follow-up found no remaining must-fix in its targeted scope. Fake unit runs are not experiment results.
+
+Evidence: `evidence/step12_planning/`. No inference, architecture/prompt/document comparison, audio or heldout execution occurred. Original Step8 seal remains intact but source-drifted; this is a separate prospective, approved-scope-reduction plan, not a silent overwrite. **Ask for exact paid group approval before any generation.**

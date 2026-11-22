@@ -1,0 +1,43 @@
+{
+  "status": "prepared_awaiting_explicit_group_approval",
+  "group_id": "step12_model_pilot_001",
+  "scenario": "IN02",
+  "planned_attempts": 6,
+  "independent_scenarios": 1,
+  "models": [
+    "gpt-4o-mini-2024-07-18",
+    "google/gemma-4-26b-a4b-it:free"
+  ],
+  "tests_passed": 139,
+  "skipped": 0,
+  "freeze_integrity": "pass",
+  "settings_sha256": "b462d94ee15f5f7d4788016505a0be1542fe45e2176ff5ed4eb0ae7cf689d7d5",
+  "max_openai_cost_usd": "7.17840",
+  "max_openrouter_cost_usd": "0",
+  "registered_pilot_batches": 0,
+  "new_inference_calls": 0,
+  "canonical_ledger_unchanged": true,
+  "remaining_openai_credit_estimate_usd": "19.99955015",
+  "openrouter_reported_credit_remainder": "3.212111249 at saved metadata timestamp; separate account",
+  "protected_files_unchanged": 831,
+  "expected_changed_files": [
+    "experiments/EXPERIMENT_LOG.md",
+    "milestones/M4_training/progress.md",
+    "src/voice_agent/evaluation/evaluator.py",
+    "src/voice_agent/inference/crm.py",
+    "src/voice_agent/models/llm.py",
+    "src/voice_agent/pipelines/episode.py"
+  ],
+  "additional_workspace_change": {
+    "path": "milestones/M4_training/README.md",
+    "before_sha256": "b66e21d4028b4ba4a029da21c5f8f47966c27166c2a41e335834b94da33bf164",
+    "current_sha256": "f5cefb41eb674a1a11128b0de3c0b99d82747a6b1328cbdbae0cc65b1829467d",
+    "action": "left as found; no overwrite"
+  },
+  "current_head": "e1b680b19586efceb21bd95021cd4bb5e2354540",
+  "original_step8_settings_unchanged": true,
+  "later_steps_started": false,
+  "human_review": "pending",
+  "common_model": "not selected",
+  "git_diff_check_exit_code": 0
+}

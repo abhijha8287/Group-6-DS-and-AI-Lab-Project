@@ -1,0 +1,6 @@
+{
+  "exit_code": 1,
+  "error": "Unexpected README drift detected against preparation snapshot; stopped preservation assertion before writing verification",
+  "additional_changed_file": "milestones/M4_training/README.md",
+  "action": "Inspect current HEAD; preserve user file, do not restore or overwrite"
+}

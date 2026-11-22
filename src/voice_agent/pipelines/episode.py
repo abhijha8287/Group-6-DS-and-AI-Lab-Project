@@ -32,7 +32,7 @@ def agent_ended_call(text: str) -> bool:
 
 
 def run_episode(task: dict, pack: BusinessPack, mode: str, clients: dict, chunks: list[dict],
-                index: BM25Index, *, checkpoint=None) -> dict:
+                index: BM25Index, *, checkpoint=None, stop_on_protocol_issue=False) -> dict:
     views = task_views(task)
     check_views(views)
     sandbox = CRMSandbox(pack.seed, views["harness"], index)
@@ -68,6 +68,10 @@ def run_episode(task: dict, pack: BusinessPack, mode: str, clients: dict, chunks
             stage = "simulator"
             caller_text = caller.reply(agent_text)
             if STOP in caller_text:
+                if stop_on_protocol_issue and not any(t["type"] == "caller" for t in turns):
+                    status = "caller_early_stop"
+                    issues.append({"category": "simulator", "stage": stage, "code": status,
+                                   "message": "Caller stopped before exercising the scenario."})
                 break
             if mode == "llm" and caller_text == previous_caller:  # LLM caller stuck repeating itself
                 status = "caller_repeat_stop"
@@ -99,8 +103,12 @@ def run_episode(task: dict, pack: BusinessPack, mode: str, clients: dict, chunks
                        "message": str(err), "error_type": type(err).__name__})
     elapsed = time.perf_counter() - started
 
+    judge_allowed = mode == "llm" and not status.startswith("error")
+    if stop_on_protocol_issue and (status != "completed" or any(
+            i["category"] in ("simulator", "infrastructure", "judge") for i in issues)):
+        judge_allowed = False
     result = score(task, pack.seed, sandbox.state, turns, sandbox.log,
-                   judge_client=clients.get("judge") if mode == "llm" and not status.startswith("error") else None)
+                   judge_client=clients.get("judge") if judge_allowed else None)
     if mode == "llm":
         for entry in sandbox.log:
             if entry.get("blocked"):

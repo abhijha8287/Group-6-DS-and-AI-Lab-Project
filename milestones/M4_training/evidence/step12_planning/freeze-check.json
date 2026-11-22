@@ -1,0 +1,5 @@
+{
+  "command": "python3 scripts/run_model_pilot.py",
+  "exit_code": 0,
+  "expected_exit_code": 0
+}

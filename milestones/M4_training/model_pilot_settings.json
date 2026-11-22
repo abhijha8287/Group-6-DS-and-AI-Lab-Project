@@ -1,0 +1,334 @@
+{
+  "version": "m4-cloud-model-pilot-v1",
+  "machine_scorer_version": "m4-pilot-machine-v1",
+  "group_id": "step12_model_pilot_001",
+  "requires_explicit_group_approval": true,
+  "scope": "Approved scope reduction: IN02 only, three repetitions/candidate, six slots; not full Step12",
+  "architecture": "unchanged SingleAgent",
+  "documents": "frozen short",
+  "retrieval": "BM25 k3 facts; rules in system prompt",
+  "caller_and_judge": "gpt-4o-mini-2024-07-18",
+  "agent_models": {
+    "openai": "gpt-4o-mini-2024-07-18",
+    "gemma": "google/gemma-4-26b-a4b-it:free"
+  },
+  "temperatures": 0,
+  "agent_output_cap": 800,
+  "caller_output_cap": 200,
+  "judge_output_cap": 1200,
+  "limits": {
+    "max_retries": 0,
+    "max_caller_turns": 12,
+    "max_tool_steps": 8,
+    "max_audio_seconds": 0,
+    "max_request_bytes": 64000
+  },
+  "pooled_agent_requests_per_caller_turn": 8,
+  "timeout_seconds": 30,
+  "concurrency": 1,
+  "slots": [
+    {
+      "id": "step12_model_pilot_001_r1_gemma",
+      "scenario_id": "IN02",
+      "repetition": 1,
+      "candidate": "gemma",
+      "agent_batch": "step12_model_pilot_001_r1_gemma_agent",
+      "evaluation_batch": "step12_model_pilot_001_r1_gemma_eval"
+    },
+    {
+      "id": "step12_model_pilot_001_r1_openai",
+      "scenario_id": "IN02",
+      "repetition": 1,
+      "candidate": "openai",
+      "agent_batch": "step12_model_pilot_001_r1_openai_agent",
+      "evaluation_batch": "step12_model_pilot_001_r1_openai_eval"
+    },
+    {
+      "id": "step12_model_pilot_001_r2_openai",
+      "scenario_id": "IN02",
+      "repetition": 2,
+      "candidate": "openai",
+      "agent_batch": "step12_model_pilot_001_r2_openai_agent",
+      "evaluation_batch": "step12_model_pilot_001_r2_openai_eval"
+    },
+    {
+      "id": "step12_model_pilot_001_r2_gemma",
+      "scenario_id": "IN02",
+      "repetition": 2,
+      "candidate": "gemma",
+      "agent_batch": "step12_model_pilot_001_r2_gemma_agent",
+      "evaluation_batch": "step12_model_pilot_001_r2_gemma_eval"
+    },
+    {
+      "id": "step12_model_pilot_001_r3_gemma",
+      "scenario_id": "IN02",
+      "repetition": 3,
+      "candidate": "gemma",
+      "agent_batch": "step12_model_pilot_001_r3_gemma_agent",
+      "evaluation_batch": "step12_model_pilot_001_r3_gemma_eval"
+    },
+    {
+      "id": "step12_model_pilot_001_r3_openai",
+      "scenario_id": "IN02",
+      "repetition": 3,
+      "candidate": "openai",
+      "agent_batch": "step12_model_pilot_001_r3_openai_agent",
+      "evaluation_batch": "step12_model_pilot_001_r3_openai_eval"
+    }
+  ],
+  "batches": [
+    {
+      "id": "step12_model_pilot_001_r1_gemma_agent",
+      "allocation": "text_development",
+      "model": "google/gemma-4-26b-a4b-it:free",
+      "max_cost_usd": "0",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 96,
+        "max_output_tokens": 800
+      },
+      "requests": []
+    },
+    {
+      "id": "step12_model_pilot_001_r1_gemma_eval",
+      "allocation": "text_development",
+      "model": "gpt-4o-mini-2024-07-18",
+      "max_cost_usd": "0.25176",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 13,
+        "max_output_tokens": 1200
+      },
+      "requests": []
+    },
+    {
+      "id": "step12_model_pilot_001_r1_openai_agent",
+      "allocation": "text_development",
+      "model": "gpt-4o-mini-2024-07-18",
+      "max_cost_usd": "1.88928",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 96,
+        "max_output_tokens": 800
+      },
+      "requests": []
+    },
+    {
+      "id": "step12_model_pilot_001_r1_openai_eval",
+      "allocation": "text_development",
+      "model": "gpt-4o-mini-2024-07-18",
+      "max_cost_usd": "0.25176",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 13,
+        "max_output_tokens": 1200
+      },
+      "requests": []
+    },
+    {
+      "id": "step12_model_pilot_001_r2_openai_agent",
+      "allocation": "text_development",
+      "model": "gpt-4o-mini-2024-07-18",
+      "max_cost_usd": "1.88928",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 96,
+        "max_output_tokens": 800
+      },
+      "requests": []
+    },
+    {
+      "id": "step12_model_pilot_001_r2_openai_eval",
+      "allocation": "text_development",
+      "model": "gpt-4o-mini-2024-07-18",
+      "max_cost_usd": "0.25176",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 13,
+        "max_output_tokens": 1200
+      },
+      "requests": []
+    },
+    {
+      "id": "step12_model_pilot_001_r2_gemma_agent",
+      "allocation": "text_development",
+      "model": "google/gemma-4-26b-a4b-it:free",
+      "max_cost_usd": "0",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 96,
+        "max_output_tokens": 800
+      },
+      "requests": []
+    },
+    {
+      "id": "step12_model_pilot_001_r2_gemma_eval",
+      "allocation": "text_development",
+      "model": "gpt-4o-mini-2024-07-18",
+      "max_cost_usd": "0.25176",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 13,
+        "max_output_tokens": 1200
+      },
+      "requests": []
+    },
+    {
+      "id": "step12_model_pilot_001_r3_gemma_agent",
+      "allocation": "text_development",
+      "model": "google/gemma-4-26b-a4b-it:free",
+      "max_cost_usd": "0",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 96,
+        "max_output_tokens": 800
+      },
+      "requests": []
+    },
+    {
+      "id": "step12_model_pilot_001_r3_gemma_eval",
+      "allocation": "text_development",
+      "model": "gpt-4o-mini-2024-07-18",
+      "max_cost_usd": "0.25176",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 13,
+        "max_output_tokens": 1200
+      },
+      "requests": []
+    },
+    {
+      "id": "step12_model_pilot_001_r3_openai_agent",
+      "allocation": "text_development",
+      "model": "gpt-4o-mini-2024-07-18",
+      "max_cost_usd": "1.88928",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 96,
+        "max_output_tokens": 800
+      },
+      "requests": []
+    },
+    {
+      "id": "step12_model_pilot_001_r3_openai_eval",
+      "allocation": "text_development",
+      "model": "gpt-4o-mini-2024-07-18",
+      "max_cost_usd": "0.25176",
+      "limits": {
+        "max_retries": 0,
+        "max_caller_turns": 12,
+        "max_tool_steps": 8,
+        "max_audio_seconds": 0,
+        "max_request_bytes": 64000,
+        "max_requests": 13,
+        "max_output_tokens": 1200
+      },
+      "requests": []
+    }
+  ],
+  "max_openai_cost_usd": "7.17840",
+  "max_openrouter_cost_usd": "0",
+  "openrouter_routing": "only google-ai-studio, no fallbacks, require parameters, zero max token prices, data_collection deny, no BYOK",
+  "runtime": {
+    "python": "3.15.2",
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "source_sha256": {
+    "milestones/M4_training/development/core.json": "89a55a4baffc263fe73468fa0b5e83c2d19155eee3da3ee2787ea3345e283860",
+    "milestones/M4_training/development/crm_seed.json": "2541fd6ae9bd82aced9d7317fb748ebe449ed5e54f931a560b70af665f64a537",
+    "milestones/M4_training/development/documents/large.md": "9d6ed54bbab5068a3c40bff1fc3dd55117c09b293342f907b8bacae8c2270a9c",
+    "milestones/M4_training/development/documents/short.md": "64782cfcfedb66d818ae5cbf2bdc9cf22990075cf099de416d13cb063df3557d",
+    "milestones/M4_training/development/manifest.json": "3e29b881a1920379c10477d9e5994bd58bb9cce556908cdcb6aa3baf95bb24bb",
+    "milestones/M4_training/development/sources.json": "b8865e46c36b388ba22d26fb7868d44ce213e36817e599688822ec718c09988b",
+    "milestones/M4_training/development/supplemental.json": "470d5ab5e2846eba484c66437593a8282ba31410236bdb370b209e4c372d4f9f",
+    "milestones/M4_training/evidence/step12_planning/gemma-endpoints.json": "8551018e7873077b86310c43a2689117dd32d6e8c29c3fa6e7c7f2f7c2ecf83d",
+    "milestones/M4_training/evidence/step12_planning/openrouter-public-models.json": "82f42dabddbd8bdfba353ae9a924d74919cfc5f2df2b1f179b831b3af36d3c8e",
+    "milestones/M4_training/evidence/step12_planning/scope-decision.json": "8c741da7ab31efd4e7c6ebe1a9245423028e191892883640f8cbdf4c028113b8",
+    "milestones/M4_training/model_pilot_plan.md": "a2f8118f58f3e5a5bf1fd8b6abfff0af76b661772198c80a195eafb6bb1c5159",
+    "scripts/check_comparison_freeze.py": "c51802540c2999a6a7bce3fb8e8a3984eb005595584f6ffa3b297db1dfc3161c",
+    "scripts/check_development.py": "37d9c775fe579b64fd14d7c55f2881be46c649fbfbad2b677e3bf4ab0168ff0a",
+    "scripts/create_m2_split_manifest.py": "f0445a29618ac970d3704130294504ab6a73b0bc10f4ec5fa7843d1b3ae82a70",
+    "scripts/expand_m2_outbound.py": "0941c6adcf8cd55c83aa742bb5dc1ac30840989a0793a4bc9b00d41f54e3f05c",
+    "scripts/expand_m2_scenarios.py": "21248618d554bece6f263dbf7740c1b1b2a03952de8f922ec96d7017930499c3",
+    "scripts/freeze_development.py": "7a29a45643126e8f18c18958ade0329b1775f34cd3aced66b5ec38bf7917f655",
+    "scripts/generate_m2_contacts.py": "0814ee60484fee3e4bebe19eb2eabf1b1528693ea0e50410753373b48efc9871",
+    "scripts/preprocess_m3.py": "985e8f3e9bf0eb867bbdb8a99b9284112b94104320fe57447bda825a5ace442b",
+    "scripts/preprocess_policy_packs.py": "ac127b8935885f616b6b83167995875a70ddfca366b52302ffc87205eee4ba43",
+    "scripts/run_m3_pipeline.py": "4d859cf5983b64fca05577ff031e1c20a1cde183cf90325f1423749bc28fa73b",
+    "scripts/run_model_pilot.py": "ea2f976e19856c4771fb29f1f68739fb21fcfced63a90e821146b6302cd9e2de",
+    "scripts/run_outbound_gate.py": "1090cc6cfa20a150c876951819091703f40dd54200f727f5dcd667ea2e270ebf",
+    "scripts/run_step11_smoke.py": "0d25afc393f505c9a22c77065fa98f828c1e457e919489b4ff72efe349005d92",
+    "scripts/run_text_smoke.py": "40c3a82e6d0525f575d4ca265e47bd08b071afb4f3485920ed1a01c65464a08b",
+    "scripts/validate_m2_outbound.py": "8c5a1eecd9ab0b3d4c47d6fb6f38ee0cfc947ca5dcf94c02b22f563e3412411c",
+    "src/voice_agent/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/data/development.py": "083fec18453d3cc5e06845b7fb08f70440c4b4aae4986c6fe253402bfe9795be",
+    "src/voice_agent/data/loader.py": "dcd52b20ff11375997f1a6d4b505c88f2bbe39d6b715aec603939820a7037173",
+    "src/voice_agent/data/preprocess.py": "85262ef02ba4bdc5ca45855c21379db857f1d14f35f728084a359b2398718ce5",
+    "src/voice_agent/evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/evaluation/evaluator.py": "b76b572b8a761382730a39f3bcf671d406980fc12bacb764f9e1dd4a9309b0f1",
+    "src/voice_agent/evaluation/measurement.py": "0594ad762fb8aedfc091acb802576b2500400fbf2a51aa56472d2cf544c550ac",
+    "src/voice_agent/evaluation/simulator.py": "17d274baf98befa0e3479adc68696f3c08037833a5f79e56382cce92c4fb88f8",
+    "src/voice_agent/inference/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/inference/agent.py": "d0be5168e9ce1165cf7ba7cd684af378e50c529ef9ba02abee4a581ad794158e",
+    "src/voice_agent/inference/crm.py": "1d899d80a96495bccd5ac91fcd8e6ecc3871323baca7f6b66927fbff13f8e74f",
+    "src/voice_agent/inference/outbound_gate.py": "49caeb2d693a12a2346a308f017d663d3af5759929b1d944344a190bc01dad95",
+    "src/voice_agent/inference/retrieval.py": "aaf9e6e345f3afc3e3c39634680e45e9a9cd9ea4ad2b2d2927062a9718f8e87c",
+    "src/voice_agent/models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/models/budget.py": "e466a68ab829c49ec6dae85a4d49c5d32bb7f686cddf7b523628729c208dfe74",
+    "src/voice_agent/models/llm.py": "3b7137e0e2a8b0cf774c7ec18f0eb075a508b6b252291451162fc637c12cb5ce",
+    "src/voice_agent/models/openrouter_free.py": "1941b51e4f9958edbc20a1d431686863ca8c690747908b9e21b3faa4b9a6038a",
+    "src/voice_agent/pipelines/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/pipelines/episode.py": "a770a5fa3b37efea4f53b44efa4e41b76b65bb4bc9b1d2d9bebcfe5d6995ba49",
+    "src/voice_agent/training/__init__.py": "67b8e2e09115782ba190e64bdfb7fcf6b8a08961e787406b35cff08e10f4cae6",
+    "src/voice_agent/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voice_agent/utils/common.py": "2a796a4593883c0fe23fc265cf3e6db350ae28c2afb60d4e1020ac322b4c3209"
+  },
+  "analysis": "N=1 independent scenario; report six attempts, triplet consistency, machine labels separately from human-pending audits; no significance or broad model selection",
+  "continuation": "no scenario/model replacement or retry; halt group on infrastructure/judge/simulator issue or source drift; do not auto-start steps13/14"
+}

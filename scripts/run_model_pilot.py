@@ -1,11 +1,13 @@
 """Six-slot IN02 cloud-model pilot. Default is offline check; execution needs group approval."""
 import argparse
+import base64
 import hashlib
 import json
 import os
 import platform
 import re
 import sys
+import time
 from datetime import datetime, timezone
 from decimal import Decimal
 from pathlib import Path
@@ -14,10 +16,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from voice_agent.data.development import load_development, case_pack
 from voice_agent.data.preprocess import chunk_knowledge
-from voice_agent.evaluation.evaluator import expected_state, transcript_text
+from voice_agent.evaluation.evaluator import expected_state, transcript_text, diff
 from voice_agent.evaluation.measurement import count_rate, nearest_rank, repetition_summary
 from voice_agent.inference.retrieval import BM25Index
-from voice_agent.models.budget import CostLedger
+from voice_agent.models.budget import CostLedger, _usage_cost
 from voice_agent.models.llm import OpenAICompatibleClient
 from voice_agent.pipelines.episode import run_episode
 from voice_agent.utils.common import load_env, write_json
@@ -54,7 +56,8 @@ def plan():
                                         ("eval",OPENAI,13,1200,"0.25176")]:
                 batches.append(dict(id=sid+"_"+kind,allocation="text_development",model=model,
                     max_cost_usd=cost,limits={**LIMITS,"max_requests":n,"max_output_tokens":cap},requests=[]))
-    return dict(version="m4-cloud-model-pilot-v1",group_id=GROUP,requires_explicit_group_approval=True,
+    return dict(version="m4-cloud-model-pilot-v1",machine_scorer_version="m4-pilot-machine-v1",
+        group_id=GROUP,requires_explicit_group_approval=True,
         scope="Approved scope reduction: IN02 only, three repetitions/candidate, six slots; not full Step12",
         architecture="unchanged SingleAgent",documents="frozen short",retrieval="BM25 k3 facts; rules in system prompt",
         caller_and_judge=OPENAI,agent_models={"openai":OPENAI,"gemma":GEMMA},
@@ -80,7 +83,10 @@ def check():
 
 def safe(value, secrets):
     if isinstance(value,bytes):
-        value=value.decode("utf-8",errors="replace")
+        for secret in secrets:
+            if secret:value=value.replace(secret.encode(),b"[REDACTED]")
+        try:value=value.decode("utf-8")
+        except UnicodeDecodeError:return {"encoding":"base64","body":base64.b64encode(value).decode("ascii")}
     if isinstance(value,str):
         for secret in secrets:
             if secret:value=value.replace(secret,"[REDACTED]")
@@ -95,18 +101,23 @@ def journal_at(out,secrets):
     def journal(event):
         rid=event["request_id"]
         if not re.fullmatch(r"[A-Za-z0-9_-]+",rid):raise ValueError("Invalid journal ID")
-        records.setdefault(rid,[]).append(safe(event,secrets))
+        records.setdefault(rid,[]).append(safe({**event,"observed_at_utc":datetime.now(timezone.utc).isoformat(),
+                                               "monotonic_ns":time.perf_counter_ns()},secrets))
         write_json(out/"calls"/(rid+".json"),{"events":records[rid]})
     return journal
 
 
-def register(value,approval):
+def validate_approval(approval):
     if (approval.get("approved") is not True or approval.get("group_id")!=GROUP
             or approval.get("settings_sha256")!=sha(SETTINGS)
             or approval.get("max_openai_cost_usd")!="7.17840"
             or approval.get("max_openrouter_cost_usd")!="0"
-            or not approval.get("user_reply")):
+            or not isinstance(approval.get("user_reply"),str) or not approval["user_reply"].strip()):
         raise ValueError("Missing or mismatched explicit group approval")
+
+
+def register(value,approval):
+    validate_approval(approval)
     budget=CostLedger(LEDGER,value["batches"][0]["id"])
     with budget._locked():
         data=json.loads(LEDGER.read_text())
@@ -118,11 +129,10 @@ def register(value,approval):
         prices=data["models"][OPENAI]
         if (prices["input_usd_per_million"],prices["output_usd_per_million"],prices["max_input_tokens"])!=("0.15","0.60",128000):
             raise ValueError("OpenAI price/context differs from approved bounds")
-        spent=sum(Decimal(b.get("batch_usage_priced_estimate_usd","0")) for b in data["batches"] if b["allocation"]=="text_development")
         # Current registration is allowed only before any text-development spending.
         if any(b["allocation"]=="text_development" for b in data["batches"]):
             raise ValueError("Prior text batches need a reviewed aggregate budget amendment")
-        if Decimal(data["allocations"]["text_development"])-spent<Decimal("7.17840"):
+        if Decimal(data["allocations"]["text_development"])<Decimal("7.17840"):
             raise ValueError("Insufficient text allocation")
         _,_,total=budget._totals(data,Decimal(data["starting_credit_usd"]))
         if total+Decimal("7.17840")>Decimal(data["starting_credit_usd"]):
@@ -134,7 +144,8 @@ def register(value,approval):
         for batch in value["batches"]:
             data["batches"].append({**batch,"approved":True,"approval_reference":approval["approval_reference"],
                 "approval_group":GROUP,"approved_at_utc":datetime.now(timezone.utc).isoformat()})
-        assert sum(Decimal(b["max_cost_usd"]) for b in value["batches"])==Decimal("7.17840")
+        if sum(Decimal(b["max_cost_usd"]) for b in value["batches"])!=Decimal("7.17840"):
+            raise ValueError("Sub-batch ceilings do not match group approval")
         budget._save(data)
 
 
@@ -149,7 +160,8 @@ def report(records):
         db=[r["result"]["db_pass"] for r in rows]+[None]*(3-len(rows))
         comp=[r["result"]["safety_pass"] for r in rows]+[None]*(3-len(rows))
         repetitions=[dict(scenario_id="IN02",repetition=r["repetition"],strict_success=bool(r["result"]["reward"]) if r["result"]["reward"] is not None else None) for r in rows]
-        latency=[r["result"]["usage"]["agent"]["latency_s"] for r in rows]
+        latency=[r["result"]["usage"]["agent"]["latency_s"] for r in rows
+                 if r["result"]["usage"]["agent"]["llm_calls"]>0]
         result["candidates"][candidate]=dict(machine_task_success=count_rate(scores),crm_exact=count_rate(db),
             machine_policy_compliance=count_rate(comp),machine_triplet=repetition_summary(repetitions,["IN02"]),
             agent_total_request_seconds=latency,agent_total_seconds_p50=nearest_rank(latency,.5),
@@ -158,11 +170,33 @@ def report(records):
     return result
 
 
+def cost_report():
+    data=json.loads(LEDGER.read_text());attempts={}
+    for batch in data["batches"]:
+        if batch.get("approval_group")!=GROUP:continue
+        aid=batch["id"].rsplit("_",1)[0]
+        row=attempts.setdefault(aid,{"observed_service_estimate_usd":Decimal(0),
+            "observed_evaluation_estimate_usd":Decimal(0),"requests":0,"unknown_requests":0,"role_counts":{},"request_ids":[]})
+        for request in batch["requests"]:
+            row["requests"]+=1
+            row["request_ids"].append(request["id"])
+            role=request["role"];row["role_counts"][role]=row["role_counts"].get(role,0)+1
+            if request["status"]!="reconciled":row["unknown_requests"]+=1;continue
+            amount=_usage_cost(request["usage"],data["models"][batch["model"]],request["max_output_tokens"])
+            key="observed_service_estimate_usd" if role=="AGENT" else "observed_evaluation_estimate_usd"
+            row[key]+=amount
+    for row in attempts.values():
+        for key in ("observed_service_estimate_usd","observed_evaluation_estimate_usd"):row[key]=str(row[key])
+    return {"by_attempt":attempts,"basis":"usage-priced estimate; raw free responses must show zero cost; not invoice or pooled OpenRouter credit",
+            "cost_per_call_minute":None}
+
+
 def execute(approval_path):
     value=check();load_env()
     secrets=[os.getenv("OPENAI_API_KEY",""),os.getenv("OPENROUTER_API_KEY","")]
     if not all(secrets):raise ValueError("Required keys absent")
     approval=json.loads(approval_path.read_text());approval["approval_reference"]=str(approval_path.relative_to(ROOT))
+    validate_approval(approval)
     out=ROOT/"experiments/runs"/GROUP
     if out.exists():raise FileExistsError("Pilot output exists; preserve interrupted attempt")
     if approval.get("settings_sha256")!=sha(SETTINGS):raise ValueError("Approval settings mismatch")
@@ -173,7 +207,9 @@ def execute(approval_path):
     from voice_agent.models.openrouter_free import FreeOpenRouterClient
     _,tasks,packs=load_development();task=next(t for t in tasks if t["id"]=="IN02")
     records=[];disposition="running"
-    def save():write_json(out/"results.json",safe({"disposition":disposition,"summary":report(records),"records":records},secrets))
+    def save():
+        write_json(out/"results.json",safe({"disposition":disposition,"summary":report(records),
+            "costs":cost_report(),"records":records},secrets))
     save()
     try:
         for slot in value["slots"]:
@@ -195,9 +231,10 @@ def execute(approval_path):
                 path=attempt/"tool_states"/f"{len(event['tool_log']):03d}.json"
                 if path.exists():raise FileExistsError("Tool checkpoint would overwrite evidence")
                 write_json(path,safe(event,secrets))
-            outcome=run_episode(task,pack,"llm",clients,chunks,index,checkpoint=checkpoint)
+            outcome=run_episode(task,pack,"llm",clients,chunks,index,checkpoint=checkpoint,stop_on_protocol_issue=True)
             record={**slot,"result":outcome};records.append(record)
             write_json(attempt/"result.json",safe(record,secrets))
+            write_json(attempt/"crm_diff.json",diff(expected_state(pack.seed,task["gold"]),outcome["final_state"]))
             (attempt/"transcript.txt").write_text(safe(transcript_text(outcome["turns"],full_tool_results=True),secrets)+"\n")
             write_json(attempt/"human_review.json",{"status":"pending","coverage_valid":None,"strict_task_success":None,
                 "policy_compliant":None,"spurious_writes":None,"wrong_record":None,"duplicate_lead":None,

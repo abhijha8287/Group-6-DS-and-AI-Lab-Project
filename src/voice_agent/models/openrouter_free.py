@@ -63,7 +63,7 @@ def _response(data):
     if not isinstance(data, dict) or data.get("provider") != "Google AI Studio" or data.get("model") not in (MODEL, MODEL.removesuffix(":free")):
         raise BudgetError("Unexpected response provider or model")
     usage = data.get("usage")
-    if not isinstance(usage, dict) or not _zero(usage.get("cost")) or usage.get("is_byok") is True:
+    if not isinstance(usage, dict) or not _zero(usage.get("cost")) or usage.get("is_byok") is not False:
         raise BudgetError("Unexpected or missing response cost")
     details = usage.get("cost_details")
     if details is not None:

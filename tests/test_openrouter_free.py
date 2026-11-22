@@ -40,7 +40,7 @@ class FreeOpenRouterTests(unittest.TestCase):
                          "choices": [{"message": {"role": "assistant", "content": None,
                                       "tool_calls": [{"id": "call1", "type": "function", "function": {
                                           "name": "lookup", "arguments": '{"x": 1}'}}]}}],
-                         "usage": {"prompt_tokens": 10, "completion_tokens": 3, "cost": 0,
+                         "usage": {"prompt_tokens": 10, "completion_tokens": 3, "cost": 0, "is_byok": False,
                                    "cost_details": {"upstream_inference_cost": None}}}
 
     def save(self):
@@ -129,6 +129,22 @@ class FreeOpenRouterTests(unittest.TestCase):
                 self.assertEqual(self.events[-1]["raw_response"], raw)
                 self.assertTrue(self.stored()["halted"])
                 self.assertEqual(self.stored()["requests"][0]["status"], "failed")
+
+    def test_bad_argument_json_uses_shared_parser_not_provider_halt(self):
+        response=copy.deepcopy(self.response)
+        response["choices"][0]["message"]["tool_calls"][0]["function"]["arguments"]="not-json"
+        with patch.object(llm._HTTP,"open",return_value=self.reply(data=response)):
+            result=self.client.complete(self.messages)
+        self.assertEqual(result.tool_calls[0]["arguments"],{"_unparsed":"not-json"})
+        self.assertFalse(self.stored().get("halted",False))
+
+    def test_missing_or_unknown_byok_halts(self):
+        for marker in (None,"false",0):
+            self.save()
+            response=copy.deepcopy(self.response);response["usage"]["is_byok"]=marker
+            with patch.object(llm._HTTP,"open",return_value=self.reply(data=response)):
+                with self.assertRaises(BudgetError):self.client.complete(self.messages)
+            self.assertTrue(self.stored()["halted"])
 
     def test_normalized_model_and_journal_failure(self):
         response = {**self.response, "model": MODEL.removesuffix(":free")}

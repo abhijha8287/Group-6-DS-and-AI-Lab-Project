@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/srijan/projects/Group-6-DS-and-AI-Lab-Project/scripts/run_model_pilot.py", line 275, in <module>
+    if __name__=="__main__":main()
+                            ~~~~^^
+  File "/Users/srijan/projects/Group-6-DS-and-AI-Lab-Project/scripts/run_model_pilot.py", line 265, in main
+    if SETTINGS.exists() or SETTINGS.with_suffix(".sha256").exists():raise FileExistsError("Pilot freeze exists")
+                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileExistsError: Pilot freeze exists

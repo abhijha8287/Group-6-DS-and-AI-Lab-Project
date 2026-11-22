@@ -1,0 +1,8 @@
+{
+  "integrity": "pass",
+  "group": "step12_model_pilot_001",
+  "attempts": 6,
+  "max_openai_cost_usd": "7.17840",
+  "max_openrouter_cost_usd": "0",
+  "execution_approved": false
+}
