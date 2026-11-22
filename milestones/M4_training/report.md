@@ -299,7 +299,7 @@ This acknowledgement records participation and responsibility for the disclosed 
 |---|---|---|---|
 | Srijan | 22f3002208 | S. | 19 November 2026 |
 | Abhishek Jha | 23f3004013 | Pending | Pending |
-| Sarwar Karim Akhand | 21f1006953 | Pending | Pending |
+| Sarwar Karim Akhand | 21f1006953 | S.K.A | 22 November 2026 |
 | Omkar Shankar Pawar | 23f1001898 | O.S.P. | 19 November 2026 |
 
 Srijan's initials were entered at his explicit request on 19 November. Each other member must add their own initials. Whether assistant-entered initials satisfy the course's own-commit requirement still needs confirmation. The 19 November version of this report is preserved in git history (`e1b680b`).
